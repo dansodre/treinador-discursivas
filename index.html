@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinador de Discursivas - EPPGG/SE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+    <!-- Bibliotecas para Geração de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .prose-custom p { margin-bottom: 1em; }
+        .prose-custom h3 { margin-top: 1.5em; margin-bottom: 0.5em; }
+        .prose-custom ul { list-style-position: inside; padding-left: 1em; }
+        .prose-custom li { margin-bottom: 0.5em; }
+        #analysisResult blockquote {
+            border-left: 4px solid #e5e7eb; padding-left: 1rem;
+            margin-left: 0; font-style: italic; color: #4b5563;
+        }
+        .mode-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .mode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #555; }
+        
+        .modal-overlay { transition: opacity 0.3s ease; }
+
+        /* Estilo para o relatório de impressão */
+        .printable-report {
+            /* A propriedade 'display: none;' foi removida pois impedia o html2canvas de renderizar o elemento. */
+            position: absolute;
+            left: -9999px;
+            width: 800px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #fff;
+        }
+        .printable-report .header { background-color: #343a40; color: white; padding: 20px; text-align: center; }
+        .printable-report .card { padding: 25px; border-bottom: 1px solid #dee2e6; }
+        .printable-report h1, .printable-report h2, .printable-report h3 { color: #343a40; }
+        .printable-report h2 { border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-top: 0; }
+        .printable-report blockquote { border-left: 5px solid #007bff; margin: 1em 0; padding: 1em; background-color: #f1f3f5; }
+        .printable-report pre { background-color: #e9ecef; padding: 15px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', Courier, monospace; }
+        .printable-report table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+        .printable-report th, .printable-report td { border: 1px solid #ced4da; padding: 12px; text-align: left; }
+        .printable-report th { background-color: #e9ecef; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl relative">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Treinador de Discursivas</h1>
+            <p class="text-md text-gray-600 mt-2">EPPGG - Governo do Estado de Sergipe</p>
+        </header>
+
+        <!-- Settings Button -->
+        <div class="absolute top-0 right-0 p-4">
+            <button id="settingsButton" class="text-gray-500 hover:text-gray-800 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+        </div>
+
+        <main id="app" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg min-h-[500px] flex flex-col">
+
+            <!-- Telas de Seleção -->
+            <div id="modeSelection">
+                <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Escolha seu modo de treino</h2>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <button data-mode="focado" class="mode-card bg-blue-50 p-6 rounded-xl border border-blue-200"><h3 class="font-bold text-lg text-blue-800">Modo Focado</h3><p class="text-sm text-blue-700 mt-2">Treine um tópico específico.</p></button>
+                    <button data-mode="interdisciplinar" class="mode-card bg-purple-50 p-6 rounded-xl border border-purple-200"><h3 class="font-bold text-lg text-purple-800">Modo Interdisciplinar</h3><p class="text-sm text-purple-700 mt-2">Combine matérias.</p></button>
+                    <button data-mode="classico" class="mode-card bg-gray-50 p-6 rounded-xl border border-gray-200"><h3 class="font-bold text-lg text-gray-800">Modo Clássico</h3><p class="text-sm text-gray-700 mt-2">Pratique por níveis.</p></button>
+                </div>
+            </div>
+
+            <div id="subjectSelection" class="hidden">
+                 <h2 class="text-xl font-semibold mb-4 text-center">Selecione a Matéria</h2>
+                 <div id="subjectGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+                 <button class="back-button mt-6 bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
+            </div>
+            
+            <div id="topicSelection" class="hidden flex-grow flex flex-col">
+                <h2 id="topicSelectionHeader" class="text-xl font-semibold mb-4 text-center">Selecione o(s) Tópico(s)</h2>
+                <div id="topicCheckboxes" class="space-y-3 custom-scrollbar overflow-y-auto max-h-[350px] p-2 border rounded-lg"></div>
+                <div class="mt-4 flex gap-4">
+                    <button id="generateFocusedQuestion" class="w-full bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 disabled:bg-blue-300" disabled>Gerar Questão</button>
+                    <button class="back-button w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
+                </div>
+            </div>
+
+            <div id="interdisciplinarySelection" class="hidden">
+                <h2 class="text-xl font-semibold mb-4 text-center">Combine as Matérias</h2>
+                <p class="text-center text-sm text-gray-500 mb-4">Selecione duas ou mais matérias para gerar uma questão.</p>
+                <div id="interdisciplinaryCheckboxes" class="space-y-3"></div>
+                <div class="mt-6 flex gap-4"><button id="generateInterdisciplinaryQuestion" class="w-full bg-purple-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-purple-700 disabled:bg-purple-300" disabled>Gerar Questão</button><button class="back-button w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button></div>
+            </div>
+
+            <div id="levelSelection" class="hidden">
+                <h2 class="text-xl font-semibold mb-4 text-center">Selecione o Nível</h2>
+                <div id="levelGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
+                <button class="back-button mt-6 bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
+            </div>
+
+            <!-- Tela da Questão -->
+            <div id="questionScreen" class="hidden">
+                <div class="mb-6"><div class="flex justify-between items-center mb-2"><span id="questionTopic" class="text-xs font-semibold uppercase text-blue-600 bg-blue-100 px-3 py-1 rounded-full"></span><span id="questionLevel" class="text-xs font-semibold uppercase text-gray-500"></span></div><h3 class="text-lg font-semibold leading-relaxed" id="questionText"></h3></div>
+                <div><label for="userAnswer" class="block text-sm font-medium text-gray-700 mb-2">Sua Resposta (20 a 30 linhas):</label><textarea id="userAnswer" rows="12" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea><div class="flex justify-between items-center mt-1"><span id="lineCount" class="text-sm text-gray-500">0 linhas</span><span id="charCount" class="text-sm text-gray-500">0 caracteres</span></div></div>
+                <div class="mt-6 flex flex-col sm:flex-row gap-3"><button id="submitAnswer" class="w-full sm:w-auto bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex-grow">Analisar</button><button id="backToMain" class="w-full sm:w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar ao Início</button></div>
+            </div>
+            
+            <!-- Tela de Análise -->
+            <div id="analysisScreen" class="hidden">
+                <div id="loader" class="text-center py-10"><svg class="animate-spin h-8 w-8 text-blue-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-4 text-lg font-semibold text-gray-700">Analisando sua resposta...</p></div>
+                <div id="analysisResult" class="hidden prose-custom max-w-none"></div>
+                <div id="analysisControls" class="hidden mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row gap-3"><button id="nextQuestion" class="w-full sm:w-auto bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 flex-grow">Próxima Questão</button><button id="downloadReport" class="w-full sm:w-auto bg-green-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-700">Baixar Relatório (PDF)</button><button id="backToMainFromAnalysis" class="w-full sm:w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar ao Início</button></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Div para gerar PDF -->
+    <div id="reportContainer" class="printable-report"></div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 md:p-8">
+            <div class="flex justify-between items-center mb-4"><h2 class="text-xl font-bold text-gray-800">Configurações</h2><button id="closeModalButton" class="text-gray-500 hover:text-gray-800">&times;</button></div>
+            <div class="space-y-4"><label for="apiKeyInput" class="block text-sm font-medium text-gray-700">Sua Chave da API do Gemini</label><input type="password" id="apiKeyInput" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Cole sua chave aqui"><p class="text-xs text-gray-500">Sua chave é salva apenas no seu navegador. <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline">Obtenha sua chave aqui.</a></p></div>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3"><button id="saveApiKeyButton" class="w-full bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700">Salvar Chave</button><button id="clearApiKeyButton" class="w-full sm:w-auto bg-red-100 text-red-700 font-semibold py-2 px-6 rounded-lg hover:bg-red-200">Limpar Chave</button></div>
+        </div>
+    </div>
+
+
+    <script>
+        const { jsPDF } = window.jspdf;
+        // --- BANCO DE DADOS DE CONTEÚDO DO EDITAL ---
+        const subjectDetailsDB = {
+            'Direito Administrativo': {
+                name: 'Direito Administrativo',
+                topics: ['Estado, governo e administração', 'Princípios da Adm. Pública', 'Poderes da administração', 'Organização administrativa', 'Ato administrativo', 'Licitação e Contratos (Leis 8.666, 10.520 e 14.133)', 'Controle da administração', 'Improbidade Administrativa', 'Lei Anticorrupção', 'Responsabilidade Civil do Estado'],
+                questions: [
+                    { level: 1, topic: 'Ato administrativo', text: 'Discorra sobre o conceito e os principais atributos do Ato Administrativo, explicando a importância de cada um para a atuação do Estado.' },
+                    { level: 2, topic: 'Controle da administração', text: 'Diferencie o controle administrativo, judicial e legislativo da Administração Pública, exemplificando uma ferramenta de cada tipo de controle.' },
+                    { level: 3, topic: 'Licitação e Contratos (Leis 8.666, 10.520 e 14.133)', text: 'Compare as modalidades de licitação previstas na Lei nº 8.666/1993 com as da nova Lei de Licitações e Contratos (Lei nº 14.133/2021), destacando a principal inovação trazida pelo novo diploma legal.' },
+                    { level: 5, topic: 'Licitações Sustentáveis', subjects: ['Direito Administrativo', 'Políticas Públicas', 'AFO'], text: 'Discorra sobre o conceito de licitações sustentáveis à luz da Lei nº 14.133/2021. Relacione a sua aplicação com os objetivos de políticas públicas de desenvolvimento nacional sustentável e com os desafios do controle de custos no orçamento público.' },
+                ]
+            },
+            'Direito Constitucional': {
+                name: 'Direito Constitucional',
+                topics: ['Aplicabilidade das normas', 'Direitos e garantias fundamentais', 'Organização do Estado', 'Administração Pública na CF', 'Poder Executivo', 'Poder Legislativo', 'Poder Judiciário', 'Funções essenciais à justiça'],
+                questions: [
+                    { level: 1, topic: 'Aplicabilidade das normas', text: 'Explique o conceito de aplicabilidade das normas constitucionais, diferenciando normas de eficácia plena, contida e limitada, e apresente um exemplo para cada tipo.' },
+                    { level: 3, topic: 'Organização do Estado', text: 'Analise o federalismo brasileiro, conforme a Constituição de 1988, explicando a repartição de competências entre União, Estados e Municípios e um desafio atual para a cooperação intergovernamental.' },
+                    { level: 5, topic: 'Transparência vs. LGPD', subjects: ['Direito Constitucional', 'Direito Administrativo'], text: 'Analise a aparente colisão entre o princípio da publicidade e o direito à transparência (Lei de Acesso à Informação) e o direito fundamental à proteção de dados pessoais (LGPD). Como um gestor público deve ponderar esses direitos ao divulgar informações que contenham dados pessoais?' },
+                ]
+            },
+            'AFO': {
+                name: 'Admin. Financeira e Orçamentária',
+                topics: ['Princípios orçamentários', 'Ciclo orçamentário', 'PPA, LDO e LOA', 'Receita Pública', 'Despesa Pública', 'Créditos adicionais', 'Restos a Pagar', 'Lei de Responsabilidade Fiscal (LRF)'],
+                questions: [
+                    { level: 1, topic: 'Princípios orçamentários', text: 'Cite e explique três princípios orçamentários previstos na legislação brasileira.' },
+                    { level: 2, topic: 'Ciclo orçamentário', text: 'Explique o Ciclo Orçamentário no Brasil, descrevendo sucintamente as quatro principais etapas (elaboração, aprovação, execução e controle).' },
+                    { level: 4, topic: 'Restos a Pagar', text: 'Explique o que são "Restos a Pagar" no contexto da execução orçamentária e da Lei de Responsabilidade Fiscal, diferenciando os processados dos não processados e as implicações de sua inscrição para a gestão fiscal.'},
+                ]
+            },
+            'Políticas Públicas': {
+                name: 'Teoria das Políticas Públicas',
+                topics: ['Ciclo de políticas públicas', 'Planejamento e avaliação', 'Intermediação de interesses', 'Governança de Políticas Públicas'],
+                questions: [
+                    { level: 4, topic: 'Ciclo de políticas públicas', text: 'Descreva as fases do ciclo de políticas públicas (formulação, implementação e avaliação). Em seguida, explique a importância da fase de avaliação para o aprimoramento da gestão governamental e para a accountability.' },
+                ]
+            },
+            'Ciência Política': {
+                name: 'Ciência Política',
+                topics: ['Conceitos fundamentais', 'Pensadores clássicos', 'Sistemas políticos e governança', 'Relações Institucionais', 'Política no Brasil'],
+                questions: [
+                    { level: 2, topic: 'Sistemas políticos e governança', text: 'Discorra sobre as formas de governo (República e Monarquia) e os sistemas de governo (Presidencialismo e Parlamentarismo), destacando as características do sistema adotado no Brasil.' },
+                ]
+            },
+            'Administração Pública': {
+                name: 'Administração Pública',
+                topics: ['Reformas administrativas', 'Modelos de gestão pública', 'Processos participativos', 'Governo eletrônico e transparência', 'Gestão por resultados', 'Planejamento (BSC, OKR)', 'Gestão de projetos e processos'],
+                questions: [
+                     { level: 1, topic: 'Modelos de gestão pública', text: 'Descreva o conceito de Administração Pública sob os sentidos formal e material. Em seguida, explique por que essa distinção é relevante para o estudo do Direito Administrativo.' },
+                     { level: 2, topic: 'Reformas administrativas', text: 'Diferencie o modelo de administração pública burocrática do modelo gerencial (pós-burocrático), destacando os principais objetivos da reforma do aparelho do Estado no Brasil na década de 1990.' },
+                ]
+            },
+            'Economia': {
+                name: 'Economia',
+                topics: ['Micro: Demanda e Oferta', 'Micro: Teoria do Consumidor', 'Micro: Mercados e Concorrência', 'Micro: Falhas de mercado', 'Macro: Contas Nacionais', 'Macro: Inflação e Juros', 'Macro: Política fiscal e monetária'],
+                questions: [
+                    { level: 2, topic: 'Macro: Inflação e Juros', text: 'Defina inflação e explique duas de suas principais causas. Em seguida, descreva um instrumento de política monetária que o Banco Central pode utilizar para contê-la.'},
+                    { level: 3, topic: 'Micro: Falhas de mercado', text: 'Defina o conceito de "falhas de mercado" e discorra sobre duas delas (por exemplo, externalidades e bens públicos), explicando por que justificam a intervenção do Estado na economia.' },
+                    { level: 5, topic: 'Política Fiscal e Desigualdade', subjects: ['Economia', 'Ciência Política', 'Administração Pública'], text: 'Discuta o papel do Estado na redução das desigualdades socioeconômicas no Brasil. Aborde, em sua resposta, ao menos dois instrumentos de política fiscal (lado da receita e/ou da despesa), um desafio político para sua implementação e um desafio de gestão para garantir sua efetividade.' },
+                ]
+            },
+            'Contabilidade Pública': {
+                name: 'Contabilidade Pública',
+                topics: ['Conceitos e campo de aplicação', 'Patrimônio Público', 'Demonstrações Contábeis (DCASP)', 'Plano de Contas (PCASP)', 'Regime orçamentário vs. patrimonial', 'Custos no Setor Público'],
+                 questions: [
+                    { level: 3, topic: 'Regime orçamentário vs. patrimonial', text: 'Diferencie o regime orçamentário do regime contábil (patrimonial) no setor público, explicando como cada um se aplica ao registro da receita e da despesa pública, conforme a Lei 4.320/64 e as novas normas contábeis (MCASP).' },
+                ]
+            }
+        };
+
+        const app = {
+            ui: {
+                modeSelection: document.getElementById('modeSelection'),
+                subjectSelection: document.getElementById('subjectSelection'),
+                topicSelection: document.getElementById('topicSelection'),
+                interdisciplinarySelection: document.getElementById('interdisciplinarySelection'),
+                levelSelection: document.getElementById('levelSelection'),
+                questionScreen: document.getElementById('questionScreen'),
+                analysisScreen: document.getElementById('analysisScreen'),
+                loader: document.getElementById('loader'),
+                analysisResult: document.getElementById('analysisResult'),
+                analysisControls: document.getElementById('analysisControls'),
+                questionTopic: document.getElementById('questionTopic'),
+                questionLevel: document.getElementById('questionLevel'),
+                questionText: document.getElementById('questionText'),
+                userAnswer: document.getElementById('userAnswer'),
+                lineCount: document.getElementById('lineCount'),
+                charCount: document.getElementById('charCount'),
+                subjectGrid: document.getElementById('subjectGrid'),
+                topicCheckboxes: document.getElementById('topicCheckboxes'),
+                topicSelectionHeader: document.getElementById('topicSelectionHeader'),
+                generateFocusedQuestionBtn: document.getElementById('generateFocusedQuestion'),
+                interdisciplinaryCheckboxes: document.getElementById('interdisciplinaryCheckboxes'),
+                levelGrid: document.getElementById('levelGrid'),
+                generateInterdisciplinaryBtn: document.getElementById('generateInterdisciplinaryQuestion'),
+                settingsButton: document.getElementById('settingsButton'),
+                settingsModal: document.getElementById('settingsModal'),
+                closeModalButton: document.getElementById('closeModalButton'),
+                apiKeyInput: document.getElementById('apiKeyInput'),
+                saveApiKeyButton: document.getElementById('saveApiKeyButton'),
+                clearApiKeyButton: document.getElementById('clearApiKeyButton'),
+            },
+            
+            state: {
+                currentMode: null, currentSubject: null, currentFilters: {},
+                currentQuestion: null, lastQuestionIndex: -1, lastAnalysis: null,
+            },
+
+            init() {
+                this.setupEventListeners();
+                this.renderSelections();
+                this.loadApiKey();
+                this.showScreen('modeSelection');
+            },
+            
+            setupEventListeners() {
+                this.ui.modeSelection.addEventListener('click', e => this.handleModeSelection(e));
+                document.querySelectorAll('.back-button').forEach(btn => btn.addEventListener('click', () => this.goBack()));
+                this.ui.subjectGrid.addEventListener('click', e => this.handleSubjectSelection(e));
+                this.ui.levelGrid.addEventListener('click', e => this.handleLevelSelection(e));
+                
+                this.ui.topicCheckboxes.addEventListener('change', () => this.updateFocusedButtonState());
+                this.ui.generateFocusedQuestionBtn.addEventListener('click', () => this.startFocusedMode());
+
+                this.ui.interdisciplinaryCheckboxes.addEventListener('change', () => this.updateInterdisciplinaryButtonState());
+                this.ui.generateInterdisciplinaryBtn.addEventListener('click', () => this.startInterdisciplinaryMode());
+                
+                document.getElementById('submitAnswer').addEventListener('click', () => this.submitAnswer());
+                document.getElementById('backToMain').addEventListener('click', () => this.showScreen('modeSelection'));
+                document.getElementById('nextQuestion').addEventListener('click', () => this.loadQuestion());
+                document.getElementById('backToMainFromAnalysis').addEventListener('click', () => this.showScreen('modeSelection'));
+                document.getElementById('downloadReport').addEventListener('click', (e) => this.downloadReport(e.target));
+                this.ui.userAnswer.addEventListener('input', () => this.updateCounts());
+
+                this.ui.settingsButton.addEventListener('click', () => this.toggleModal(true));
+                this.ui.closeModalButton.addEventListener('click', () => this.toggleModal(false));
+                this.ui.settingsModal.addEventListener('click', (e) => { if (e.target === this.ui.settingsModal) this.toggleModal(false); });
+                this.ui.saveApiKeyButton.addEventListener('click', () => this.saveApiKey());
+                this.ui.clearApiKeyButton.addEventListener('click', () => this.clearApiKey());
+            },
+            
+            renderSelections() {
+                this.ui.subjectGrid.innerHTML = Object.keys(subjectDetailsDB).map(key => `<button data-subject="${key}" class="w-full text-md font-semibold p-4 border rounded-lg transition duration-200 hover:bg-blue-500 hover:text-white hover:border-blue-500">${subjectDetailsDB[key].name}</button>`).join('');
+                this.ui.interdisciplinaryCheckboxes.innerHTML = Object.keys(subjectDetailsDB).map(key => `<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="subject" value="${key}" class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"><span class="ml-3 text-gray-700">${subjectDetailsDB[key].name}</span></label>`).join('');
+                const allLevels = [...new Set(Object.values(subjectDetailsDB).flatMap(s => s.questions.map(q => q.level)))];
+                const levels = allLevels.filter(l => l <= 5).sort((a, b) => a - b);
+                this.ui.levelGrid.innerHTML = levels.map(level => `<button data-level="${level}" class="w-full text-lg font-semibold p-4 border rounded-lg transition duration-200 hover:bg-gray-500 hover:text-white hover:border-gray-500">Nível ${level}</button>`).join('');
+            },
+
+            handleModeSelection(e) {
+                const button = e.target.closest('button');
+                if (!button || !button.dataset.mode) return;
+                this.state.currentMode = button.dataset.mode;
+                if (this.state.currentMode === 'focado') this.showScreen('subjectSelection');
+                else if (this.state.currentMode === 'interdisciplinar') this.showScreen('interdisciplinarySelection');
+                else if (this.state.currentMode === 'classico') this.showScreen('levelSelection');
+            },
+
+            handleSubjectSelection(e) {
+                const button = e.target.closest('button');
+                if (!button || !button.dataset.subject) return;
+                this.state.currentSubject = button.dataset.subject;
+                this.renderTopics(this.state.currentSubject);
+                this.showScreen('topicSelection');
+            },
+
+            handleLevelSelection(e) {
+                const button = e.target.closest('button');
+                if (!button || !button.dataset.level) return;
+                this.state.currentFilters = { level: parseInt(button.dataset.level) };
+                this.loadQuestion();
+            },
+
+            renderTopics(subjectKey) {
+                const subject = subjectDetailsDB[subjectKey];
+                this.ui.topicSelectionHeader.textContent = `Tópicos de ${subject.name}`;
+                this.ui.topicCheckboxes.innerHTML = subject.topics.map(topic => `
+                    <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input type="checkbox" name="topic" value="${topic}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-3 text-gray-700">${topic}</span>
+                    </label>
+                `).join('');
+                 this.updateFocusedButtonState();
+            },
+            
+            goBack() {
+                if (this.state.currentMode === 'focado' && this.state.currentSubject) {
+                    this.state.currentSubject = null;
+                    this.showScreen('subjectSelection');
+                } else {
+                    this.state.currentMode = null;
+                    this.showScreen('modeSelection');
+                }
+            },
+
+            startFocusedMode() {
+                const selectedTopics = Array.from(this.ui.topicCheckboxes.querySelectorAll('input:checked')).map(cb => cb.value);
+                this.state.currentFilters = { subject: this.state.currentSubject, topics: selectedTopics };
+                this.loadQuestion();
+            },
+
+            updateFocusedButtonState() {
+                this.ui.generateFocusedQuestionBtn.disabled = this.ui.topicCheckboxes.querySelectorAll('input:checked').length < 1;
+            },
+            
+            startInterdisciplinaryMode() {
+                const selectedSubjects = Array.from(this.ui.interdisciplinaryCheckboxes.querySelectorAll('input:checked')).map(cb => cb.value);
+                this.state.currentFilters = { subjects: selectedSubjects, interdisciplinary: true };
+                this.loadQuestion();
+            },
+
+            updateInterdisciplinaryButtonState() {
+                this.ui.generateInterdisciplinaryBtn.disabled = this.ui.interdisciplinaryCheckboxes.querySelectorAll('input:checked').length < 2;
+            },
+            
+            getFilteredQuestions() {
+                 const { level, subject, topics, subjects, interdisciplinary } = this.state.currentFilters;
+                
+                let allQuestions = Object.entries(subjectDetailsDB).flatMap(([key, subjectData]) => 
+                    subjectData.questions.map(q => ({
+                        ...q,
+                        subjectKey: key,
+                        // Adicionando o array de subjects para cada questão, para consistência
+                        subjects: q.subjects || [key] 
+                    }))
+                );
+
+                return allQuestions.filter(q => {
+                    if (level && q.level !== level) return false;
+                    if (subject && topics && topics.length > 0 && !topics.includes(q.topic)) return false;
+                    // Interdisciplinar é tratado na geração, não na filtragem de questões prontas, por simplicidade.
+                    return true;
+                });
+            },
+
+            async loadQuestion() {
+                let possibleQuestions = this.getFilteredQuestions();
+
+                if (possibleQuestions.length === 0) {
+                    if (!localStorage.getItem('geminiApiKey')) {
+                        alert("Para gerar questões inéditas, é necessário inserir sua chave da API do Gemini nas configurações.");
+                        this.toggleModal(true);
+                        return;
+                    }
+                    this.showScreen('loader');
+                    try {
+                        const newQuestionText = await this.generateNewQuestion();
+                        this.state.currentQuestion = {
+                            level: this.state.currentFilters.level || 5, // Default to level 5 for generated
+                            subjects: this.state.currentFilters.subjects || [this.state.currentSubject],
+                            topic: this.state.currentFilters.topics ? this.state.currentFilters.topics.join(' + ') : 'Geral (Interdisciplinar)',
+                            text: newQuestionText
+                        };
+                    } catch (error) {
+                        alert('Não foi possível gerar uma nova questão. Tente outra combinação ou verifique sua chave de API.');
+                        this.showScreen('modeSelection');
+                        return;
+                    }
+                } else {
+                    let newIndex;
+                    do { newIndex = Math.floor(Math.random() * possibleQuestions.length); } 
+                    while (possibleQuestions.length > 1 && newIndex === this.state.lastQuestionIndex);
+                    this.state.lastQuestionIndex = newIndex;
+                    this.state.currentQuestion = possibleQuestions[newIndex];
+                }
+                
+                this.ui.questionTopic.textContent = this.state.currentQuestion.topic;
+                this.ui.questionLevel.textContent = `Nível ${this.state.currentQuestion.level}`;
+                this.ui.questionText.textContent = this.state.currentQuestion.text;
+
+                this.ui.userAnswer.value = '';
+                this.updateCounts();
+                this.showScreen('questionScreen');
+            },
+
+            async generateNewQuestion() {
+                 const { topics, subject, subjects } = this.state.currentFilters;
+                 let promptText = "Gere uma única questão discursiva inédita para o concurso de EPPGG de Sergipe. A questão deve ser complexa, exigir raciocínio e ser estritamente aderente ao conteúdo do edital. ";
+                 if(topics && subject) {
+                     promptText += `Foque no(s) tópico(s) "${topics.join(', ')}" da matéria "${subjectDetailsDB[subject].name}".`
+                 } else if (subjects) {
+                     promptText += `A questão deve ser interdisciplinar, conectando as matérias: ${subjects.map(s => subjectDetailsDB[s].name).join(', ')}.`
+                 }
+                 
+                 const prompt = `Você é um elaborador de questões de concurso. Sua tarefa é criar uma questão discursiva. Responda APENAS com o texto da questão, sem nenhum texto adicional. ${promptText}`;
+                 const response = await this.callGeminiAPI(prompt);
+                 return response;
+            },
+            
+            updateCounts() {
+                const text = this.ui.userAnswer.value;
+                const lines = text.trim() === '' ? 0 : text.split('\n').length;
+                this.ui.charCount.textContent = `${text.length} caracteres`;
+                this.ui.lineCount.textContent = `${lines} linha${lines !== 1 ? 's' : ''}`;
+            },
+
+            showScreen(screenId) {
+                const screens = ['modeSelection', 'subjectSelection', 'topicSelection', 'interdisciplinarySelection', 'levelSelection', 'questionScreen', 'analysisScreen', 'loader'];
+                screens.forEach(id => this.ui[id]?.classList.add('hidden'));
+                if (this.ui[screenId]) this.ui[screenId].classList.remove('hidden');
+
+                if(screenId === 'analysisScreen' || screenId === 'loader') {
+                    this.ui.loader.classList.remove('hidden');
+                    this.ui.analysisResult.classList.add('hidden');
+                    this.ui.analysisControls.classList.add('hidden');
+                }
+            },
+
+            async submitAnswer() {
+                const userAnswer = this.ui.userAnswer.value.trim();
+                if (userAnswer.length < 50) { alert('Por favor, elabore um pouco mais sua resposta.'); return; }
+
+                if (!localStorage.getItem('geminiApiKey')) {
+                    alert("Por favor, insira sua chave da API do Gemini nas configurações para usar a análise.");
+                    this.toggleModal(true);
+                    return;
+                }
+
+                this.showScreen('analysisScreen');
+                
+                try {
+                    const prompt = `Você é um examinador experiente de concursos públicos para o cargo de Especialista em Políticas Públicas e Gestão Governamental. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
+### Análise da Resposta
+Faça uma análise geral da resposta do candidato.
+### Atribuição de Nota (Simulada)
+Apresente uma tabela em Markdown com a nota (máximo 40 pontos), dividida entre "Correção de Conteúdo" (20) e "Correção Formal" (20), com justificativas.
+| Critério | Pontuação Máxima | Nota Atribuída | Justificativa |
+| :--- | :--- | :--- | :--- |
+| **A. Correção de Conteúdo** | **20** | ... | ... |
+| **B. Correção Formal** | **20** | ... | ... |
+| **NOTA FINAL** | **40** | **...** | |
+### Ponderações e Pontos a Melhorar
+Crie duas listas: **Pontos Fortes** e **Pontos a Melhorar**, com sugestões práticas.
+### Versão Aprimorada da Resposta
+Reescreva a resposta de forma ideal, como um gabarito nota máxima. Envolva o texto em um bloco de citação (blockquote).
+---
+**Questão Proposta:** "${this.state.currentQuestion.text}"
+**Resposta do Candidato:** "${userAnswer}"`;
+                    const analysis = await this.callGeminiAPI(prompt);
+                    this.displayAnalysis(analysis, userAnswer);
+                } catch (error) {
+                    console.error(error);
+                    this.displayAnalysis(`# Erro na Análise\n\nOcorreu um problema ao contatar o examinador virtual. Verifique se sua chave da API do Gemini está correta nas configurações ou tente novamente.`, userAnswer);
+                }
+            },
+            
+            async callGeminiAPI(prompt) {
+                const apiKey = localStorage.getItem('geminiApiKey');
+                
+                if (!apiKey) {
+                    throw new Error("Chave da API não encontrada. Por favor, insira sua chave nas configurações.");
+                }
+
+                const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if (!response.ok) {
+                    const errorBody = await response.json();
+                    throw new Error(`Erro na API: ${errorBody.error?.message || response.statusText}`);
+                }
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts[0]) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error('Resposta da API em formato inesperado.');
+                }
+            },
+            
+            displayAnalysis(markdownText, userAnswer) {
+                this.state.lastAnalysis = { question: this.state.currentQuestion, userAnswer: userAnswer, analysisMarkdown: markdownText };
+                const converter = new showdown.Converter({tables: true, strikethrough: true, literalMidWordUnderscores: true});
+                this.ui.analysisResult.innerHTML = converter.makeHtml(markdownText);
+                this.ui.loader.classList.add('hidden');
+                this.ui.analysisResult.classList.remove('hidden');
+                this.ui.analysisControls.classList.remove('hidden');
+            },
+
+            async downloadReport(button) {
+                if (!this.state.lastAnalysis) { alert('Nenhum relatório para baixar.'); return; }
+                
+                const originalText = button.textContent;
+                button.textContent = 'Gerando...';
+                button.disabled = true;
+
+                const { question, userAnswer, analysisMarkdown } = this.state.lastAnalysis;
+                const converter = new showdown.Converter({ tables: true, strikethrough: true });
+                const analysisHtml = converter.makeHtml(analysisMarkdown);
+
+                const reportElement = document.getElementById('reportContainer');
+                reportElement.innerHTML = `
+                    <div class="header"><h1>Relatório de Desempenho</h1></div>
+                    <div class="card"><h2>Questão Proposta</h2><p><strong>Tópico:</strong> ${question.topic}</p><p>${question.text}</p></div>
+                    <div class="card"><h2>Sua Resposta</h2><pre>${userAnswer.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre></div>
+                    <div class="card"><h2>Análise do Examinador</h2>${analysisHtml}</div>
+                `;
+                
+                try {
+                    const canvas = await html2canvas(reportElement, { scale: 2, useCORS: true });
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'px',
+                        format: [canvas.width, canvas.height]
+                    });
+                    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+                    pdf.save(`relatorio_discursiva_${new Date().toISOString().slice(0,10)}.pdf`);
+                } catch(e) {
+                    console.error("Erro ao gerar o PDF:", e);
+                    alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
+                } finally {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }
+            },
+
+            toggleModal(show) {
+                if (show) { this.ui.settingsModal.classList.remove('hidden'); } 
+                else { this.ui.settingsModal.classList.add('hidden'); }
+            },
+
+            saveApiKey() {
+                const key = this.ui.apiKeyInput.value.trim();
+                if (key) { localStorage.setItem('geminiApiKey', key); alert('Chave da API salva com sucesso!'); this.toggleModal(false); } 
+                else { alert('Por favor, insira uma chave válida.'); }
+            },
+
+            loadApiKey() {
+                const key = localStorage.getItem('geminiApiKey');
+                if (key) { this.ui.apiKeyInput.value = key; }
+            },
+
+            clearApiKey() {
+                localStorage.removeItem('geminiApiKey');
+                this.ui.apiKeyInput.value = '';
+                alert('Chave da API removida.');
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+</body>
+</html>
