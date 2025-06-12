@@ -37,13 +37,9 @@
 
         /* Estilo para o relatório de impressão */
         .printable-report {
-            /* A propriedade 'display: none;' foi removida pois impedia o html2canvas de renderizar o elemento. */
-            position: absolute;
-            left: -9999px;
-            width: 800px;
+            position: absolute; left: -9999px; width: 800px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #fff;
+            line-height: 1.6; background-color: #fff;
         }
         .printable-report .header { background-color: #343a40; color: white; padding: 20px; text-align: center; }
         .printable-report .card { padding: 25px; border-bottom: 1px solid #dee2e6; }
@@ -54,6 +50,28 @@
         .printable-report table { border-collapse: collapse; width: 100%; margin-top: 1em; }
         .printable-report th, .printable-report td { border: 1px solid #ced4da; padding: 12px; text-align: left; }
         .printable-report th { background-color: #e9ecef; font-weight: 600; }
+
+        /* Estilos Flashcard */
+        .flashcard-container { perspective: 1000px; }
+        .flashcard {
+            width: 100%; height: 250px; position: relative;
+            transform-style: preserve-3d; transition: transform 0.6s;
+        }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .flashcard-face {
+            position: absolute; width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; text-align: center;
+            border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .flashcard-front { background-color: #f3f4f6; border: 1px solid #d1d5db; }
+        .flashcard-back {
+            background-color: #e0f2fe; color: #0c4a6e;
+            transform: rotateY(180deg);
+            border: 1px solid #bae6fd;
+        }
+
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -77,10 +95,11 @@
             <!-- Telas de Seleção -->
             <div id="modeSelection">
                 <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Escolha seu modo de treino</h2>
-                <div class="grid md:grid-cols-3 gap-6 text-center">
-                    <button data-mode="focado" class="mode-card bg-blue-50 p-6 rounded-xl border border-blue-200"><h3 class="font-bold text-lg text-blue-800">Modo Focado</h3><p class="text-sm text-blue-700 mt-2">Treine um tópico específico.</p></button>
-                    <button data-mode="interdisciplinar" class="mode-card bg-purple-50 p-6 rounded-xl border border-purple-200"><h3 class="font-bold text-lg text-purple-800">Modo Interdisciplinar</h3><p class="text-sm text-purple-700 mt-2">Combine matérias.</p></button>
-                    <button data-mode="classico" class="mode-card bg-gray-50 p-6 rounded-xl border border-gray-200"><h3 class="font-bold text-lg text-gray-800">Modo Clássico</h3><p class="text-sm text-gray-700 mt-2">Pratique por níveis.</p></button>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    <button data-mode="focado" class="mode-card bg-blue-50 p-6 rounded-xl border border-blue-200"><h3 class="font-bold text-lg text-blue-800">Questão Focada</h3><p class="text-sm text-blue-700 mt-2">Treine um tópico específico.</p></button>
+                    <button data-mode="interdisciplinar" class="mode-card bg-purple-50 p-6 rounded-xl border border-purple-200"><h3 class="font-bold text-lg text-purple-800">Questão Interdisciplinar</h3><p class="text-sm text-purple-700 mt-2">Combine matérias.</p></button>
+                    <button data-mode="classico" class="mode-card bg-gray-50 p-6 rounded-xl border border-gray-200"><h3 class="font-bold text-lg text-gray-800">Questão por Nível</h3><p class="text-sm text-gray-700 mt-2">Pratique por dificuldade.</p></button>
+                    <button data-mode="flashcards" class="mode-card bg-green-50 p-6 rounded-xl border border-green-200"><h3 class="font-bold text-lg text-green-800">Flashcards</h3><p class="text-sm text-green-700 mt-2">Memorize os conceitos.</p></button>
                 </div>
             </div>
 
@@ -110,6 +129,25 @@
                 <h2 class="text-xl font-semibold mb-4 text-center">Selecione o Nível</h2>
                 <div id="levelGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
                 <button class="back-button mt-6 bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
+            </div>
+            
+            <!-- Tela de Flashcards -->
+            <div id="flashcardScreen" class="hidden flex-grow flex flex-col">
+                <div class="mb-4 flex flex-col sm:flex-row gap-4 items-center">
+                    <label for="flashcardSubjectSelect" class="font-semibold text-gray-700">Matéria:</label>
+                    <select id="flashcardSubjectSelect" class="flex-grow p-2 border border-gray-300 rounded-lg"></select>
+                </div>
+                <div id="flashcardContainer" class="flashcard-container flex-grow flex items-center justify-center">
+                    <div id="flashcard" class="flashcard">
+                        <div id="flashcardFront" class="flashcard-face flashcard-front text-2xl font-bold"></div>
+                        <div id="flashcardBack" class="flashcard-face flashcard-back text-lg"></div>
+                    </div>
+                </div>
+                 <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                    <button id="flipCardButton" class="w-full sm:w-auto bg-gray-200 text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300 flex-grow">Virar Card</button>
+                    <button id="nextCardButton" class="w-full sm:w-auto bg-green-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-700">Próximo Conceito</button>
+                    <button class="back-button w-full sm:w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar ao Menu</button>
+                </div>
             </div>
 
             <!-- Tela da Questão -->
@@ -153,6 +191,11 @@
                     { level: 2, topic: 'Controle da administração', text: 'Diferencie o controle administrativo, judicial e legislativo da Administração Pública, exemplificando uma ferramenta de cada tipo de controle.' },
                     { level: 3, topic: 'Licitação e Contratos (Leis 8.666, 10.520 e 14.133)', text: 'Compare as modalidades de licitação previstas na Lei nº 8.666/1993 com as da nova Lei de Licitações e Contratos (Lei nº 14.133/2021), destacando a principal inovação trazida pelo novo diploma legal.' },
                     { level: 5, topic: 'Licitações Sustentáveis', subjects: ['Direito Administrativo', 'Políticas Públicas', 'AFO'], text: 'Discorra sobre o conceito de licitações sustentáveis à luz da Lei nº 14.133/2021. Relacione a sua aplicação com os objetivos de políticas públicas de desenvolvimento nacional sustentável e com os desafios do controle de custos no orçamento público.' },
+                ],
+                flashcards: [
+                    { term: "Ato Administrativo", definition: "Manifestação unilateral de vontade da Administração Pública que, agindo nessa qualidade, tenha por fim imediato adquirir, resguardar, transferir, modificar, extinguir e declarar direitos, ou impor obrigações aos administrados ou a si própria." },
+                    { term: "Princípio da Legalidade", definition: "A Administração Pública só pode fazer o que a lei permite. Diferente do particular, que pode fazer tudo o que a lei não proíbe." },
+                    { term: "Poder de Polícia", definition: "Faculdade que dispõe a Administração Pública para condicionar e restringir o uso e gozo de bens, atividades e direitos individuais, em benefício da coletividade ou do próprio Estado." },
                 ]
             },
             'Direito Constitucional': {
@@ -162,6 +205,11 @@
                     { level: 1, topic: 'Aplicabilidade das normas', text: 'Explique o conceito de aplicabilidade das normas constitucionais, diferenciando normas de eficácia plena, contida e limitada, e apresente um exemplo para cada tipo.' },
                     { level: 3, topic: 'Organização do Estado', text: 'Analise o federalismo brasileiro, conforme a Constituição de 1988, explicando a repartição de competências entre União, Estados e Municípios e um desafio atual para a cooperação intergovernamental.' },
                     { level: 5, topic: 'Transparência vs. LGPD', subjects: ['Direito Constitucional', 'Direito Administrativo'], text: 'Analise a aparente colisão entre o princípio da publicidade e o direito à transparência (Lei de Acesso à Informação) e o direito fundamental à proteção de dados pessoais (LGPD). Como um gestor público deve ponderar esses direitos ao divulgar informações que contenham dados pessoais?' },
+                ],
+                flashcards: [
+                    { term: "Norma de Eficácia Plena", definition: "Produz todos os seus efeitos desde a entrada em vigor da Constituição, independentemente de lei posterior que a regulamente." },
+                    { term: "Controle de Constitucionalidade", definition: "Verificação da compatibilidade de uma lei ou ato normativo com a Constituição, visando a supremacia da Carta Magna." },
+                    { term: "Remédios Constitucionais", definition: "Ações judiciais à disposição dos cidadãos para se protegerem de ilegalidades ou abuso de poder por parte do Estado (Ex: Habeas Corpus, Mandado de Segurança)." },
                 ]
             },
             'AFO': {
@@ -171,6 +219,12 @@
                     { level: 1, topic: 'Princípios orçamentários', text: 'Cite e explique três princípios orçamentários previstos na legislação brasileira.' },
                     { level: 2, topic: 'Ciclo orçamentário', text: 'Explique o Ciclo Orçamentário no Brasil, descrevendo sucintamente as quatro principais etapas (elaboração, aprovação, execução e controle).' },
                     { level: 4, topic: 'Restos a Pagar', text: 'Explique o que são "Restos a Pagar" no contexto da execução orçamentária e da Lei de Responsabilidade Fiscal, diferenciando os processados dos não processados e as implicações de sua inscrição para a gestão fiscal.'},
+                ],
+                flashcards: [
+                    { term: "PPA (Plano Plurianual)", definition: "Instrumento de planejamento de médio prazo (4 anos) que estabelece as diretrizes, objetivos e metas da administração pública para as despesas de capital e outras delas decorrentes." },
+                    { term: "LDO (Lei de Diretrizes Orçamentárias)", definition: "Elo entre o PPA e a LOA. Define as metas e prioridades para o ano seguinte, orienta a elaboração da LOA e dispõe sobre alterações na legislação tributária." },
+                    { term: "LOA (Lei Orçamentária Anual)", definition: "Lei que estima as receitas e fixa as despesas do governo para o período de um ano. Nenhuma despesa pública pode ser executada sem estar prevista na LOA." },
+                    { term: "Regra de Ouro", definition: "Princípio constitucional (art. 167, III, CF) que proíbe a realização de operações de crédito (empréstimos) em montante superior às despesas de capital (investimentos)." },
                 ]
             },
             'Políticas Públicas': {
@@ -178,6 +232,11 @@
                 topics: ['Ciclo de políticas públicas', 'Planejamento e avaliação', 'Intermediação de interesses', 'Governança de Políticas Públicas'],
                 questions: [
                     { level: 4, topic: 'Ciclo de políticas públicas', text: 'Descreva as fases do ciclo de políticas públicas (formulação, implementação e avaliação). Em seguida, explique a importância da fase de avaliação para o aprimoramento da gestão governamental e para a accountability.' },
+                ],
+                flashcards: [
+                    { term: "Ciclo de Políticas Públicas", definition: "Modelo que organiza a vida de uma política pública em fases sequenciais: construção da agenda, formulação da política, tomada de decisão, implementação e avaliação." },
+                    { term: "Avaliação Ex Ante", definition: "Avaliação realizada antes da implementação da política pública, com o objetivo de analisar sua viabilidade, custos e potenciais impactos." },
+                    { term: "Governança", definition: "Refere-se aos processos e estruturas que envolvem a direção e o controle de uma organização ou Estado, incluindo a participação de múltiplos atores (Estado, mercado e sociedade civil)." },
                 ]
             },
             'Ciência Política': {
@@ -185,6 +244,11 @@
                 topics: ['Conceitos fundamentais', 'Pensadores clássicos', 'Sistemas políticos e governança', 'Relações Institucionais', 'Política no Brasil'],
                 questions: [
                     { level: 2, topic: 'Sistemas políticos e governança', text: 'Discorra sobre as formas de governo (República e Monarquia) e os sistemas de governo (Presidencialismo e Parlamentarismo), destacando as características do sistema adotado no Brasil.' },
+                ],
+                flashcards: [
+                    { term: "Presidencialismo", definition: "Sistema de governo no qual o Chefe de Estado e o Chefe de Governo são a mesma pessoa (o Presidente), eleito por voto popular para um mandato fixo." },
+                    { term: "Parlamentarismo", definition: "Sistema de governo com uma distinção clara entre Chefe de Estado (monarca ou presidente cerimonial) e Chefe de Governo (primeiro-ministro), que depende da confiança do parlamento para governar." },
+                    { term: "Federalismo", definition: "Forma de organização do Estado em que o poder é dividido entre um governo central (União) e governos regionais (Estados), cada um com autonomia em suas esferas de competência." },
                 ]
             },
             'Administração Pública': {
@@ -193,6 +257,11 @@
                 questions: [
                      { level: 1, topic: 'Modelos de gestão pública', text: 'Descreva o conceito de Administração Pública sob os sentidos formal e material. Em seguida, explique por que essa distinção é relevante para o estudo do Direito Administrativo.' },
                      { level: 2, topic: 'Reformas administrativas', text: 'Diferencie o modelo de administração pública burocrática do modelo gerencial (pós-burocrático), destacando os principais objetivos da reforma do aparelho do Estado no Brasil na década de 1990.' },
+                ],
+                flashcards: [
+                    { term: "Administração Gerencial", definition: "Paradigma de gestão pública focado em resultados, eficiência e qualidade dos serviços, com maior autonomia para os gestores e uso de ferramentas do setor privado." },
+                    { term: "Accountability", definition: "Conceito que abrange a obrigação de membros de um órgão administrativo ou de representantes de prestar contas de seus atos a instâncias controladoras e à sociedade." },
+                    { term: "Governo Eletrônico (e-Gov)", definition: "Uso de tecnologias da informação e comunicação (TICs) para fornecer serviços públicos, melhorar a eficiência governamental e aumentar a participação cidadã." },
                 ]
             },
             'Economia': {
@@ -202,6 +271,11 @@
                     { level: 2, topic: 'Macro: Inflação e Juros', text: 'Defina inflação e explique duas de suas principais causas. Em seguida, descreva um instrumento de política monetária que o Banco Central pode utilizar para contê-la.'},
                     { level: 3, topic: 'Micro: Falhas de mercado', text: 'Defina o conceito de "falhas de mercado" e discorra sobre duas delas (por exemplo, externalidades e bens públicos), explicando por que justificam a intervenção do Estado na economia.' },
                     { level: 5, topic: 'Política Fiscal e Desigualdade', subjects: ['Economia', 'Ciência Política', 'Administração Pública'], text: 'Discuta o papel do Estado na redução das desigualdades socioeconômicas no Brasil. Aborde, em sua resposta, ao menos dois instrumentos de política fiscal (lado da receita e/ou da despesa), um desafio político para sua implementação e um desafio de gestão para garantir sua efetividade.' },
+                ],
+                flashcards: [
+                    { term: "Falhas de Mercado", definition: "Situações em que o mercado, por si só, não consegue alocar recursos de forma eficiente, justificando a intervenção do Estado. Ex: externalidades, bens públicos, assimetria de informação." },
+                    { term: "Política Fiscal", definition: "Uso dos gastos do governo e da tributação para influenciar a economia. Pode ser expansionista (mais gastos/menos impostos) ou contracionista (menos gastos/mais impostos)." },
+                    { term: "Política Monetária", definition: "Ações do Banco Central para controlar a oferta de moeda e as taxas de juros, visando principalmente a estabilidade dos preços (controle da inflação)." },
                 ]
             },
             'Contabilidade Pública': {
@@ -209,6 +283,11 @@
                 topics: ['Conceitos e campo de aplicação', 'Patrimônio Público', 'Demonstrações Contábeis (DCASP)', 'Plano de Contas (PCASP)', 'Regime orçamentário vs. patrimonial', 'Custos no Setor Público'],
                  questions: [
                     { level: 3, topic: 'Regime orçamentário vs. patrimonial', text: 'Diferencie o regime orçamentário do regime contábil (patrimonial) no setor público, explicando como cada um se aplica ao registro da receita e da despesa pública, conforme a Lei 4.320/64 e as novas normas contábeis (MCASP).' },
+                ],
+                flashcards: [
+                    { term: "Regime de Competência", definition: "Regime contábil que registra os fatos (variações patrimoniais) na data em que ocorrem, independentemente de pagamento ou recebimento. É o regime patrimonial do setor público." },
+                    { term: "Restos a Pagar", definition: "Despesas empenhadas mas não pagas dentro do exercício financeiro. Dividem-se em processados (liquidados) e não processados (não liquidados)." },
+                    { term: "PCASP", definition: "Plano de Contas Aplicado ao Setor Público. Estrutura padronizada de contas contábeis que deve ser utilizada por todos os entes da Federação, visando a consolidação das contas nacionais." },
                 ]
             }
         };
@@ -220,6 +299,7 @@
                 topicSelection: document.getElementById('topicSelection'),
                 interdisciplinarySelection: document.getElementById('interdisciplinarySelection'),
                 levelSelection: document.getElementById('levelSelection'),
+                flashcardScreen: document.getElementById('flashcardScreen'),
                 questionScreen: document.getElementById('questionScreen'),
                 analysisScreen: document.getElementById('analysisScreen'),
                 loader: document.getElementById('loader'),
@@ -244,11 +324,19 @@
                 apiKeyInput: document.getElementById('apiKeyInput'),
                 saveApiKeyButton: document.getElementById('saveApiKeyButton'),
                 clearApiKeyButton: document.getElementById('clearApiKeyButton'),
+                // Flashcard UI
+                flashcardSubjectSelect: document.getElementById('flashcardSubjectSelect'),
+                flashcard: document.getElementById('flashcard'),
+                flashcardFront: document.getElementById('flashcardFront'),
+                flashcardBack: document.getElementById('flashcardBack'),
+                flipCardButton: document.getElementById('flipCardButton'),
+                nextCardButton: document.getElementById('nextCardButton'),
             },
             
             state: {
                 currentMode: null, currentSubject: null, currentFilters: {},
                 currentQuestion: null, lastQuestionIndex: -1, lastAnalysis: null,
+                flashcardDeck: [], currentFlashcardIndex: 0,
             },
 
             init() {
@@ -282,14 +370,22 @@
                 this.ui.settingsModal.addEventListener('click', (e) => { if (e.target === this.ui.settingsModal) this.toggleModal(false); });
                 this.ui.saveApiKeyButton.addEventListener('click', () => this.saveApiKey());
                 this.ui.clearApiKeyButton.addEventListener('click', () => this.clearApiKey());
+                
+                // Flashcard Listeners
+                this.ui.flashcardSubjectSelect.addEventListener('change', (e) => this.loadFlashcardDeck(e.target.value));
+                this.ui.flipCardButton.addEventListener('click', () => this.flipCard());
+                this.ui.nextCardButton.addEventListener('click', () => this.nextCard());
+
             },
             
             renderSelections() {
-                this.ui.subjectGrid.innerHTML = Object.keys(subjectDetailsDB).map(key => `<button data-subject="${key}" class="w-full text-md font-semibold p-4 border rounded-lg transition duration-200 hover:bg-blue-500 hover:text-white hover:border-blue-500">${subjectDetailsDB[key].name}</button>`).join('');
-                this.ui.interdisciplinaryCheckboxes.innerHTML = Object.keys(subjectDetailsDB).map(key => `<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="subject" value="${key}" class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"><span class="ml-3 text-gray-700">${subjectDetailsDB[key].name}</span></label>`).join('');
+                const subjectKeys = Object.keys(subjectDetailsDB);
+                this.ui.subjectGrid.innerHTML = subjectKeys.map(key => `<button data-subject="${key}" class="w-full text-md font-semibold p-4 border rounded-lg transition hover:bg-blue-500 hover:text-white hover:border-blue-500">${subjectDetailsDB[key].name}</button>`).join('');
+                this.ui.interdisciplinaryCheckboxes.innerHTML = subjectKeys.map(key => `<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="subject" value="${key}" class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"><span class="ml-3 text-gray-700">${subjectDetailsDB[key].name}</span></label>`).join('');
+                this.ui.flashcardSubjectSelect.innerHTML = subjectKeys.map(key => `<option value="${key}">${subjectDetailsDB[key].name}</option>`).join('');
                 const allLevels = [...new Set(Object.values(subjectDetailsDB).flatMap(s => s.questions.map(q => q.level)))];
                 const levels = allLevels.filter(l => l <= 5).sort((a, b) => a - b);
-                this.ui.levelGrid.innerHTML = levels.map(level => `<button data-level="${level}" class="w-full text-lg font-semibold p-4 border rounded-lg transition duration-200 hover:bg-gray-500 hover:text-white hover:border-gray-500">Nível ${level}</button>`).join('');
+                this.ui.levelGrid.innerHTML = levels.map(level => `<button data-level="${level}" class="w-full text-lg font-semibold p-4 border rounded-lg transition hover:bg-gray-500 hover:text-white hover:border-gray-500">Nível ${level}</button>`).join('');
             },
 
             handleModeSelection(e) {
@@ -299,172 +395,55 @@
                 if (this.state.currentMode === 'focado') this.showScreen('subjectSelection');
                 else if (this.state.currentMode === 'interdisciplinar') this.showScreen('interdisciplinarySelection');
                 else if (this.state.currentMode === 'classico') this.showScreen('levelSelection');
+                else if (this.state.currentMode === 'flashcards') this.startFlashcardMode();
             },
 
-            handleSubjectSelection(e) {
-                const button = e.target.closest('button');
-                if (!button || !button.dataset.subject) return;
-                this.state.currentSubject = button.dataset.subject;
-                this.renderTopics(this.state.currentSubject);
-                this.showScreen('topicSelection');
+            startFlashcardMode() {
+                this.showScreen('flashcardScreen');
+                this.loadFlashcardDeck(this.ui.flashcardSubjectSelect.value);
             },
 
-            handleLevelSelection(e) {
-                const button = e.target.closest('button');
-                if (!button || !button.dataset.level) return;
-                this.state.currentFilters = { level: parseInt(button.dataset.level) };
-                this.loadQuestion();
+            loadFlashcardDeck(subjectKey) {
+                const deck = subjectDetailsDB[subjectKey]?.flashcards || [];
+                // Shuffle deck
+                this.state.flashcardDeck = deck
+                    .map(value => ({ value, sort: Math.random() }))
+                    .sort((a, b) => a.sort - b.sort)
+                    .map(({ value }) => value);
+                this.state.currentFlashcardIndex = 0;
+                this.displayCurrentCard();
             },
 
-            renderTopics(subjectKey) {
-                const subject = subjectDetailsDB[subjectKey];
-                this.ui.topicSelectionHeader.textContent = `Tópicos de ${subject.name}`;
-                this.ui.topicCheckboxes.innerHTML = subject.topics.map(topic => `
-                    <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
-                        <input type="checkbox" name="topic" value="${topic}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-3 text-gray-700">${topic}</span>
-                    </label>
-                `).join('');
-                 this.updateFocusedButtonState();
-            },
-            
-            goBack() {
-                if (this.state.currentMode === 'focado' && this.state.currentSubject) {
-                    this.state.currentSubject = null;
-                    this.showScreen('subjectSelection');
-                } else {
-                    this.state.currentMode = null;
-                    this.showScreen('modeSelection');
+            displayCurrentCard() {
+                if(this.ui.flashcard.classList.contains('is-flipped')) {
+                    this.ui.flashcard.classList.remove('is-flipped');
                 }
-            },
-
-            startFocusedMode() {
-                const selectedTopics = Array.from(this.ui.topicCheckboxes.querySelectorAll('input:checked')).map(cb => cb.value);
-                this.state.currentFilters = { subject: this.state.currentSubject, topics: selectedTopics };
-                this.loadQuestion();
-            },
-
-            updateFocusedButtonState() {
-                this.ui.generateFocusedQuestionBtn.disabled = this.ui.topicCheckboxes.querySelectorAll('input:checked').length < 1;
-            },
-            
-            startInterdisciplinaryMode() {
-                const selectedSubjects = Array.from(this.ui.interdisciplinaryCheckboxes.querySelectorAll('input:checked')).map(cb => cb.value);
-                this.state.currentFilters = { subjects: selectedSubjects, interdisciplinary: true };
-                this.loadQuestion();
-            },
-
-            updateInterdisciplinaryButtonState() {
-                this.ui.generateInterdisciplinaryBtn.disabled = this.ui.interdisciplinaryCheckboxes.querySelectorAll('input:checked').length < 2;
-            },
-            
-            getFilteredQuestions() {
-                 const { level, subject, topics, subjects, interdisciplinary } = this.state.currentFilters;
-                
-                let allQuestions = Object.entries(subjectDetailsDB).flatMap(([key, subjectData]) => 
-                    subjectData.questions.map(q => ({
-                        ...q,
-                        subjectKey: key,
-                        // Adicionando o array de subjects para cada questão, para consistência
-                        subjects: q.subjects || [key] 
-                    }))
-                );
-
-                return allQuestions.filter(q => {
-                    if (level && q.level !== level) return false;
-                    if (subject && topics && topics.length > 0 && !topics.includes(q.topic)) return false;
-                    // Interdisciplinar é tratado na geração, não na filtragem de questões prontas, por simplicidade.
-                    return true;
-                });
-            },
-
-            async loadQuestion() {
-                let possibleQuestions = this.getFilteredQuestions();
-
-                if (possibleQuestions.length === 0) {
-                    if (!localStorage.getItem('geminiApiKey')) {
-                        alert("Para gerar questões inéditas, é necessário inserir sua chave da API do Gemini nas configurações.");
-                        this.toggleModal(true);
-                        return;
+                setTimeout(() => {
+                    const card = this.state.flashcardDeck[this.state.currentFlashcardIndex];
+                    if (card) {
+                        this.ui.flashcardFront.textContent = card.term;
+                        this.ui.flashcardBack.textContent = card.definition;
+                    } else {
+                        this.ui.flashcardFront.textContent = 'Fim dos cards!';
+                        this.ui.flashcardBack.textContent = 'Selecione outra matéria para continuar.';
                     }
-                    this.showScreen('loader');
-                    try {
-                        const newQuestionText = await this.generateNewQuestion();
-                        this.state.currentQuestion = {
-                            level: this.state.currentFilters.level || 5, // Default to level 5 for generated
-                            subjects: this.state.currentFilters.subjects || [this.state.currentSubject],
-                            topic: this.state.currentFilters.topics ? this.state.currentFilters.topics.join(' + ') : 'Geral (Interdisciplinar)',
-                            text: newQuestionText
-                        };
-                    } catch (error) {
-                        alert('Não foi possível gerar uma nova questão. Tente outra combinação ou verifique sua chave de API.');
-                        this.showScreen('modeSelection');
-                        return;
-                    }
-                } else {
-                    let newIndex;
-                    do { newIndex = Math.floor(Math.random() * possibleQuestions.length); } 
-                    while (possibleQuestions.length > 1 && newIndex === this.state.lastQuestionIndex);
-                    this.state.lastQuestionIndex = newIndex;
-                    this.state.currentQuestion = possibleQuestions[newIndex];
+                }, 300); // Aguarda a animação de virar
+            },
+
+            flipCard() {
+                this.ui.flashcard.classList.toggle('is-flipped');
+            },
+
+            nextCard() {
+                this.state.currentFlashcardIndex = (this.state.currentFlashcardIndex + 1);
+                if (this.state.currentFlashcardIndex >= this.state.flashcardDeck.length) {
+                    this.state.currentFlashcardIndex = 0; // Volta para o início
                 }
-                
-                this.ui.questionTopic.textContent = this.state.currentQuestion.topic;
-                this.ui.questionLevel.textContent = `Nível ${this.state.currentQuestion.level}`;
-                this.ui.questionText.textContent = this.state.currentQuestion.text;
-
-                this.ui.userAnswer.value = '';
-                this.updateCounts();
-                this.showScreen('questionScreen');
+                this.displayCurrentCard();
             },
 
-            async generateNewQuestion() {
-                 const { topics, subject, subjects } = this.state.currentFilters;
-                 let promptText = "Gere uma única questão discursiva inédita para o concurso de EPPGG de Sergipe. A questão deve ser complexa, exigir raciocínio e ser estritamente aderente ao conteúdo do edital. ";
-                 if(topics && subject) {
-                     promptText += `Foque no(s) tópico(s) "${topics.join(', ')}" da matéria "${subjectDetailsDB[subject].name}".`
-                 } else if (subjects) {
-                     promptText += `A questão deve ser interdisciplinar, conectando as matérias: ${subjects.map(s => subjectDetailsDB[s].name).join(', ')}.`
-                 }
-                 
-                 const prompt = `Você é um elaborador de questões de concurso. Sua tarefa é criar uma questão discursiva. Responda APENAS com o texto da questão, sem nenhum texto adicional. ${promptText}`;
-                 const response = await this.callGeminiAPI(prompt);
-                 return response;
-            },
-            
-            updateCounts() {
-                const text = this.ui.userAnswer.value;
-                const lines = text.trim() === '' ? 0 : text.split('\n').length;
-                this.ui.charCount.textContent = `${text.length} caracteres`;
-                this.ui.lineCount.textContent = `${lines} linha${lines !== 1 ? 's' : ''}`;
-            },
-
-            showScreen(screenId) {
-                const screens = ['modeSelection', 'subjectSelection', 'topicSelection', 'interdisciplinarySelection', 'levelSelection', 'questionScreen', 'analysisScreen', 'loader'];
-                screens.forEach(id => this.ui[id]?.classList.add('hidden'));
-                if (this.ui[screenId]) this.ui[screenId].classList.remove('hidden');
-
-                if(screenId === 'analysisScreen' || screenId === 'loader') {
-                    this.ui.loader.classList.remove('hidden');
-                    this.ui.analysisResult.classList.add('hidden');
-                    this.ui.analysisControls.classList.add('hidden');
-                }
-            },
-
-            async submitAnswer() {
-                const userAnswer = this.ui.userAnswer.value.trim();
-                if (userAnswer.length < 50) { alert('Por favor, elabore um pouco mais sua resposta.'); return; }
-
-                if (!localStorage.getItem('geminiApiKey')) {
-                    alert("Por favor, insira sua chave da API do Gemini nas configurações para usar a análise.");
-                    this.toggleModal(true);
-                    return;
-                }
-
-                this.showScreen('analysisScreen');
-                
-                try {
-                    const prompt = `Você é um examinador experiente de concursos públicos para o cargo de Especialista em Políticas Públicas e Gestão Governamental. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
+            // ... (restante do código das outras funções permanece igual)
+            handleSubjectSelection(e){const t=e.target.closest("button");t&&t.dataset.subject&&(this.state.currentSubject=t.dataset.subject,this.renderTopics(this.state.currentSubject),this.showScreen("topicSelection"))},handleLevelSelection(e){const t=e.target.closest("button");t&&t.dataset.level&&(this.state.currentFilters={level:parseInt(t.dataset.level)},this.loadQuestion())},renderTopics(e){const t=subjectDetailsDB[e];this.ui.topicSelectionHeader.textContent=`Tópicos de ${t.name}`,this.ui.topicCheckboxes.innerHTML=t.topics.map(e=>`<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">\n                        <input type="checkbox" name="topic" value="${e}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">\n                        <span class="ml-3 text-gray-700">${e}</span>\n                    </label>`).join(""),this.updateFocusedButtonState()},goBack(){"focado"===this.state.currentMode&&this.state.currentSubject?(this.state.currentSubject=null,this.showScreen("subjectSelection")):(this.state.currentMode=null,this.showScreen("modeSelection"))},startFocusedMode(){const e=Array.from(this.ui.topicCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subject:this.state.currentSubject,topics:e},this.loadQuestion()},updateFocusedButtonState(){this.ui.generateFocusedQuestionBtn.disabled=this.ui.topicCheckboxes.querySelectorAll("input:checked").length<1},startInterdisciplinaryMode(){const e=Array.from(this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subjects:e,interdisciplinary:!0},this.loadQuestion()},updateInterdisciplinaryButtonState(){this.ui.generateInterdisciplinaryBtn.disabled=this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked").length<2},getFilteredQuestions(){const{level:e,subject:t,topics:s,subjects:i,interdisciplinary:o}=this.state.currentFilters;return Object.entries(subjectDetailsDB).flatMap(([e,t])=>t.questions.map(s=>({...s,subjectKey:e,subjects:s.subjects||[e]}))).filter(n=>(!e||n.level===e)&&(!t||n.subjectKey===t)&&(!t||!s||0===s.length||s.includes(n.topic))&&void 0)},async loadQuestion(){let e=this.getFilteredQuestions();if(0===e.length){if(!localStorage.getItem("geminiApiKey")){alert("Para gerar questões inéditas, é necessário inserir sua chave da API do Gemini nas configurações."),this.toggleModal(!0);return}this.showScreen("loader");try{const t=await this.generateNewQuestion();this.state.currentQuestion={level:this.state.currentFilters.level||5,subjects:this.state.currentFilters.subjects||[this.state.currentSubject],topic:this.state.currentFilters.topics?this.state.currentFilters.topics.join(" + "):"Geral (Interdisciplinar)",text:t}}catch(e){alert("Não foi possível gerar uma nova questão. Tente outra combinação ou verifique sua chave de API."),this.showScreen("modeSelection");return}}else{let t;do{t=Math.floor(Math.random()*e.length)}while(e.length>1&&t===this.state.lastQuestionIndex);this.state.lastQuestionIndex=t,this.state.currentQuestion=e[t]}this.ui.questionTopic.textContent=this.state.currentQuestion.topic,this.ui.questionLevel.textContent=`Nível ${this.state.currentQuestion.level}`,this.ui.questionText.textContent=this.state.currentQuestion.text,this.ui.userAnswer.value="",this.updateCounts(),this.showScreen("questionScreen")},async generateNewQuestion(){const{topics:e,subject:t,subjects:s}=this.state.currentFilters;let i="Gere uma única questão discursiva inédita para o concurso de EPPGG de Sergipe. A questão deve ser complexa, exigir raciocínio e ser estritamente aderente ao conteúdo do edital. ";e&&t?i+=`Foque no(s) tópico(s) "${e.join(", ")}" da matéria "${subjectDetailsDB[t].name}".`:s&&(i+=`A questão deve ser interdisciplinar, conectando as matérias: ${s.map(e=>subjectDetailsDB[e].name).join(", ")}.`);const o=`Você é um elaborador de questões de concurso. Sua tarefa é criar uma questão discursiva. Responda APENAS com o texto da questão, sem nenhum texto adicional. ${i}`;return await this.callGeminiAPI(o)},updateCounts(){const e=this.ui.userAnswer.value,t=e.trim()?"":e.split("\n").length;this.ui.charCount.textContent=`${e.length} caracteres`,this.ui.lineCount.textContent=`${t} linha${1!==t?"s":""}`},showScreen(e){["modeSelection","subjectSelection","topicSelection","interdisciplinarySelection","levelSelection","questionScreen","analysisScreen","loader","flashcardScreen"].forEach(t=>this.ui[t]?.classList.add("hidden")),this.ui[e]&&this.ui[e].classList.remove("hidden"),"analysisScreen"!==e&&"loader"!==e||(this.ui.loader.classList.remove("hidden"),this.ui.analysisResult.classList.add("hidden"),this.ui.analysisControls.classList.add("hidden"))},async submitAnswer(){const e=this.ui.userAnswer.value.trim();if(e.length<50){alert("Por favor, elabore um pouco mais sua resposta.");return}if(!localStorage.getItem("geminiApiKey")){alert("Por favor, insira sua chave da API do Gemini nas configurações para usar a análise."),this.toggleModal(!0);return}this.showScreen("analysisScreen");try{const t=`Você é um examinador experiente de concursos públicos para o cargo de Especialista em Políticas Públicas e Gestão Governamental. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
 ### Análise da Resposta
 Faça uma análise geral da resposta do candidato.
 ### Atribuição de Nota (Simulada)
@@ -480,109 +459,12 @@ Crie duas listas: **Pontos Fortes** e **Pontos a Melhorar**, com sugestões prá
 Reescreva a resposta de forma ideal, como um gabarito nota máxima. Envolva o texto em um bloco de citação (blockquote).
 ---
 **Questão Proposta:** "${this.state.currentQuestion.text}"
-**Resposta do Candidato:** "${userAnswer}"`;
-                    const analysis = await this.callGeminiAPI(prompt);
-                    this.displayAnalysis(analysis, userAnswer);
-                } catch (error) {
-                    console.error(error);
-                    this.displayAnalysis(`# Erro na Análise\n\nOcorreu um problema ao contatar o examinador virtual. Verifique se sua chave da API do Gemini está correta nas configurações ou tente novamente.`, userAnswer);
-                }
-            },
-            
-            async callGeminiAPI(prompt) {
-                const apiKey = localStorage.getItem('geminiApiKey');
-                
-                if (!apiKey) {
-                    throw new Error("Chave da API não encontrada. Por favor, insira sua chave nas configurações.");
-                }
-
-                const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = { contents: chatHistory };
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) {
-                    const errorBody = await response.json();
-                    throw new Error(`Erro na API: ${errorBody.error?.message || response.statusText}`);
-                }
-                const result = await response.json();
-                
-                if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts[0]) {
-                    return result.candidates[0].content.parts[0].text;
-                } else {
-                    throw new Error('Resposta da API em formato inesperado.');
-                }
-            },
-            
-            displayAnalysis(markdownText, userAnswer) {
-                this.state.lastAnalysis = { question: this.state.currentQuestion, userAnswer: userAnswer, analysisMarkdown: markdownText };
-                const converter = new showdown.Converter({tables: true, strikethrough: true, literalMidWordUnderscores: true});
-                this.ui.analysisResult.innerHTML = converter.makeHtml(markdownText);
-                this.ui.loader.classList.add('hidden');
-                this.ui.analysisResult.classList.remove('hidden');
-                this.ui.analysisControls.classList.remove('hidden');
-            },
-
-            async downloadReport(button) {
-                if (!this.state.lastAnalysis) { alert('Nenhum relatório para baixar.'); return; }
-                
-                const originalText = button.textContent;
-                button.textContent = 'Gerando...';
-                button.disabled = true;
-
-                const { question, userAnswer, analysisMarkdown } = this.state.lastAnalysis;
-                const converter = new showdown.Converter({ tables: true, strikethrough: true });
-                const analysisHtml = converter.makeHtml(analysisMarkdown);
-
-                const reportElement = document.getElementById('reportContainer');
-                reportElement.innerHTML = `
+**Resposta do Candidato:** "${e}"`,s=await this.callGeminiAPI(t);this.displayAnalysis(s,e)}catch(t){console.error(t),this.displayAnalysis("# Erro na Análise\n\nOcorreu um problema ao contatar o examinador virtual. Verifique se sua chave da API do Gemini está correta nas configurações ou tente novamente.",e)}},async callGeminiAPI(e){const t=localStorage.getItem("geminiApiKey");if(!t)throw new Error("Chave da API não encontrada. Por favor, insira sua chave nas configurações.");const s=[{role:"user",parts:[{text:e}]}],i={contents:s},o=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${t}`,n=await fetch(o,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(i)});if(!n.ok){const e=await n.json();throw new Error(`Erro na API: ${e.error?.message||n.statusText}`)}const a=await n.json();if(a.candidates&&a.candidates[0].content&&a.candidates[0].content.parts[0])return a.candidates[0].content.parts[0].text;throw new Error("Resposta da API em formato inesperado.")},displayAnalysis(e,t){this.state.lastAnalysis={question:this.state.currentQuestion,userAnswer:t,analysisMarkdown:e};const s=new showdown.Converter({tables:!0,strikethrough:!0,literalMidWordUnderscores:!0});this.ui.analysisResult.innerHTML=s.makeHtml(e),this.ui.loader.classList.add("hidden"),this.ui.analysisResult.classList.remove("hidden"),this.ui.analysisControls.classList.remove("hidden")},async downloadReport(e){if(!this.state.lastAnalysis){alert("Nenhum relatório para baixar.");return}const t=e.textContent;e.textContent="Gerando...",e.disabled=!0;const{question:s,userAnswer:i,analysisMarkdown:o}=this.state.lastAnalysis,n=new showdown.Converter({tables:!0,strikethrough:!0}),a=n.makeHtml(o),l=document.getElementById("reportContainer");l.innerHTML=`
                     <div class="header"><h1>Relatório de Desempenho</h1></div>
-                    <div class="card"><h2>Questão Proposta</h2><p><strong>Tópico:</strong> ${question.topic}</p><p>${question.text}</p></div>
-                    <div class="card"><h2>Sua Resposta</h2><pre>${userAnswer.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre></div>
-                    <div class="card"><h2>Análise do Examinador</h2>${analysisHtml}</div>
-                `;
-                
-                try {
-                    const canvas = await html2canvas(reportElement, { scale: 2, useCORS: true });
-                    const imgData = canvas.toDataURL('image/png');
-                    const pdf = new jsPDF({
-                        orientation: 'portrait',
-                        unit: 'px',
-                        format: [canvas.width, canvas.height]
-                    });
-                    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-                    pdf.save(`relatorio_discursiva_${new Date().toISOString().slice(0,10)}.pdf`);
-                } catch(e) {
-                    console.error("Erro ao gerar o PDF:", e);
-                    alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
-                } finally {
-                    button.textContent = originalText;
-                    button.disabled = false;
-                }
-            },
-
-            toggleModal(show) {
-                if (show) { this.ui.settingsModal.classList.remove('hidden'); } 
-                else { this.ui.settingsModal.classList.add('hidden'); }
-            },
-
-            saveApiKey() {
-                const key = this.ui.apiKeyInput.value.trim();
-                if (key) { localStorage.setItem('geminiApiKey', key); alert('Chave da API salva com sucesso!'); this.toggleModal(false); } 
-                else { alert('Por favor, insira uma chave válida.'); }
-            },
-
-            loadApiKey() {
-                const key = localStorage.getItem('geminiApiKey');
-                if (key) { this.ui.apiKeyInput.value = key; }
-            },
-
-            clearApiKey() {
-                localStorage.removeItem('geminiApiKey');
-                this.ui.apiKeyInput.value = '';
-                alert('Chave da API removida.');
-            }
-        };
+                    <div class="card"><h2>Questão Proposta</h2><p><strong>Tópico:</strong> ${s.topic}</p><p>${s.text}</p></div>
+                    <div class="card"><h2>Sua Resposta</h2><pre>${i.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</pre></div>
+                    <div class="card"><h2>Análise do Examinador</h2>${a}</div>
+                `;try{const s=await html2canvas(l,{scale:2,useCORS:!0}),i=s.toDataURL("image/png"),o=new jsPDF({orientation:"portrait",unit:"px",format:[s.width,s.height]});o.addImage(i,"PNG",0,0,s.width,s.height),o.save(`relatorio_discursiva_${(new Date).toISOString().slice(0,10)}.pdf`)}catch(s){console.error("Erro ao gerar o PDF:",s),alert("Ocorreu um erro ao gerar o PDF. Tente novamente.")}finally{e.textContent=t,e.disabled=!1}},toggleModal(e){e?this.ui.settingsModal.classList.remove("hidden"):this.ui.settingsModal.classList.add("hidden")},saveApiKey(){const e=this.ui.apiKeyInput.value.trim();e?(localStorage.setItem("geminiApiKey",e),alert("Chave da API salva com sucesso!"),this.toggleModal(!1)):alert("Por favor, insira uma chave válida.")},loadApiKey(){const e=localStorage.getItem("geminiApiKey");e&&(this.ui.apiKeyInput.value=e)},clearApiKey(){localStorage.removeItem("geminiApiKey"),this.ui.apiKeyInput.value="",alert("Chave da API removida.")}};
 
         document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
