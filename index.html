@@ -125,10 +125,18 @@
                 <div class="mt-6 flex gap-4"><button id="generateInterdisciplinaryQuestion" class="w-full bg-purple-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-purple-700 disabled:bg-purple-300" disabled>Gerar Questão</button><button class="back-button w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button></div>
             </div>
 
-            <div id="levelSelection" class="hidden">
+            <div id="levelSelection" class="hidden flex flex-col">
                 <h2 class="text-xl font-semibold mb-4 text-center">Selecione o Nível</h2>
                 <div id="levelGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
-                <button class="back-button mt-6 bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
+                 <div id="subjectFilterForLevel" class="hidden mt-6 space-y-4">
+                    <h3 class="text-lg font-semibold text-center text-gray-700">Filtre por Matéria (Opcional)</h3>
+                    <select id="subjectFilterSelect" class="w-full p-2 border border-gray-300 rounded-lg"></select>
+                    <div class="flex gap-4">
+                        <button id="generateLevelQuestion" class="w-full bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-700">Gerar Questão</button>
+                        <button class="back-to-levels-button w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
+                    </div>
+                </div>
+                <button class="back-button mt-6 bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300 self-start">Voltar</button>
             </div>
             
             <!-- Tela de Flashcards -->
@@ -186,7 +194,11 @@
             'Direito Administrativo': {
                 name: 'Direito Administrativo',
                 topics: ['Estado, governo e administração', 'Princípios da Adm. Pública', 'Poderes da administração', 'Organização administrativa', 'Ato administrativo', 'Licitação e Contratos', 'Controle da administração', 'Improbidade Administrativa', 'Lei Anticorrupção', 'Responsabilidade Civil do Estado'],
-                questions: [/* Questões aqui */],
+                questions: [
+                    { level: 3, topic: 'Licitação e Contratos (Leis 8.666, 10.520 e 14.133)', subjects: ['Direito Administrativo'], text: 'Compare as modalidades de licitação previstas na Lei nº 8.666/1993 com as da nova Lei de Licitações e Contratos (Lei nº 14.133/2021), destacando a principal inovação trazida pelo novo diploma legal.' },
+                    { level: 5, topic: 'Licitações Sustentáveis', subjects: ['Direito Administrativo', 'Políticas Públicas', 'AFO'], text: 'Discorra sobre o conceito de licitações sustentáveis à luz da Lei nº 14.133/2021. Relacione a sua aplicação com os objetivos de políticas públicas de desenvolvimento nacional sustentável e com os desafios do controle de custos no orçamento público.' },
+                    { level: 6, topic: 'Controle da Administração', subjects: ['Direito Administrativo'], text: 'Analise criticamente a eficácia do controle judicial dos atos administrativos discricionários no Brasil, considerando o princípio da separação dos poderes e a necessidade de coibir arbitrariedades. Cite um exemplo prático de situação em que essa intervenção é legítima.' },
+                ],
                 flashcards: [
                     { term: "Diferença: Estado, Governo e Adm. Pública", definition: "Estado é a organização política soberana (povo, território, governo); Governo é o núcleo dirigente que toma as decisões; Administração Pública executa as decisões e presta serviços." },
                     { term: "Fontes do Direito Administrativo", definition: "As principais são: Constituição, leis, regulamentos, jurisprudência (decisões judiciais reiteradas), doutrina (estudos acadêmicos) e princípios gerais do direito." },
@@ -263,7 +275,9 @@
             'AFO': {
                 name: 'Admin. Financeira e Orçamentária',
                 topics: ['Princípios orçamentários', 'Ciclo orçamentário', 'PPA, LDO e LOA', 'Receita Pública', 'Despesa Pública', 'Créditos adicionais', 'Restos a Pagar', 'Lei de Responsabilidade Fiscal (LRF)'],
-                questions: [/* Questões aqui */],
+                questions: [
+                    { level: 8, topic: 'Orçamento e Crise Fiscal', subjects: ['AFO', 'Economia', 'Administração Pública'], text: 'Considerando um cenário de crise fiscal e a necessidade de ajuste nas contas públicas, analise o papel do Teto de Gastos (EC 95/2016). Discuta sua eficácia como âncora fiscal, seus impactos no financiamento de políticas públicas essenciais e os desafios de gestão para alocar recursos sob um limite rígido.' },
+                ],
                 flashcards: [
                     { term: "PPA (Plano Plurianual)", definition: "Instrumento de planejamento de médio prazo (4 anos) que estabelece as diretrizes, objetivos e metas da administração pública para as despesas de capital e outras delas decorrentes." },
                     { term: "LDO (Lei de Diretrizes Orçamentárias)", definition: "Elo entre o PPA e a LOA. Define as metas e prioridades para o ano seguinte, orienta a elaboração da LOA e dispõe sobre alterações na legislação tributária." },
@@ -355,7 +369,7 @@
             },
             'Administração Pública': {
                 name: 'Administração Pública',
-                topics: ['Reformas administrativas', 'Modelos de gestão pública', 'Processos participativos', 'Governo eletrônico e transparência', 'Gestão por resultados', 'Planejamento (BSC, OKR)', 'Gestão de projetos e processos'],
+                topics: ['Reformas administrativas', 'Modelos de gestão pública', 'Processos participativos', 'Governo eletrônico e transparência', 'Gestão por resultados', 'Planejamento (BSC, OKR)', 'Gestão de projetos e processos', 'Comunicação e redes', 'Administração de pessoal', 'Compras e materiais', 'Sustentabilidade nas contratações', 'Mudanças institucionais'],
                 questions: [
                     { level: 10, topic: 'Futuro do Serviço Público', subjects: ['Administração Pública', 'Direito Constitucional', 'Economia'], text: 'Diante do avanço da Inteligência Artificial e da automação, discuta o futuro do serviço público no Brasil. Analise, sob a ótica da eficiência (Administração Pública), dos direitos fundamentais (Direito Constitucional) e dos impactos fiscais (AFO/Economia), os desafios e as oportunidades da adoção de tecnologias disruptivas na prestação de serviços essenciais à população.'},
                 ],
@@ -467,6 +481,9 @@
                 interdisciplinaryCheckboxes: document.getElementById('interdisciplinaryCheckboxes'),
                 levelGrid: document.getElementById('levelGrid'),
                 generateInterdisciplinaryBtn: document.getElementById('generateInterdisciplinaryQuestion'),
+                subjectFilterForLevel: document.getElementById('subjectFilterForLevel'),
+                subjectFilterSelect: document.getElementById('subjectFilterSelect'),
+                generateLevelQuestionBtn: document.getElementById('generateLevelQuestion'),
                 settingsButton: document.getElementById('settingsButton'),
                 settingsModal: document.getElementById('settingsModal'),
                 closeModalButton: document.getElementById('closeModalButton'),
@@ -507,6 +524,9 @@
                 this.ui.interdisciplinaryCheckboxes.addEventListener('change', () => this.updateInterdisciplinaryButtonState());
                 this.ui.generateInterdisciplinaryBtn.addEventListener('click', () => this.startInterdisciplinaryMode());
                 
+                this.ui.generateLevelQuestionBtn.addEventListener('click', () => this.startClassicMode());
+                document.querySelector('.back-to-levels-button').addEventListener('click', () => this.goBackToLevelGrid());
+
                 document.getElementById('submitAnswer').addEventListener('click', () => this.submitAnswer());
                 document.getElementById('backToMain').addEventListener('click', () => this.showScreen('modeSelection'));
                 document.getElementById('nextQuestion').addEventListener('click', () => this.loadQuestion());
@@ -532,6 +552,11 @@
                 this.ui.subjectGrid.innerHTML = subjectKeys.map(key => `<button data-subject="${key}" class="w-full text-md font-semibold p-4 border rounded-lg transition hover:bg-blue-500 hover:text-white hover:border-blue-500">${subjectDetailsDB[key].name}</button>`).join('');
                 this.ui.interdisciplinaryCheckboxes.innerHTML = subjectKeys.map(key => `<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="subject" value="${key}" class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"><span class="ml-3 text-gray-700">${subjectDetailsDB[key].name}</span></label>`).join('');
                 this.ui.flashcardSubjectSelect.innerHTML = subjectKeys.map(key => `<option value="${key}">${subjectDetailsDB[key].name}</option>`).join('');
+                
+                let subjectOptions = `<option value="all">Todas as Matérias</option>`;
+                subjectOptions += subjectKeys.map(key => `<option value="${key}">${subjectDetailsDB[key].name}</option>`).join('');
+                this.ui.subjectFilterSelect.innerHTML = subjectOptions;
+
                 const levels = Array.from({ length: 10 }, (_, i) => i + 1);
                 this.ui.levelGrid.innerHTML = levels.map(level => `<button data-level="${level}" class="w-full text-lg font-semibold p-4 border rounded-lg transition hover:bg-gray-500 hover:text-white hover:border-gray-500">Nível ${level}</button>`).join('');
             },
@@ -553,7 +578,6 @@
 
             loadFlashcardDeck(subjectKey) {
                 const deck = subjectDetailsDB[subjectKey]?.flashcards || [];
-                // Shuffle deck
                 this.state.flashcardDeck = deck
                     .map(value => ({ value, sort: Math.random() }))
                     .sort((a, b) => a.sort - b.sort)
@@ -572,16 +596,13 @@
                         this.ui.flashcardFront.textContent = card.term;
                         this.ui.flashcardBack.textContent = card.definition;
                     } else {
-                        // Isso só acontecerá se o baralho estiver vazio
                         this.ui.flashcardFront.textContent = 'Sem cards!';
                         this.ui.flashcardBack.textContent = 'Não há conceitos para esta matéria no momento.';
                     }
-                }, 300); // Aguarda a animação de virar
+                }, 300); 
             },
 
-            flipCard() {
-                this.ui.flashcard.classList.toggle('is-flipped');
-            },
+            flipCard() { this.ui.flashcard.classList.toggle('is-flipped'); },
 
             nextCard() {
                 this.state.currentFlashcardIndex++;
@@ -592,17 +613,44 @@
                      setTimeout(() => {
                         this.ui.flashcardFront.textContent = 'Fim do Ciclo!';
                         this.ui.flashcardBack.textContent = 'Embaralhando o baralho novamente...';
-
-                        setTimeout(() => {
-                            this.loadFlashcardDeck(this.ui.flashcardSubjectSelect.value);
-                        }, 1500);
+                        setTimeout(() => this.loadFlashcardDeck(this.ui.flashcardSubjectSelect.value), 1500);
                     }, 300);
                 } else {
                     this.displayCurrentCard();
                 }
             },
             
-            handleSubjectSelection(e){const t=e.target.closest("button");t&&t.dataset.subject&&(this.state.currentSubject=t.dataset.subject,this.renderTopics(this.state.currentSubject),this.showScreen("topicSelection"))},handleLevelSelection(e){const t=e.target.closest("button");t&&t.dataset.level&&(this.state.currentFilters={level:parseInt(t.dataset.level)},this.loadQuestion())},renderTopics(e){const t=subjectDetailsDB[e];this.ui.topicSelectionHeader.textContent=`Tópicos de ${t.name}`,this.ui.topicCheckboxes.innerHTML=t.topics.map(e=>`<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">\n                        <input type="checkbox" name="topic" value="${e}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">\n                        <span class="ml-3 text-gray-700">${e}</span>\n                    </label>`).join(""),this.updateFocusedButtonState()},goBack(){"focado"===this.state.currentMode&&this.state.currentSubject?(this.state.currentSubject=null,this.showScreen("subjectSelection")):(this.state.currentMode=null,this.showScreen("modeSelection"))},startFocusedMode(){const e=Array.from(this.ui.topicCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subject:this.state.currentSubject,topics:e},this.loadQuestion()},updateFocusedButtonState(){this.ui.generateFocusedQuestionBtn.disabled=this.ui.topicCheckboxes.querySelectorAll("input:checked").length<1},startInterdisciplinaryMode(){const e=Array.from(this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subjects:e,interdisciplinary:!0},this.loadQuestion()},updateInterdisciplinaryButtonState(){this.ui.generateInterdisciplinaryBtn.disabled=this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked").length<2},getFilteredQuestions(){const{level:e,subject:t,topics:s}=this.state.currentFilters;return Object.values(subjectDetailsDB).flatMap(e=>e.questions).filter(i=>(!e||i.level===e)&&(!t||i.subjects.includes(t))&&(!s||!s.length||s.includes(i.topic)))},async loadQuestion(){let e=this.getFilteredQuestions();if(0===e.length){if(!localStorage.getItem("geminiApiKey")){alert("Para gerar questões inéditas, é necessário inserir sua chave da API do Gemini nas configurações."),this.toggleModal(!0);return}this.showScreen("loader");try{const t=await this.generateNewQuestion();this.state.currentQuestion={level:this.state.currentFilters.level||5,subjects:this.state.currentFilters.subjects||[this.state.currentSubject],topic:this.state.currentFilters.topics?this.state.currentFilters.topics.join(" + "):"Geral (Interdisciplinar)",text:t}}catch(e){alert("Não foi possível gerar uma nova questão. Tente outra combinação ou verifique sua chave de API."),this.showScreen("modeSelection");return}}else{let t;do{t=Math.floor(Math.random()*e.length)}while(e.length>1&&t===this.state.lastQuestionIndex);this.state.lastQuestionIndex=t,this.state.currentQuestion=e[t]}this.ui.questionTopic.textContent=this.state.currentQuestion.topic,this.ui.questionLevel.textContent=`Nível ${this.state.currentQuestion.level}`,this.ui.questionText.textContent=this.state.currentQuestion.text,this.ui.userAnswer.value="",this.updateCounts(),this.showScreen("questionScreen")},async generateNewQuestion(){const{topics:e,subject:t,subjects:s,level:l}=this.state.currentFilters;let i=`Gere uma única questão discursiva inédita para o concurso de EPPGG de Sergipe, com complexidade de nível ${l||"avançado"}. A questão deve ser complexa, exigir raciocínio e ser estritamente aderente ao conteúdo do edital. `;e&&t?i+=`Foque no(s) tópico(s) "${e.join(", ")}" da matéria "${subjectDetailsDB[t].name}".`:s&&(i+=`A questão deve ser interdisciplinar, conectando as matérias: ${s.map(e=>subjectDetailsDB[e].name).join(", ")}.`);const o=`Você é um elaborador de questões de concurso. Sua tarefa é criar uma questão discursiva. Responda APENAS com o texto da questão, sem nenhum texto adicional. ${i}`;return await this.callGeminiAPI(o)},updateCounts(){const e=this.ui.userAnswer.value,t=e.trim()?"":e.split("\n").length;this.ui.charCount.textContent=`${e.length} caracteres`,this.ui.lineCount.textContent=`${t} linha${1!==t?"s":""}`},showScreen(e){["modeSelection","subjectSelection","topicSelection","interdisciplinarySelection","levelSelection","questionScreen","analysisScreen","loader","flashcardScreen"].forEach(t=>this.ui[t]?.classList.add("hidden")),this.ui[e]&&this.ui[e].classList.remove("hidden"),"analysisScreen"!==e&&"loader"!==e||(this.ui.loader.classList.remove("hidden"),this.ui.analysisResult.classList.add("hidden"),this.ui.analysisControls.classList.add("hidden"))},async submitAnswer(){const e=this.ui.userAnswer.value.trim();if(e.length<50){alert("Por favor, elabore um pouco mais sua resposta.");return}if(!localStorage.getItem("geminiApiKey")){alert("Por favor, insira sua chave da API do Gemini nas configurações para usar a análise."),this.toggleModal(!0);return}this.showScreen("analysisScreen");try{const t=`Você é um examinador experiente de concursos públicos para o cargo de Especialista em Políticas Públicas e Gestão Governamental. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
+            handleSubjectSelection(e){const t=e.target.closest("button");t&&t.dataset.subject&&(this.state.currentSubject=t.dataset.subject,this.renderTopics(this.state.currentSubject),this.showScreen("topicSelection"))},
+            
+            handleLevelSelection(e) {
+                const button = e.target.closest('button');
+                if (!button || !button.dataset.level) return;
+                this.state.currentFilters = { level: parseInt(button.dataset.level) };
+                this.ui.levelGrid.classList.add('hidden');
+                this.ui.levelSelection.querySelector('.back-button').classList.add('hidden');
+                this.ui.subjectFilterForLevel.classList.remove('hidden');
+            },
+
+            goBackToLevelGrid() {
+                 this.ui.subjectFilterForLevel.classList.add('hidden');
+                 this.ui.levelGrid.classList.remove('hidden');
+                 this.ui.levelSelection.querySelector('.back-button').classList.remove('hidden');
+                 this.state.currentFilters = {};
+            },
+
+            renderTopics(e){const t=subjectDetailsDB[e];this.ui.topicSelectionHeader.textContent=`Tópicos de ${t.name}`,this.ui.topicCheckboxes.innerHTML=t.topics.map(e=>`<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">\n                        <input type="checkbox" name="topic" value="${e}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">\n                        <span class="ml-3 text-gray-700">${e}</span>\n                    </label>`).join(""),this.updateFocusedButtonState()},goBack(){"focado"===this.state.currentMode&&this.state.currentSubject?(this.state.currentSubject=null,this.showScreen("subjectSelection")):(this.state.currentMode=null,this.showScreen("modeSelection"))},startFocusedMode(){const e=Array.from(this.ui.topicCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subject:this.state.currentSubject,topics:e},this.loadQuestion()},
+            
+            startClassicMode() {
+                const subject = this.ui.subjectFilterSelect.value;
+                if (subject && subject !== 'all') {
+                    this.state.currentFilters.subject = subject;
+                } else {
+                    delete this.state.currentFilters.subject;
+                }
+                this.loadQuestion();
+            },
+
+            updateFocusedButtonState(){this.ui.generateFocusedQuestionBtn.disabled=this.ui.topicCheckboxes.querySelectorAll("input:checked").length<1},startInterdisciplinaryMode(){const e=Array.from(this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subjects:e,interdisciplinary:!0},this.loadQuestion()},updateInterdisciplinaryButtonState(){this.ui.generateInterdisciplinaryBtn.disabled=this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked").length<2},getFilteredQuestions(){const{level:e,subject:t,topics:s}=this.state.currentFilters;return Object.values(subjectDetailsDB).flatMap(e=>e.questions).filter(i=>(!e||i.level===e)&&(!t||i.subjects.includes(t))&&(!s||!s.length||s.includes(i.topic)))},async loadQuestion(){let e=this.getFilteredQuestions();if(0===e.length){if(!localStorage.getItem("geminiApiKey")){alert("Para gerar questões inéditas, é necessário inserir sua chave da API do Gemini nas configurações."),this.toggleModal(!0);return}this.showScreen("loader");try{const t=await this.generateNewQuestion();this.state.currentQuestion={level:this.state.currentFilters.level||5,subjects:this.state.currentFilters.subjects||[this.state.currentSubject],topic:this.state.currentFilters.topics?this.state.currentFilters.topics.join(" + "):"Geral (Interdisciplinar)",text:t}}catch(e){alert("Não foi possível gerar uma nova questão. Tente outra combinação ou verifique sua chave de API."),this.goBack()}finally{this.showScreen("questionScreen")}}else{let t;do{t=Math.floor(Math.random()*e.length)}while(e.length>1&&t===this.state.lastQuestionIndex);this.state.lastQuestionIndex=t,this.state.currentQuestion=e[t]}this.ui.questionTopic.textContent=this.state.currentQuestion.topic,this.ui.questionLevel.textContent=`Nível ${this.state.currentQuestion.level}`,this.ui.questionText.textContent=this.state.currentQuestion.text,this.ui.userAnswer.value="",this.updateCounts(),this.showScreen("questionScreen")},async generateNewQuestion(){const{topics:e,subject:t,subjects:s,level:l}=this.state.currentFilters;let i=`Gere uma única questão discursiva inédita para o concurso de EPPGG de Sergipe, com complexidade de nível ${l||"avançado"}. A questão deve ser complexa, exigir raciocínio e ser estritamente aderente ao conteúdo do edital. `;e&&t?i+=`Foque no(s) tópico(s) "${e.join(", ")}" da matéria "${subjectDetailsDB[t].name}".`:s&&(i+=`A questão deve ser interdisciplinar, conectando as matérias: ${s.map(e=>subjectDetailsDB[e].name).join(", ")}.`);const o=`Você é um elaborador de questões de concurso. Sua tarefa é criar uma questão discursiva. Responda APENAS com o texto da questão, sem nenhum texto adicional. ${i}`;return await this.callGeminiAPI(o)},updateCounts(){const e=this.ui.userAnswer.value,t=e.trim()?e.split("\n").length:0;this.ui.charCount.textContent=`${e.length} caracteres`,this.ui.lineCount.textContent=`${t} linha${1!==t?"s":""}`},showScreen(e){["modeSelection","subjectSelection","topicSelection","interdisciplinarySelection","levelSelection","questionScreen","analysisScreen","loader","flashcardScreen"].forEach(t=>this.ui[t]?.classList.add("hidden")),this.ui[e]&&this.ui[e].classList.remove("hidden"),"analysisScreen"!==e&&"loader"!==e||(this.ui.loader.classList.remove("hidden"),this.ui.analysisResult.classList.add("hidden"),this.ui.analysisControls.classList.add("hidden"))},async submitAnswer(){const e=this.ui.userAnswer.value.trim();if(e.length<50){alert("Por favor, elabore um pouco mais sua resposta.");return}if(!localStorage.getItem("geminiApiKey")){alert("Por favor, insira sua chave da API do Gemini nas configurações para usar a análise."),this.toggleModal(!0);return}this.showScreen("analysisScreen");try{const t=`Você é um examinador experiente de concursos públicos para o cargo de Especialista em Políticas Públicas e Gestão Governamental. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
 ### Análise da Resposta
 Faça uma análise geral da resposta do candidato.
 ### Atribuição de Nota (Simulada)
