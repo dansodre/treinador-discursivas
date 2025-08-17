@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treinador de Discursivas - EPPGG/SE</title>
+    <title>Treinador de Discursivas - SEFAZ/SE 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
@@ -71,7 +71,6 @@
             transform: rotateY(180deg);
             border: 1px solid #bae6fd;
         }
-
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -80,15 +79,8 @@
         
         <header class="text-center mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Treinador de Discursivas</h1>
-            <p class="text-md text-gray-600 mt-2">EPPGG - Governo do Estado de Sergipe</p>
+            <p class="text-md text-gray-600 mt-2">Auditor Fiscal de Tributos Estaduais - SEFAZ/SE 2025</p>
         </header>
-
-        <!-- Settings Button -->
-        <div class="absolute top-0 right-0 p-4">
-            <button id="settingsButton" class="text-gray-500 hover:text-gray-800 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            </button>
-        </div>
 
         <main id="app" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg min-h-[500px] flex flex-col">
 
@@ -97,7 +89,7 @@
                 <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Escolha seu modo de treino</h2>
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
                     <button data-mode="focado" class="mode-card bg-blue-50 p-6 rounded-xl border border-blue-200"><h3 class="font-bold text-lg text-blue-800">Questão Focada</h3><p class="text-sm text-blue-700 mt-2">Treine um tópico específico.</p></button>
-                    <button data-mode="interdisciplinar" class="mode-card bg-purple-50 p-6 rounded-xl border border-purple-200"><h3 class="font-bold text-lg text-purple-800">Questão Interdisciplinar</h3><p class="text-sm text-purple-700 mt-2">Combine matérias.</p></button>
+                    <button data-mode="interdisciplinar" class="mode-card bg-purple-50 p-6 rounded-xl border border-purple-200"><h3 class="font-bold text-lg text-purple-800">Questão Interdisciplinar</h3><p class="text-sm text-purple-700 mt-2">Combine as matérias.</p></button>
                     <button data-mode="classico" class="mode-card bg-gray-50 p-6 rounded-xl border border-gray-200"><h3 class="font-bold text-lg text-gray-800">Questão por Nível</h3><p class="text-sm text-gray-700 mt-2">Pratique por dificuldade.</p></button>
                     <button data-mode="flashcards" class="mode-card bg-green-50 p-6 rounded-xl border border-green-200"><h3 class="font-bold text-lg text-green-800">Flashcards</h3><p class="text-sm text-green-700 mt-2">Memorize os conceitos.</p></button>
                 </div>
@@ -105,7 +97,7 @@
 
             <div id="subjectSelection" class="hidden">
                  <h2 class="text-xl font-semibold mb-4 text-center">Selecione a Matéria</h2>
-                 <div id="subjectGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+                 <div id="subjectGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                  <button class="back-button mt-6 bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
             </div>
             
@@ -120,7 +112,7 @@
 
             <div id="interdisciplinarySelection" class="hidden">
                 <h2 class="text-xl font-semibold mb-4 text-center">Combine as Matérias</h2>
-                <p class="text-center text-sm text-gray-500 mb-4">Selecione duas ou mais matérias para gerar uma questão.</p>
+                <p class="text-center text-sm text-gray-500 mb-4">Selecione as duas matérias para gerar uma questão.</p>
                 <div id="interdisciplinaryCheckboxes" class="space-y-3"></div>
                 <div class="mt-6 flex gap-4"><button id="generateInterdisciplinaryQuestion" class="w-full bg-purple-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-purple-700 disabled:bg-purple-300" disabled>Gerar Questão</button><button class="back-button w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button></div>
             </div>
@@ -129,13 +121,13 @@
                 <h2 class="text-xl font-semibold mb-4 text-center">Selecione o Nível</h2>
                 <div id="levelGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
                  <div id="subjectFilterForLevel" class="hidden mt-6 space-y-4">
-                    <h3 class="text-lg font-semibold text-center text-gray-700">Filtre por Matéria (Opcional)</h3>
-                    <select id="subjectFilterSelect" class="w-full p-2 border border-gray-300 rounded-lg"></select>
-                    <div class="flex gap-4">
-                        <button id="generateLevelQuestion" class="w-full bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-700">Gerar Questão</button>
-                        <button class="back-to-levels-button w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
-                    </div>
-                </div>
+                     <h3 class="text-lg font-semibold text-center text-gray-700">Filtre por Matéria (Opcional)</h3>
+                     <select id="subjectFilterSelect" class="w-full p-2 border border-gray-300 rounded-lg"></select>
+                     <div class="flex gap-4">
+                         <button id="generateLevelQuestion" class="w-full bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-700">Gerar Questão</button>
+                         <button class="back-to-levels-button w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
+                     </div>
+                 </div>
                 <button class="back-button mt-6 bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300 self-start">Voltar</button>
             </div>
             
@@ -161,7 +153,7 @@
             <!-- Tela da Questão -->
             <div id="questionScreen" class="hidden">
                 <div class="mb-6"><div class="flex justify-between items-center mb-2"><span id="questionTopic" class="text-xs font-semibold uppercase text-blue-600 bg-blue-100 px-3 py-1 rounded-full"></span><span id="questionLevel" class="text-xs font-semibold uppercase text-gray-500"></span></div><h3 class="text-lg font-semibold leading-relaxed" id="questionText"></h3></div>
-                <div><label for="userAnswer" class="block text-sm font-medium text-gray-700 mb-2">Sua Resposta (20 a 30 linhas):</label><textarea id="userAnswer" rows="12" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea><div class="flex justify-between items-center mt-1"><span id="lineCount" class="text-sm text-gray-500">0 linhas</span><span id="charCount" class="text-sm text-gray-500">0 caracteres</span></div></div>
+                <div><label for="userAnswer" class="block text-sm font-medium text-gray-700 mb-2">Sua Resposta (até 20 linhas):</label><textarea id="userAnswer" rows="12" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea><div class="flex justify-between items-center mt-1"><span id="lineCount" class="text-sm text-gray-500">0 linhas</span><span id="charCount" class="text-sm text-gray-500">0 caracteres</span></div></div>
                 <div class="mt-6 flex flex-col sm:flex-row gap-3"><button id="submitAnswer" class="w-full sm:w-auto bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex-grow">Analisar</button><button id="backToMain" class="w-full sm:w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar ao Início</button></div>
             </div>
             
@@ -177,280 +169,73 @@
     <!-- Div para gerar PDF -->
     <div id="reportContainer" class="printable-report"></div>
 
-    <!-- Settings Modal -->
-    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 md:p-8">
-            <div class="flex justify-between items-center mb-4"><h2 class="text-xl font-bold text-gray-800">Configurações</h2><button id="closeModalButton" class="text-gray-500 hover:text-gray-800">&times;</button></div>
-            <div class="space-y-4"><label for="apiKeyInput" class="block text-sm font-medium text-gray-700">Sua Chave da API do Gemini</label><input type="password" id="apiKeyInput" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Cole sua chave aqui"><p class="text-xs text-gray-500">Sua chave é salva apenas no seu navegador. <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline">Obtenha sua chave aqui.</a></p></div>
-            <div class="mt-6 flex flex-col sm:flex-row gap-3"><button id="saveApiKeyButton" class="w-full bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700">Salvar Chave</button><button id="clearApiKeyButton" class="w-full sm:w-auto bg-red-100 text-red-700 font-semibold py-2 px-6 rounded-lg hover:bg-red-200">Limpar Chave</button></div>
-        </div>
-    </div>
-
-
     <script>
         const { jsPDF } = window.jspdf;
-        // --- BANCO DE DADOS DE CONTEÚDO DO EDITAL ---
+        // --- BANCO DE DADOS DE CONTEÚDO DO EDITAL - SEFAZ/SE 2025 ---
         const subjectDetailsDB = {
-            'Direito Administrativo': {
-                name: 'Direito Administrativo',
-                topics: ['Estado, governo e administração', 'Princípios da Adm. Pública', 'Poderes da administração', 'Organização administrativa', 'Ato administrativo', 'Licitação e Contratos', 'Controle da administração', 'Improbidade Administrativa', 'Lei Anticorrupção', 'Responsabilidade Civil do Estado'],
+            'Legislação Tributária Estadual': {
+                name: 'Legislação Tributária Estadual',
+                topics: [
+                    'ICMS (Lei 3.796/96 e Dec. 21.400/02)',
+                    'Processo Administrativo Fiscal (Lei 7.651/13)',
+                    'PSDI (Lei 3.140/91)',
+                    'FEEF (Lei 8.180/16)',
+                    'IPVA (Lei 7.655/13)',
+                    'ITCMD (Lei 7.724/13)',
+                    'Taxa Estadual (TFSD - Lei 8.638/19)',
+                    'Fundo de Combate à Pobreza (Lei 4.731/02)'
+                ],
                 questions: [
-                    { level: 3, topic: 'Licitação e Contratos (Leis 8.666, 10.520 e 14.133)', subjects: ['Direito Administrativo'], text: 'Compare as modalidades de licitação previstas na Lei nº 8.666/1993 com as da nova Lei de Licitações e Contratos (Lei nº 14.133/2021), destacando a principal inovação trazida pelo novo diploma legal.' },
-                    { level: 5, topic: 'Licitações Sustentáveis', subjects: ['Direito Administrativo', 'Políticas Públicas', 'AFO'], text: 'Discorra sobre o conceito de licitações sustentáveis à luz da Lei nº 14.133/2021. Relacione a sua aplicação com os objetivos de políticas públicas de desenvolvimento nacional sustentável e com os desafios do controle de custos no orçamento público.' },
-                    { level: 6, topic: 'Controle da Administração', subjects: ['Direito Administrativo'], text: 'Analise criticamente a eficácia do controle judicial dos atos administrativos discricionários no Brasil, considerando o princípio da separação dos poderes e a necessidade de coibir arbitrariedades. Cite um exemplo prático de situação em que essa intervenção é legítima.' },
+                    { level: 7, topic: 'ICMS (Lei 3.796/96 e Dec. 21.400/02)', subjects: ['Legislação Tributária Estadual'], text: 'Discorra sobre o instituto da substituição tributária "para frente" do ICMS, previsto na legislação de Sergipe. Aborde o conceito, a responsabilidade pelo recolhimento do imposto e a forma de cálculo da base de cálculo presumida.' },
+                    { level: 8, topic: 'Processo Administrativo Fiscal (Lei 7.651/13)', subjects: ['Legislação Tributária Estadual'], text: 'Analise as fases do Processo Administrativo Fiscal em Sergipe, desde a lavratura do auto de infração até a decisão final em segunda instância. Destaque os principais direitos e garantias do contribuinte nesse processo.' },
                 ],
                 flashcards: [
-                    { term: "Diferença: Estado, Governo e Adm. Pública", definition: "Estado é a organização política soberana (povo, território, governo); Governo é o núcleo dirigente que toma as decisões; Administração Pública executa as decisões e presta serviços." },
-                    { term: "Fontes do Direito Administrativo", definition: "As principais são: Constituição, leis, regulamentos, jurisprudência (decisões judiciais reiteradas), doutrina (estudos acadêmicos) e princípios gerais do direito." },
-                    { term: "Princípios Expressos (L-I-M-P-E)", definition: "Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (Art. 37, CF)." },
-                    { term: "Princípios Implícitos", definition: "Autotutela, Razoabilidade, Proporcionalidade, Segurança Jurídica, Motivação, Supremacia do Interesse Público." },
-                    { term: "Regime Jurídico Administrativo", definition: "Conjunto de prerrogativas (privilégios, como a autoexecutoriedade) e sujeições (restrições, como o dever de licitar) que regem a atuação da Administração Pública." },
-                    { term: "LINDB no Direito Administrativo", definition: "Impõe que as decisões públicas sejam motivadas com base nas consequências práticas (pragmatismo) e estabelece regras de transição para novas interpretações, garantindo segurança jurídica." },
-                    { term: "Poder Hierárquico", definition: "Poder de organizar, controlar, avocar e delegar competências dentro da mesma pessoa jurídica. Gera subordinação." },
-                    { term: "Poder Disciplinar", definition: "Poder-dever de apurar infrações e aplicar sanções aos agentes públicos e a particulares com vínculo específico com a Administração." },
-                    { term: "Poder Regulamentar", definition: "Faculdade do Chefe do Executivo de editar normas gerais e abstratas para a fiel execução da lei (decreto regulamentar)." },
-                    { term: "Poder de Polícia", definition: "Faculdade que dispõe a Administração Pública para condicionar e restringir o uso e gozo de bens, atividades e direitos individuais, em benefício da coletividade ou do próprio Estado." },
-                    { term: "Serviço Público 'Uti Singuli'", definition: "Serviços com usuários determinados e mensuráveis individualmente, geralmente remunerados por taxa ou tarifa (ex: fornecimento de água)." },
-                    { term: "Serviço Público 'Uti Universi'", definition: "Serviços prestados à coletividade de forma indistinta, sem usuários determinados, financiados por impostos (ex: iluminação pública, segurança)." },
-                    { term: "Delegação de Serviços Públicos", definition: "Formas de transferir a execução de serviços públicos a particulares, como a Concessão (contrato mais complexo, exige licitação), Permissão (ato precário) e Autorização." },
-                    { term: "Desconcentração", definition: "Distribuição de competências DENTRO da mesma pessoa jurídica, criando órgãos internos sem personalidade jurídica própria (ex: Ministérios, Secretarias)." },
-                    { term: "Descentralização", definition: "Transferência da execução de serviços PARA outra pessoa jurídica, distinta do ente central. Pode ser por outorga (cria autarquia) ou por delegação (concessão a particular)." },
-                    { term: "Administração Indireta", definition: "Composta por Autarquias, Fundações Públicas, Empresas Públicas e Sociedades de Economia Mista." },
-                    { term: "Agências Reguladoras", definition: "Autarquias de regime especial, com maior autonomia, que fiscalizam e regulam serviços públicos delegados e atividades econômicas (ex: ANATEL, ANEEL)." },
-                    { term: "Lei das Estatais (Lei 13.303/2016)", definition: "Dispõe sobre o estatuto jurídico das empresas públicas e sociedades de economia mista, estabelecendo regras de governança corporativa, licitações e contratos." },
-                    { term: "Terceiro Setor", definition: "Conjunto de entidades privadas sem fins lucrativos que prestam serviços de interesse público, em parceria com o Estado. Exemplos incluem Organizações Sociais (OS) e OSCIPs." },
-                    { term: "Contrato de Gestão", definition: "Instrumento firmado entre o Poder Público e uma Organização Social (OS) para a formação de parceria na execução de atividades de interesse público, com metas de desempenho." },
-                    { term: "Ato Administrativo (Atributos)", definition: "Presunção de legitimidade (presume-se legal), Autoexecutoriedade (execução sem precisar do Judiciário), Tipicidade (previsto em lei) e Imperatividade (impõe-se a terceiros)." },
-                    { term: "Elementos do Ato Administrativo (COFIFOMOB)", definition: "Competência, Finalidade, Forma, Motivo e Objeto. A ausência ou vício em um desses elementos pode levar à anulação do ato." },
-                    { term: "Processo Administrativo (Lei 9.784/99)", definition: "Sequência de atos na Administração Pública para a tomada de uma decisão final. Rege-se por princípios como contraditório, ampla defesa e eficiência." },
-                    { term: "Responsabilidade Civil Objetiva do Estado", definition: "Baseada na Teoria do Risco Administrativo. O Estado responde pelos danos que seus agentes, nessa qualidade, causarem a terceiros, bastando comprovar o dano, a conduta e o nexo causal." },
-                    { term: "Ação de Regresso", definition: "Ação pela qual o Estado, após indenizar a vítima, cobra do agente público causador do dano o valor pago, caso o agente tenha agido com dolo ou culpa." },
-                    { term: "Tipos de Agentes Públicos", definition: "Classificam-se em: Agentes Políticos (mandato eletivo), Servidores Estatutários (regime próprio), Empregados Públicos (CLT) e Temporários (contrato por tempo determinado)." },
-                    { term: "Modalidades de Licitação (Lei 14.133/21)", definition: "São 5: Concorrência, Concurso, Leilão, Pregão e a inovação do Diálogo Competitivo (para soluções inovadoras)." },
-                    { term: "Controle Interno vs. Externo", definition: "Controle Interno é exercido pelo próprio poder que editou o ato (autotutela). Controle Externo é exercido por outro poder (Legislativo com auxílio do TC) ou pelo Judiciário." },
-                    { term: "Lei Anticorrupção (Lei 12.846/13)", definition: "Dispõe sobre a responsabilização objetiva administrativa e civil de pessoas jurídicas pela prática de atos contra a administração pública, nacional ou estrangeira." },
-                    { term: "LGPD no Serviço Público", definition: "O poder público deve tratar dados pessoais com finalidade específica, transparente e com base legal, garantindo a proteção dos dados dos cidadãos e nomeando um Encarregado de Dados (DPO)." }
+                    { term: "Fato Gerador do ICMS", definition: "Regra geral, é a saída de mercadoria de estabelecimento de contribuinte. Outras hipóteses incluem fornecimento de alimentação, transporte, importação, etc. (Lei 3.796/96)" },
+                    { term: "Base de Cálculo do ICMS", definition: "Normalmente, é o valor da operação de que decorrer a saída da mercadoria. Inclui frete e outras despesas debitadas ao adquirente." },
+                    { term: "Contribuinte do ICMS", definition: "Qualquer pessoa, física ou jurídica, que realize, com habitualidade ou em volume que caracterize intuito comercial, operações de circulação de mercadoria ou prestações de serviços de transporte e comunicação." },
+                    { term: "Não Cumulatividade (ICMS)", definition: "Princípio que permite ao contribuinte abater do imposto devido em suas operações o montante cobrado nas operações anteriores (crédito do imposto)." },
+                    { term: "Substituição Tributária (ICMS)", definition: "Regime no qual a responsabilidade pelo recolhimento do imposto de operações futuras é atribuída a um contribuinte anterior na cadeia (ex: indústria recolhe pelo varejo)." },
+                    { term: "Contencioso Administrativo Fiscal", definition: "Órgão julgador de primeira instância no PAF de Sergipe, responsável por julgar as impugnações aos autos de infração. (Lei 7.651/2013)" },
+                    { term: "Conselho de Contribuintes", definition: "Órgão julgador de segunda e última instância administrativa no PAF de Sergipe, com composição paritária entre representantes do Fisco e dos contribuintes." },
+                    { term: "Fato Gerador do IPVA", definition: "A propriedade de veículo automotor. Ocorre no primeiro dia de janeiro de cada exercício. (Lei 7.655/2013)" },
+                    { term: "Fato Gerador do ITCMD", definition: "A transmissão 'causa mortis' (herança) ou por doação de quaisquer bens ou direitos. (Lei 7.724/2013)" },
+                    { term: "Fundo de Combate à Pobreza (FCP)", definition: "Financiado por um adicional na alíquota do ICMS sobre produtos e serviços considerados supérfluos, como bebidas alcoólicas, cigarros e cosméticos. (Lei 4.731/02)" },
+                    { term: "PSDI", definition: "Programa Sergipano de Desenvolvimento Industrial, que concede incentivos fiscais (crédito presumido de ICMS) para empresas que se instalem ou expandam suas atividades no estado. (Lei 3.140/1991)" }
                 ]
             },
-            'Direito Constitucional': {
-                name: 'Direito Constitucional',
-                topics: ['Aplicabilidade das normas', 'Direitos e garantias fundamentais', 'Organização do Estado', 'Administração Pública na CF', 'Poder Executivo', 'Poder Legislativo', 'Poder Judiciário', 'Funções essenciais à justiça'],
+            'Auditoria Fiscal': {
+                name: 'Auditoria Fiscal',
+                topics: [
+                    'Normas de Auditoria (NBC TA e PA)',
+                    'Amostragem em Auditoria (NBC TA 530)',
+                    'Testes de observância e substantivos',
+                    'Evidências e procedimentos de auditoria',
+                    'Fraudes na escrita contábil',
+                    'Auditoria do Ativo Circulante (Caixa, Estoques)',
+                    'Auditoria do Ativo Não Circulante',
+                    'Auditoria do Passivo e PL',
+                    'Auditoria de Contas de Resultado',
+                    'Fraudes na escrita fiscal (EFD, NFe)',
+                    'Auditoria no CIAP',
+                    'Sigilo Bancário (LC 105/2001)'
+                ],
                 questions: [
-                    { level: 5, topic: 'Transparência vs. LGPD', subjects: ['Direito Constitucional', 'Direito Administrativo'], text: 'Analise a aparente colisão entre o princípio da publicidade e o direito à transparência (Lei de Acesso à Informação) e o direito fundamental à proteção de dados pessoais (LGPD). Como um gestor público deve ponderar esses direitos ao divulgar informações que contenham dados pessoais?' },
-                    { level: 7, topic: 'Ativismo Judicial e Separação de Poderes', subjects: ['Direito Constitucional', 'Ciência Política'], text: 'Discuta o fenômeno do ativismo judicial no Brasil e suas implicações para o princípio da separação dos poderes. Em que medida a judicialização de políticas públicas representa um avanço para a garantia de direitos ou uma usurpação das funções dos poderes Executivo e Legislativo?' },
+                    { level: 9, topic: 'Fraudes na escrita fiscal (EFD, NFe)', subjects: ['Auditoria Fiscal'], text: 'Descreva os procedimentos de auditoria fiscal aplicáveis para identificar a omissão de receitas por meio da análise cruzada de dados da Escrituração Fiscal Digital (EFD) e das Notas Fiscais Eletrônicas (NFe) de entrada e saída. Cite ao menos três possíveis inconsistências a serem investigadas.' },
+                    { level: 10, topic: 'Auditoria e Legislação', subjects: ['Auditoria Fiscal', 'Legislação Tributária Estadual'], text: 'Considerando as normas de auditoria fiscal (NBC TA) e a legislação do ICMS de Sergipe, descreva os procedimentos de auditoria que você aplicaria para identificar a falta de recolhimento do imposto decorrente de suprimentos de caixa não comprovados (passivo fictício) em uma empresa comercial. Relacione os achados da auditoria com as possíveis penalidades previstas na lei do Processo Administrativo Fiscal do estado.' }
                 ],
                 flashcards: [
-                    { term: "Constituição (Conceito)", definition: "Lei fundamental e suprema de um Estado, que define sua organização política e jurídica, estrutura os poderes e enuncia os direitos e garantias fundamentais." },
-                    { term: "Poder Constituinte Originário", definition: "Poder que cria uma nova Constituição. É inicial, autônomo e incondicionado." },
-                    { term: "Poder Constituinte Derivado", definition: "Poder que altera a Constituição existente, por meio de emendas. É derivado, subordinado e condicionado às regras da própria Constituição." },
-                    { term: "Princípios Fundamentais (Art. 1º a 4º CF)", definition: "Bases da República Federativa do Brasil, incluindo a soberania, cidadania, dignidade da pessoa humana, valores sociais do trabalho e livre iniciativa, e o pluralismo político." },
-                    { term: "Forma de Estado", definition: "Modo de organização territorial do poder. No Brasil, é a Federação (União, Estados, DF e Municípios autônomos)." },
-                    { term: "Forma de Governo", definition: "Modo de relação entre governantes e governados. No Brasil, é a República (eletividade, temporalidade e responsabilidade)." },
-                    { term: "Sistema de Governo", definition: "Modo de relação entre os Poderes Executivo e Legislativo. No Brasil, é o Presidencialismo." },
-                    { term: "Norma de Eficácia Plena", definition: "Produz todos os seus efeitos desde a entrada em vigor da Constituição, independentemente de lei posterior que a regulamente." },
-                    { term: "Norma de Eficácia Contida", definition: "Produz seus efeitos plenamente, mas pode ter seu alcance restringido por lei posterior." },
-                    { term: "Norma de Eficácia Limitada", definition: "Não produz seus efeitos de imediato, dependendo de lei posterior para que possa ser aplicada." },
-                    { term: "Direitos Fundamentais", definition: "Conjunto de direitos e garantias essenciais para a dignidade humana, divididos em gerações/dimensões (civis/políticos, sociais/econômicos/culturais, difusos/coletivos)." },
-                    { term: "Cláusulas Pétreas (Art. 60, §4º)", definition: "Núcleo intangível da Constituição que não pode ser abolido por emenda constitucional. Incluem a forma federativa de Estado, o voto direto, secreto, universal e periódico, a separação dos Poderes e os direitos e garantias individuais." },
-                    { term: "Remédios Constitucionais", definition: "Ações judiciais à disposição dos cidadãos para se protegerem de ilegalidades ou abuso de poder por parte do Estado (Ex: Habeas Corpus, Mandado de Segurança, Mandado de Injunção, Habeas Data)." },
-                    { term: "Organização Político-Administrativa", definition: "Divisão do poder estatal no território. No Brasil, é uma Federação composta pela União, Estados, Distrito Federal e Municípios, todos autônomos." },
-                    { term: "Repartição de Competências", definition: "Distribuição das atribuições legislativas e administrativas entre os entes federativos (competências exclusivas da União, privativas da União, comuns a todos, concorrentes entre União, Estados e DF)." },
-                    { term: "Intervenção Federal", definition: "Medida excepcional em que a União intervém na autonomia dos Estados ou do DF para preservar a integridade nacional, repelir invasão estrangeira, pôr termo a grave comprometimento da ordem pública, etc." },
-                    { term: "Princípios da Adm. Pública na CF (Art. 37)", definition: "Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (LIMPE)." },
-                    { term: "Poder Executivo", definition: "Função de administrar o Estado e executar as leis. No federalismo, exercido pelo Presidente (União), Governadores (Estados/DF) e Prefeitos (Municípios)." },
-                    { term: "Medida Provisória (MP)", definition: "Ato normativo com força de lei, editado pelo Presidente da República em casos de relevância e urgência, que precisa ser convertido em lei pelo Congresso Nacional." },
-                    { term: "Poder Legislativo", definition: "Função de elaborar as leis e fiscalizar o Poder Executivo. No âmbito federal, é bicameral (Câmara dos Deputados e Senado Federal)." },
-                    { term: "Comissão Parlamentar de Inquérito (CPI)", definition: "Instrumento de investigação do Poder Legislativo, com poderes de investigação próprios de autoridade judicial, para apurar fato certo por prazo determinado." },
-                    { term: "Processo Legislativo", definition: "Conjunto de atos ordenados para a elaboração das leis. Envolve iniciativa, discussão, votação, sanção/veto e promulgação." },
-                    { term: "Poder Judiciário", definition: "Função de aplicar a lei aos casos concretos para solucionar conflitos (jurisdição). Tem como órgão de cúpula o Supremo Tribunal Federal (STF)." },
-                    { term: "Controle de Constitucionalidade", definition: "Verificação da compatibilidade de uma lei ou ato normativo com a Constituição. Pode ser preventivo ou repressivo; difuso ou concentrado." },
-                    { term: "Controle Difuso vs. Concentrado", definition: "Difuso: realizado por qualquer juiz ou tribunal no caso concreto. Concentrado: realizado pelo STF (e TJs para Constituições Estaduais) em ações específicas (ADI, ADC, ADO, ADPF)." },
-                    { term: "Súmula Vinculante", definition: "Decisão do STF que, após cumpridos certos requisitos, passa a ter efeito obrigatório para os demais órgãos do Poder Judiciário e para a administração pública direta e indireta." },
-                    { term: "Funções Essenciais à Justiça", definition: "Instituições indispensáveis para o funcionamento do Judiciário, como o Ministério Público (defesa da ordem jurídica), a Advocacia Pública (representação judicial do Estado) e a Defensoria Pública (assistência jurídica aos necessitados)." },
-                    { term: "Ordem Econômica e Financeira (Art. 170)", definition: "Fundada na valorização do trabalho humano e na livre iniciativa, tem por fim assegurar a todos existência digna, conforme os ditames da justiça social." },
-                    { term: "Ordem Social (Art. 193)", definition: "Baseada no primado do trabalho e tem como objetivo o bem-estar e a justiça sociais. Abrange a Seguridade Social (Saúde, Previdência e Assistência)." },
-                    { term: "Normas Programáticas", definition: "Normas que estabelecem programas e diretrizes para a atuação do Estado, dependendo de ações futuras para sua plena concretização. Ex: objetivos fundamentais da República (Art. 3º)." }
-                ]
-            },
-            'AFO': {
-                name: 'Admin. Financeira e Orçamentária',
-                topics: ['Princípios orçamentários', 'Ciclo orçamentário', 'PPA, LDO e LOA', 'Receita Pública', 'Despesa Pública', 'Créditos adicionais', 'Restos a Pagar', 'Lei de Responsabilidade Fiscal (LRF)'],
-                questions: [
-                    { level: 8, topic: 'Orçamento e Crise Fiscal', subjects: ['AFO', 'Economia', 'Administração Pública'], text: 'Considerando um cenário de crise fiscal e a necessidade de ajuste nas contas públicas, analise o papel do Teto de Gastos (EC 95/2016). Discuta sua eficácia como âncora fiscal, seus impactos no financiamento de políticas públicas essenciais e os desafios de gestão para alocar recursos sob um limite rígido.' },
-                ],
-                flashcards: [
-                    { term: "PPA (Plano Plurianual)", definition: "Instrumento de planejamento de médio prazo (4 anos) que estabelece as diretrizes, objetivos e metas da administração pública para as despesas de capital e outras delas decorrentes." },
-                    { term: "LDO (Lei de Diretrizes Orçamentárias)", definition: "Elo entre o PPA e a LOA. Define as metas e prioridades para o ano seguinte, orienta a elaboração da LOA e dispõe sobre alterações na legislação tributária." },
-                    { term: "LOA (Lei Orçamentária Anual)", definition: "Lei que estima as receitas e fixa as despesas do governo para o período de um ano. Nenhuma despesa pública pode ser executada sem estar prevista na LOA." },
-                    { term: "Princípio da Universalidade", definition: "A LOA deve conter todas as receitas e despesas de todos os poderes, órgãos e entidades da administração direta e indireta." },
-                    { term: "Princípio da Unidade/Totalidade", definition: "O orçamento deve ser uno, ou seja, deve haver um único orçamento para um ente da federação, para determinado exercício financeiro." },
-                    { term: "Princípio do Orçamento Bruto", definition: "Todas as receitas e despesas devem constar na LOA pelos seus valores brutos, sem deduções." },
-                    { term: "Princípio da Anualidade/Periodicidade", definition: "A LOA tem vigência limitada a um exercício financeiro, que coincide com o ano civil (1º de janeiro a 31 de dezembro)." },
-                    { term: "Princípio da Exclusividade", definition: "A LOA não conterá matéria estranha à previsão da receita e à fixação da despesa, exceto autorização para créditos suplementares e operações de crédito." },
-                    { term: "Ciclo Orçamentário", definition: "Processo contínuo que envolve as fases de elaboração, discussão/aprovação, execução/programação e controle/avaliação do orçamento." },
-                    { term: "Receita Corrente", definition: "Receitas que aumentam o patrimônio líquido do Estado de forma não duradoura. Incluem receitas tributárias, de contribuições, patrimoniais, etc." },
-                    { term: "Receita de Capital", definition: "Receitas que alteram o patrimônio duradouro do Estado. Incluem operações de crédito, alienação de bens, amortização de empréstimos." },
-                    { term: "Estágios da Receita", definition: "Previsão, Lançamento, Arrecadação e Recolhimento (PLAR)." },
-                    { term: "Despesa Corrente", definition: "Despesas que não contribuem, diretamente, para a formação ou aquisição de um bem de capital (ex: pessoal, juros da dívida, custeio)." },
-                    { term: "Despesa de Capital", definition: "Despesas que contribuem para a formação ou aquisição de um bem de capital (ex: investimentos, inversões financeiras, amortização da dívida)." },
-                    { term: "Estágios da Despesa", definition: "Empenho, Liquidação e Pagamento (ELP)." },
-                    { term: "Empenho da Despesa", definition: "Ato que cria para o Estado a obrigação de pagamento. Reserva uma dotação orçamentária para uma despesa específica." },
-                    { term: "Liquidação da Despesa", definition: "Verificação do direito adquirido pelo credor, tendo por base os títulos e documentos comprobatórios do respectivo crédito." },
-                    { term: "Créditos Adicionais", definition: "Autorizações de despesa não computadas ou insuficientemente dotadas na LOA. Podem ser Suplementares, Especiais ou Extraordinários." },
-                    { term: "Restos a Pagar", definition: "Despesas empenhadas mas não pagas até o final do exercício financeiro (31/12)." },
-                    { term: "Restos a Pagar Processados", definition: "Despesas que já passaram pelo estágio da liquidação, ou seja, o serviço foi prestado ou o material foi entregue." },
-                    { term: "Restos a Pagar Não Processados", definition: "Despesas que ainda não foram liquidadas, ou seja, o credor ainda não cumpriu sua parte na obrigação." },
-                    { term: "Dívida Ativa", definition: "Créditos a favor da Fazenda Pública que não foram recebidos no prazo para pagamento. Após inscrição, a cobrança passa a ser judicial." },
-                    { term: "Dívida Flutuante", definition: "Compreende os Restos a Pagar (excluídos os serviços da dívida), os serviços da dívida a pagar, os depósitos e os débitos de tesouraria." },
-                    { term: "Dívida Fundada (ou Consolidada)", definition: "Compromissos de exigibilidade superior a 12 meses, contraídos para financiar desequilíbrios orçamentários ou para investimentos." },
-                    { term: "Suprimento de Fundos", definition: "Adiantamento concedido a servidor para realizar despesas que não possam subordinar-se ao processo normal de aplicação (pequeno vulto ou urgentes)." },
-                    { term: "Lei de Responsabilidade Fiscal (LRF)", definition: "Lei Complementar 101/2000 que estabelece normas de finanças públicas voltadas para a responsabilidade na gestão fiscal, com mecanismos de controle de gastos, endividamento e transparência." },
-                    { term: "Limite com Despesa de Pessoal (LRF)", definition: "A LRF impõe limites percentuais da Receita Corrente Líquida que cada Poder e ente pode gastar com pessoal, incluindo o Limite Prudencial (95% do total) e o Limite de Alerta (90% do total)." },
-                    { term: "Transparência na Gestão Fiscal (LRF)", definition: "Ampla divulgação, inclusive em meios eletrônicos de acesso público, dos planos, orçamentos, prestações de contas e do Relatório Resumido da Execução Orçamentária (RREO) e Relatório de Gestão Fiscal (RGF)." },
-                    { term: "Lei de Acesso à Informação (LAI)", definition: "Lei 12.527/2011 que regula o acesso a informações previsto na CF, obrigando órgãos públicos a fornecer informações de interesse público, com exceção das sigilosas." },
-                    { term: "Regra de Ouro", definition: "Princípio constitucional (art. 167, III, CF) que proíbe a realização de operações de crédito (empréstimos) em montante superior às despesas de capital (investimentos)." }
-                ]
-            },
-            'Políticas Públicas': {
-                name: 'Teoria das Políticas Públicas',
-                topics: ['Ciclo de políticas públicas', 'Planejamento e avaliação', 'Intermediação de interesses', 'Governança de Políticas Públicas'],
-                questions: [
-                     { level: 9, topic: 'Estudo de Caso: Política Pública Local', subjects: ['Políticas Públicas', 'Administração Pública', 'Ciência Política'], text: 'O Estado de Sergipe enfrenta uma crise de segurança alimentar em comunidades rurais. Como EPPGG, você é encarregado de liderar um grupo de trabalho para propor uma solução. Apresente uma estrutura de política pública, abordando: 1) os principais atores a serem envolvidos no processo de governança; 2) dois instrumentos de política pública que poderiam ser utilizados (ex: regulação, incentivos, serviços diretos); e 3) um desafio na implementação relacionado ao federalismo brasileiro (conflito de competências com municípios ou União).' },
-                ],
-                flashcards: [
-                    { term: "Ciclo de Políticas Públicas", definition: "Modelo que organiza a vida de uma política pública em fases sequenciais: construção da agenda, formulação da política, tomada de decisão, implementação e avaliação." },
-                    { term: "Construção de Agenda", definition: "Primeira fase do ciclo, onde um problema é reconhecido como relevante e digno de atenção governamental, entrando na agenda política." },
-                    { term: "Formulação de Políticas", definition: "Fase de elaboração das possíveis soluções e alternativas para o problema que entrou na agenda." },
-                    { term: "Tomada de Decisão", definition: "Momento em que os atores políticos escolhem uma ou mais alternativas de solução para o problema." },
-                    { term: "Implementação", definition: "Fase de execução da política pública, transformando as decisões em ações concretas por meio de instrumentos e processos." },
-                    { term: "Avaliação de Políticas Públicas", definition: "Análise dos processos, resultados e impactos de uma política, visando seu aprimoramento, correção ou extinção." },
-                    { term: "Avaliação Ex Ante", definition: "Avaliação realizada antes da implementação da política pública, com o objetivo de analisar sua viabilidade, custos e potenciais impactos." },
-                    { term: "Avaliação Ex Post", definition: "Avaliação realizada após a implementação da política, para verificar seus resultados, impactos e eficiência." },
-                    { term: "Planejamento Estratégico Governamental", definition: "Processo de definir a missão, visão, valores, objetivos e estratégias de longo prazo de uma organização pública para orientar sua atuação." },
-                    { term: "Intermediação de Interesses", definition: "Processo pelo qual grupos sociais se organizam e interagem com o Estado para influenciar as políticas públicas. Principais modelos: clientelismo, corporativismo e pluralismo." },
-                    { term: "Clientelismo", definition: "Troca de bens e serviços por apoio político, baseada em uma relação de poder desigual e pessoal, e não em direitos universais." },
-                    { term: "Corporativismo", definition: "Modelo de intermediação de interesses em que o Estado organiza e licencia um número limitado de associações (sindicatos, federações) como representantes únicos de categorias." },
-                    { term: "Neocorporativismo", definition: "Modelo de negociação tripartite entre Estado, associações de empresários e sindicatos de trabalhadores para a formulação de políticas macroeconômicas." },
-                    { term: "Corrupção e Políticas Públicas", definition: "A corrupção pode distorcer todas as fases do ciclo de políticas, desde a inclusão de temas na agenda por interesses privados até o desvio de recursos na implementação." },
-                    { term: "Papel das Instituições", definition: "As regras formais (leis, constituição) e informais (cultura, costumes) moldam o comportamento dos atores e influenciam o resultado das políticas públicas." },
-                    { term: "Indicadores de Políticas Públicas", definition: "Medidas quantitativas ou qualitativas usadas para monitorar e avaliar o desempenho e os resultados de uma política. Ex: taxa de analfabetismo, leitos por mil habitantes." },
-                    { term: "Governança de Políticas Públicas", definition: "Refere-se aos processos e estruturas que envolvem a direção e o controle da formulação e implementação de políticas, incluindo a participação de múltiplos atores (Estado, mercado e sociedade civil)." },
-                    { term: "Modelo Racional de Decisão", definition: "Pressupõe que o tomador de decisão conhece todos os problemas, alternativas e consequências, e escolhe a opção que maximiza os resultados. É um modelo idealizado." },
-                    { term: "Modelo Incremental (Muddling Through)", definition: "Propõe que as decisões são tomadas com base em pequenas alterações e ajustes a políticas já existentes, em vez de mudanças radicais, devido à racionalidade limitada." },
-                    { term: "Instrumentos de Políticas Públicas", definition: "Ferramentas usadas pelo governo para implementar políticas, como regulação (normas), financiamento (subsídios), serviços diretos (hospitais públicos) e informação (campanhas)." }
-                ]
-            },
-            'Ciência Política': {
-                name: 'Ciência Política',
-                topics: ['Conceitos fundamentais', 'Pensadores clássicos', 'Sistemas políticos e governança', 'Relações Institucionais', 'Política no Brasil'],
-                questions: [/* Questões aqui */],
-                flashcards: [
-                    { term: "Política (Conceito)", definition: "Atividade relacionada à conquista, manutenção e exercício do poder no Estado e na sociedade, envolvendo a tomada de decisões coletivas." },
-                    { term: "Poder, Autoridade e Legitimidade", definition: "Poder é a capacidade de impor a vontade. Autoridade é o poder considerado legítimo. Legitimidade é a aceitação e o reconhecimento do direito de governar." },
-                    { term: "Elementos do Estado", definition: "Povo (componente humano), Território (base física) e Governo Soberano (poder que rege o Estado)." },
-                    { term: "Formas de Governo", definition: "República (eletividade e temporalidade do governante) e Monarquia (hereditariedade e vitaliciedade)." },
-                    { term: "Regimes Políticos", definition: "Modo como o poder é exercido. Principalmente Democracia (poder emana do povo) e Autocracia/Ditadura (poder concentrado)." },
-                    { term: "Sistemas de Governo", definition: "Relação entre os poderes Executivo e Legislativo. Principais: Presidencialismo e Parlamentarismo." },
-                    { term: "Maquiavel", definition: "Pensador renascentista que separou a política da moral e da religião, focando na 'verità effettuale della cosa' (verdade efetiva da coisa) e nos meios para conquistar e manter o poder ('O Príncipe')." },
-                    { term: "Hobbes (Leviatã)", definition: "Contratualista que via o estado de natureza como uma 'guerra de todos contra todos'. Defendia um Estado absoluto para garantir a paz e a segurança." },
-                    { term: "Locke (Pai do Liberalismo)", definition: "Contratualista que defendia direitos naturais (vida, liberdade, propriedade) e um governo limitado, com direito de resistência à tirania." },
-                    { term: "Rousseau (Contrato Social)", definition: "Contratualista que defendia a soberania popular e a 'vontade geral'. O governo é um mero executor da vontade do povo." },
-                    { term: "Weber (Tipos de Dominação)", definition: "Probabilidade de encontrar obediência. Tipos: Tradicional (costume), Carismática (qualidades do líder) e Racional-Legal (crença na validade das leis e da burocracia)." },
-                    { term: "Burocracia (Weber)", definition: "Modelo de organização baseado na racionalidade legal, com impessoalidade, hierarquia, regras formais e especialização. É a forma mais eficiente de dominação racional-legal." },
-                    { term: "Governança e Governabilidade", definition: "Governabilidade é a capacidade política de governar (apoio político). Governança é a capacidade técnica e administrativa de implementar políticas eficientemente." },
-                    { term: "Democracia Representativa vs. Direta", definition: "Representativa: o povo elege representantes para tomar decisões. Direta: o povo toma as decisões diretamente (ex: plebiscito, referendo, iniciativa popular)." },
-                    { term: "Participação Política e Controle Social", definition: "Controle Social é a fiscalização da sociedade sobre as ações do Estado. A participação política (voto, conselhos, audiências públicas) é um meio para exercer esse controle." },
-                    { term: "Relações entre Poderes (Checks and Balances)", definition: "Sistema de freios e contrapesos em que cada Poder (Executivo, Legislativo, Judiciário) controla e limita os outros, para evitar a concentração de poder." },
-                    { term: "Sistemas Eleitorais", definition: "Regras que definem como os votos são transformados em mandatos. Principais: Majoritário (vence quem tem mais votos) e Proporcional (distribui cadeiras pela proporção de votos do partido/coligação)." },
-                    { term: "Federalismo Brasileiro", definition: "Modelo de federalismo cooperativo, com três níveis de governo autônomos (União, Estados/DF, Municípios) e uma repartição de competências complexa (exclusivas, privativas, comuns, concorrentes)." },
-                    { term: "Transparência e Accountability", definition: "Transparência é a publicidade dos atos do governo. Accountability é a responsabilização dos governantes por seus atos, o que exige transparência." },
-                    { term: "Globalização e Soberania", definition: "A globalização (integração econômica, cultural e política) desafia a soberania dos Estados ao criar interdependência e a necessidade de seguir normas de organismos internacionais." }
-                ]
-            },
-            'Administração Pública': {
-                name: 'Administração Pública',
-                topics: ['Reformas administrativas', 'Modelos de gestão pública', 'Processos participativos', 'Governo eletrônico e transparência', 'Gestão por resultados', 'Planejamento (BSC, OKR)', 'Gestão de projetos e processos', 'Comunicação e redes', 'Administração de pessoal', 'Compras e materiais', 'Sustentabilidade nas contratações', 'Mudanças institucionais'],
-                questions: [
-                    { level: 10, topic: 'Futuro do Serviço Público', subjects: ['Administração Pública', 'Direito Constitucional', 'Economia'], text: 'Diante do avanço da Inteligência Artificial e da automação, discuta o futuro do serviço público no Brasil. Analise, sob a ótica da eficiência (Administração Pública), dos direitos fundamentais (Direito Constitucional) e dos impactos fiscais (AFO/Economia), os desafios e as oportunidades da adoção de tecnologias disruptivas na prestação de serviços essenciais à população.'},
-                ],
-                flashcards: [
-                    { term: "Reforma do Aparelho do Estado (Plano Diretor)", definition: "Reforma dos anos 90 no Brasil, liderada por Bresser-Pereira, que visava substituir a administração burocrática por um modelo gerencial focado na eficiência e nos resultados." },
-                    { term: "Modelo Racional-Legal (Burocracia Weberiana)", definition: "Modelo de administração baseado na profissionalização, impessoalidade, hierarquia clara e previsibilidade das regras. Busca eficiência, mas pode gerar rigidez." },
-                    { term: "Patrimonialismo", definition: "Modelo de administração em que não há distinção entre o patrimônio público e o privado do governante. O Estado é tratado como propriedade pessoal do rei ou do governante." },
-                    { term: "Paradigma Pós-Burocrático", definition: "Modelo de administração que busca superar as rigidezes da burocracia, enfatizando a flexibilidade, a participação, a orientação ao cidadão e a gestão por resultados." },
-                    { term: "Administração Pública Gerencial", definition: "Paradigma de gestão pública focado em resultados, eficiência e qualidade dos serviços, com maior autonomia para os gestores e uso de ferramentas do setor privado." },
-                    { term: "Orçamento Participativo", definition: "Mecanismo de participação social no qual a população decide sobre a alocação de parte dos recursos do orçamento público, fortalecendo o controle social." },
-                    { term: "Conselhos de Gestão", definition: "Espaços institucionais de participação da sociedade civil na formulação, monitoramento e fiscalização de políticas públicas setoriais (ex: Conselho de Saúde, Conselho de Educação)." },
-                    { term: "Governo Eletrônico (e-Gov)", definition: "Uso de tecnologias da informação e comunicação (TICs) para fornecer serviços públicos, melhorar a eficiência governamental e aumentar a participação cidadã." },
-                    { term: "Accountability Horizontal vs. Vertical", definition: "Vertical: controle exercido pelos cidadãos (eleições, protestos). Horizontal: controle exercido por outras instituições estatais ('agências de accountability' como MP, TCs)." },
-                    { term: "Gestão por Resultados", definition: "Modelo de gestão que foca no alcance de metas e objetivos previamente definidos, vinculando recursos e desempenho. A avaliação é fundamental nesse modelo." },
-                    { term: "Organizações Sociais (OS)", definition: "Entidades privadas sem fins lucrativos que recebem delegação do Estado para executar serviços públicos (saúde, educação, cultura) por meio de um Contrato de Gestão." },
-                    { term: "OSCIP", definition: "Organização da Sociedade Civil de Interesse Público. Qualificação jurídica dada a ONGs para facilitar parcerias com o Estado, via Termo de Parceria." },
-                    { term: "Agência Executiva", definition: "Qualificação dada a uma autarquia ou fundação que celebra um Contrato de Gestão com seu ministério supervisor para melhorar a eficiência e reduzir custos, ganhando mais autonomia." },
-                    { term: "Planejamento Estratégico", definition: "Processo de definir a missão, visão, valores, objetivos e estratégias de longo prazo de uma organização para orientar sua atuação." },
-                    { term: "Missão, Visão e Valores", definition: "Missão: a razão de ser da organização. Visão: onde a organização quer chegar no futuro. Valores: princípios que guiam o comportamento da organização." },
-                    { term: "BSC (Balanced Scorecard)", definition: "Ferramenta de planejamento estratégico que mede o desempenho de uma organização sob quatro perspectivas: financeira, clientes, processos internos e aprendizado/crescimento." },
-                    { term: "OKR (Objectives and Key Results)", definition: "Metodologia de gestão ágil para definição de metas, composta por um Objetivo (qualitativo, inspirador) e Key Results (quantitativos, mensuráveis) que indicam o progresso." },
-                    { term: "Gestão de Projetos Ágil vs. Tradicional", definition: "Tradicional (cascata) é sequencial e planejado do início ao fim. Ágil (Scrum, Kanban) é iterativo e incremental, focado em entregas de valor contínuas e adaptação a mudanças." },
-                    { term: "Gestão de Processos (BPM)", definition: "Abordagem de gestão focada em otimizar os processos de negócio de uma organização de ponta a ponta para melhorar a eficiência e a eficácia." },
-                    { term: "Sustentabilidade nas Contratações", definition: "Critério de julgamento em licitações que considera não apenas o menor preço, mas também os custos e benefícios ambientais e sociais de um produto ou serviço ao longo de seu ciclo de vida." }
-                ]
-            },
-            'Economia': {
-                name: 'Economia',
-                topics: ['Micro: Demanda e Oferta', 'Micro: Teoria do Consumidor', 'Micro: Mercados e Concorrência', 'Micro: Falhas de mercado', 'Macro: Contas Nacionais', 'Macro: Inflação e Juros', 'Macro: Política fiscal e monetária'],
-                questions: [
-                     { level: 5, topic: 'Política Fiscal e Desigualdade', subjects: ['Economia', 'Ciência Política', 'Administração Pública'], text: 'Discuta o papel do Estado na redução das desigualdades socioeconômicas no Brasil. Aborde, em sua resposta, ao menos dois instrumentos de política fiscal (lado da receita e/ou da despesa), um desafio político para sua implementação e um desafio de gestão para garantir sua efetividade.' },
-                ],
-                flashcards: [
-                    { term: "Problema Econômico Fundamental", definition: "A escassez de recursos diante de necessidades humanas ilimitadas, o que exige escolhas sobre 'o que', 'como' e 'para quem' produzir." },
-                    { term: "Demanda e Oferta", definition: "Demanda é a quantidade de um bem que os consumidores desejam e podem comprar. Oferta é a quantidade que os produtores desejam e podem vender. O equilíbrio de mercado ocorre onde as duas se cruzam." },
-                    { term: "Elasticidade", definition: "Medida da sensibilidade da quantidade demandada ou ofertada de um bem em relação a variações em seus determinantes, como preço ou renda." },
-                    { term: "Teoria do Consumidor", definition: "Estuda como os consumidores alocam sua renda para maximizar sua satisfação (utilidade), dadas as suas preferências e a restrição orçamentária." },
-                    { term: "Concorrência Perfeita", definition: "Estrutura de mercado com muitos compradores e vendedores, produtos homogêneos e livre entrada e saída, onde nenhuma empresa individualmente pode influenciar o preço." },
-                    { term: "Monopólio", definition: "Estrutura de mercado com apenas um vendedor de um produto sem substitutos próximos, resultando em poder de mercado para definir preços." },
-                    { term: "Oligopólio", definition: "Estrutura de mercado com um pequeno número de empresas interdependentes, onde a ação de uma afeta as outras (ex: setor bancário, telefonia)." },
-                    { term: "Teoria dos Jogos (Equilíbrio de Nash)", definition: "Situação em um jogo com dois ou more jogadores na qual nenhum jogador pode melhorar seu resultado mudando sua estratégia unilateralmente, dadas as estratégias dos outros." },
-                    { term: "Vantagem Comparativa", definition: "Fundamento do livre comércio. Um país deve se especializar na produção do bem em que possui o menor custo de oportunidade, mesmo que não tenha vantagem absoluta." },
-                    { term: "Falhas de Mercado", definition: "Situações em que o mercado, por si só, não consegue alocar recursos de forma eficiente, justificando a intervenção do Estado. Ex: externalidades, bens públicos, assimetria de informação." },
-                    { term: "Externalidades", definition: "Custos ou benefícios de uma decisão que recaem sobre terceiros que não participaram da decisão. Podem ser positivas (vacinação) ou negativas (poluição)." },
-                    { term: "Bens Públicos", definition: "Bens que são não-rivais (o consumo de um não impede o de outro) e não-excludentes (é difícil impedir que alguém consuma). Ex: segurança nacional, iluminação pública." },
-                    { term: "Assimetria de Informação", definition: "Ocorre quando uma parte em uma transação tem mais ou melhor informação que a outra. Gera problemas como seleção adversa e risco moral." },
-                    { term: "Economia Comportamental", definition: "Campo da economia que incorpora insights da psicologia para explicar decisões que parecem irracionais, como a aversão à perda e o comportamento de manada." },
-                    { term: "Produto Interno Bruto (PIB)", definition: "Soma de todos os bens e serviços finais produzidos em uma área geográfica durante um determinado período. Pode ser medido pela ótica da produção, da renda ou da despesa." },
-                    { term: "Balanço de Pagamentos", definition: "Registro de todas as transações econômicas entre residentes de um país e o resto do mundo em um determinado período." },
-                    { term: "Taxa de Câmbio", definition: "Preço de uma moeda em termos de outra moeda. Pode ser flutuante (definida pelo mercado) ou fixa (definida pelo governo)." },
-                    { term: "Inflação", definition: "Aumento contínuo e generalizado do nível de preços da economia, que diminui o poder de compra da moeda." },
-                    { term: "Política Monetária", definition: "Ações do Banco Central para controlar a oferta de moeda e as taxas de juros, visando principalmente a estabilidade dos preços (controle da inflação)." },
-                    { term: "Política Fiscal", definition: "Uso dos gastos do governo e da tributação para influenciar a economia. Pode ser expansionista (mais gastos/menos impostos) ou contracionista (menos gastos/mais impostos)." },
-                    { term: "Modelo IS-LM", definition: "Modelo macroeconômico que representa o equilíbrio simultâneo no mercado de bens e serviços (curva IS) e no mercado monetário (curva LM)." },
-                    { term: "Déficit Orçamentário", definition: "Ocorre quando as despesas de um governo excedem suas receitas em um determinado período." },
-                ]
-            },
-            'Contabilidade Pública': {
-                name: 'Contabilidade Pública',
-                topics: ['Conceitos e campo de aplicação', 'Patrimônio Público', 'Demonstrações Contábeis (DCASP)', 'Plano de Contas (PCASP)', 'Regime orçamentário vs. patrimonial', 'Custos no Setor Público'],
-                 questions: [/* Questões aqui */],
-                flashcards: [
-                    { term: "Objeto da Contabilidade Aplicada ao Setor Público (CASP)", definition: "O Patrimônio Público e suas variações." },
-                    { term: "Campo de Aplicação da CASP", definition: "Todas as entidades do setor público, sejam elas integrantes da administração direta ou indireta." },
-                    { term: "Patrimônio Público (Composição)", definition: "Conjunto de direitos e bens (Ativo) e obrigações (Passivo) de uma entidade do setor público." },
-                    { term: "NBC TSP - Estrutura Conceitual", definition: "Norma que estabelece os conceitos básicos para elaboração e divulgação de relatórios contábeis de propósito geral pelas entidades do setor público, visando a transparência e a comparabilidade." },
-                    { term: "Demonstrações Contábeis do Setor Público (DCASP)", definition: "Conjunto de relatórios que apresentam a situação financeira e patrimonial do ente público. Principais: Balanço Patrimonial, DVP, Balanço Orçamentário, Balanço Financeiro e DFC." },
-                    { term: "Balanço Patrimonial (BP)", definition: "Demonstração contábil que evidencia, qualitativa e quantitativamente, a situação patrimonial da entidade pública, confrontando seus Ativos, Passivos e Patrimônio Líquido." },
-                    { term: "Demonstração das Variações Patrimoniais (DVP)", definition: "Evidencia as alterações verificadas no patrimônio, resultantes ou independentes da execução orçamentária, e indica o resultado patrimonial do exercício (VPA x VPD)." },
-                    { term: "Balanço Orçamentário", definition: "Demonstração que compara a receita prevista com a arrecadada e a despesa autorizada com a executada, mostrando o resultado orçamentário." },
-                    { term: "Balanço Financeiro", definition: "Demonstração que evidencia as receitas e despesas orçamentárias, bem como os ingressos e dispêndios extraorçamentários, confrontando-os com os saldos em espécie do exercício anterior e atual." },
-                    { term: "Demonstração dos Fluxos de Caixa (DFC)", definition: "Informa sobre as movimentações de caixa da entidade em um período, classificadas em atividades operacionais, de investimento e de financiamento." },
-                    { term: "PCASP", definition: "Plano de Contas Aplicado ao Setor Público. Estrutura padronizada de contas contábeis que deve ser utilizada por todos os entes da Federação, visando a consolidação das contas nacionais." },
-                    { term: "Sistema de Contas na CASP", definition: "Organizado em subsistemas de informação: Orçamentário, Patrimonial, de Custos e de Compensação." },
-                    { term: "Regime de Competência (Patrimonial)", definition: "Regime contábil que registra os fatos (variações patrimoniais) na data em que ocorrem, independentemente de pagamento ou recebimento. É o regime principal da CASP." },
-                    { term: "Regime de Caixa (Orçamentário)", definition: "Regime que registra as transações no momento do recebimento (receita) ou pagamento (despesa). É usado na execução orçamentária para apurar o fluxo financeiro." },
-                    { term: "Diferença: Regime Orçamentário vs. Contábil", definition: "O Orçamentário foca no controle da execução da LOA (Receita Arrecadada vs. Despesa Empenhada). O Contábil (Patrimonial) registra o impacto de todos os fatos no patrimônio do ente." },
-                    { term: "Restos a Pagar", definition: "Despesas empenhadas mas não pagas dentro do exercício financeiro. Dividem-se em processados (liquidados) e não processados (não liquidados)." },
-                    { term: "Manual de Demonstrativos Fiscais (MDF)", definition: "Manual da STN que padroniza os relatórios da LRF, como o Relatório Resumido da Execução Orçamentária (RREO) e o Relatório de Gestão Fiscal (RGF)." },
-                    { term: "Relatório de Gestão Fiscal (RGF)", definition: "Instrumento de transparência da LRF, assinado pelos titulares dos Poderes, que verifica o cumprimento dos limites de despesa com pessoal, dívida, etc." },
-                    { term: "NBC TSP 34 – Custos no Setor Público", definition: "Norma que estabelece os critérios para mensuração e reconhecimento da informação de custos dos serviços e bens produzidos pelo setor público, visando a eficiência." }
+                    { term: "Risco de Auditoria", definition: "É o risco de o auditor expressar uma opinião de auditoria inadequada quando as demonstrações contábeis contiverem distorção relevante. Componentes: Risco Inerente, de Controle e de Detecção." },
+                    { term: "Evidência de Auditoria", definition: "Informações utilizadas pelo auditor para fundamentar suas conclusões. Deve ser apropriada (relevante e confiável) e suficiente (quantidade)." },
+                    { term: "Testes de Observância (ou de Controles)", definition: "Procedimentos de auditoria para testar a efetividade operacional dos controles internos na prevenção ou detecção e correção de distorções relevantes." },
+                    { term: "Testes Substantivos", definition: "Procedimentos de auditoria para detectar distorções relevantes no nível de afirmações. Incluem testes de detalhes (de saldos e transações) e procedimentos analíticos substantivos." },
+                    { term: "Amostragem em Auditoria (NBC TA 530)", definition: "Aplicação de procedimentos de auditoria em menos de 100% dos itens de uma população, de forma que todas as unidades de amostragem tenham a mesma chance de serem selecionadas." },
+                    { term: "Circularização (Confirmação Externa)", definition: "Procedimento de auditoria que consiste em obter evidência diretamente de terceiros, como confirmação de saldos de contas a receber com clientes ou saldos bancários com bancos." },
+                    { term: "Passivo Fictício", definition: "Registro de uma obrigação inexistente no passivo da empresa, geralmente com o objetivo de justificar uma entrada de recursos (suprimento de caixa) de origem ilícita ou não declarada." },
+                    { term: "Ativo Oculto", definition: "Bens ou direitos da empresa não registrados em sua contabilidade, frequentemente adquiridos com recursos de receitas não declaradas ('caixa dois')." },
+                    { term: "EFD ICMS/IPI", definition: "Escrituração Fiscal Digital. Arquivo digital que substitui os livros de registro de entradas, saídas, inventário e apuração do ICMS e IPI." },
+                    { term: "Cruzamento de Dados Fiscais", definition: "Técnica de auditoria que consiste em comparar informações de diferentes fontes (ex: EFD, NFe, ECF, Decred) para identificar inconsistências que apontem para sonegação fiscal." },
+                    { term: "Quebra de Sigilo Bancário (LC 105/2001)", definition: "A autoridade fiscal pode requisitar informações sobre movimentações financeiras de contribuintes diretamente às instituições financeiras, em caso de processo administrativo fiscal instaurado." },
+                    { term: "CIAP", definition: "Controle de Crédito de ICMS do Ativo Permanente. Documento fiscal para controlar o crédito de ICMS sobre a aquisição de bens destinados ao ativo imobilizado, que deve ser apropriado na razão de 1/48 por mês." }
                 ]
             }
         };
@@ -484,12 +269,6 @@
                 subjectFilterForLevel: document.getElementById('subjectFilterForLevel'),
                 subjectFilterSelect: document.getElementById('subjectFilterSelect'),
                 generateLevelQuestionBtn: document.getElementById('generateLevelQuestion'),
-                settingsButton: document.getElementById('settingsButton'),
-                settingsModal: document.getElementById('settingsModal'),
-                closeModalButton: document.getElementById('closeModalButton'),
-                apiKeyInput: document.getElementById('apiKeyInput'),
-                saveApiKeyButton: document.getElementById('saveApiKeyButton'),
-                clearApiKeyButton: document.getElementById('clearApiKeyButton'),
                 // Flashcard UI
                 flashcardSubjectSelect: document.getElementById('flashcardSubjectSelect'),
                 flashcard: document.getElementById('flashcard'),
@@ -508,7 +287,6 @@
             init() {
                 this.setupEventListeners();
                 this.renderSelections();
-                this.loadApiKey();
                 this.showScreen('modeSelection');
             },
             
@@ -533,12 +311,6 @@
                 document.getElementById('backToMainFromAnalysis').addEventListener('click', () => this.showScreen('modeSelection'));
                 document.getElementById('downloadReport').addEventListener('click', (e) => this.downloadReport(e.target));
                 this.ui.userAnswer.addEventListener('input', () => this.updateCounts());
-
-                this.ui.settingsButton.addEventListener('click', () => this.toggleModal(true));
-                this.ui.closeModalButton.addEventListener('click', () => this.toggleModal(false));
-                this.ui.settingsModal.addEventListener('click', (e) => { if (e.target === this.ui.settingsModal) this.toggleModal(false); });
-                this.ui.saveApiKeyButton.addEventListener('click', () => this.saveApiKey());
-                this.ui.clearApiKeyButton.addEventListener('click', () => this.clearApiKey());
                 
                 // Flashcard Listeners
                 this.ui.flashcardSubjectSelect.addEventListener('change', (e) => this.loadFlashcardDeck(e.target.value));
@@ -638,7 +410,7 @@
                  this.state.currentFilters = {};
             },
 
-            renderTopics(e){const t=subjectDetailsDB[e];this.ui.topicSelectionHeader.textContent=`Tópicos de ${t.name}`,this.ui.topicCheckboxes.innerHTML=t.topics.map(e=>`<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">\n                        <input type="checkbox" name="topic" value="${e}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">\n                        <span class="ml-3 text-gray-700">${e}</span>\n                    </label>`).join(""),this.updateFocusedButtonState()},goBack(){"focado"===this.state.currentMode&&this.state.currentSubject?(this.state.currentSubject=null,this.showScreen("subjectSelection")):(this.state.currentMode=null,this.showScreen("modeSelection"))},startFocusedMode(){const e=Array.from(this.ui.topicCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subject:this.state.currentSubject,topics:e},this.loadQuestion()},
+            renderTopics(e){const t=subjectDetailsDB[e];this.ui.topicSelectionHeader.textContent=`Tópicos de ${t.name}`,this.ui.topicCheckboxes.innerHTML=t.topics.map(e=>`<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">\n                         <input type="checkbox" name="topic" value="${e}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">\n                         <span class="ml-3 text-gray-700">${e}</span>\n                     </label>`).join(""),this.updateFocusedButtonState()},goBack(){"focado"===this.state.currentMode&&this.state.currentSubject?(this.state.currentSubject=null,this.showScreen("subjectSelection")):(this.state.currentMode=null,this.showScreen("modeSelection"))},startFocusedMode(){const e=Array.from(this.ui.topicCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subject:this.state.currentSubject,topics:e},this.loadQuestion()},
             
             startClassicMode() {
                 const subject = this.ui.subjectFilterSelect.value;
@@ -650,28 +422,197 @@
                 this.loadQuestion();
             },
 
-            updateFocusedButtonState(){this.ui.generateFocusedQuestionBtn.disabled=this.ui.topicCheckboxes.querySelectorAll("input:checked").length<1},startInterdisciplinaryMode(){const e=Array.from(this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subjects:e,interdisciplinary:!0},this.loadQuestion()},updateInterdisciplinaryButtonState(){this.ui.generateInterdisciplinaryBtn.disabled=this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked").length<2},getFilteredQuestions(){const{level:e,subject:t,topics:s}=this.state.currentFilters;return Object.values(subjectDetailsDB).flatMap(e=>e.questions).filter(i=>(!e||i.level===e)&&(!t||i.subjects.includes(t))&&(!s||!s.length||s.includes(i.topic)))},async loadQuestion(){let e=this.getFilteredQuestions();if(0===e.length){if(!localStorage.getItem("geminiApiKey")){alert("Para gerar questões inéditas, é necessário inserir sua chave da API do Gemini nas configurações."),this.toggleModal(!0);return}this.showScreen("loader");try{const t=await this.generateNewQuestion();this.state.currentQuestion={level:this.state.currentFilters.level||5,subjects:this.state.currentFilters.subjects||[this.state.currentSubject],topic:this.state.currentFilters.topics?this.state.currentFilters.topics.join(" + "):"Geral (Interdisciplinar)",text:t}}catch(e){alert("Não foi possível gerar uma nova questão. Tente outra combinação ou verifique sua chave de API."),this.goBack()}finally{this.showScreen("questionScreen")}}else{let t;do{t=Math.floor(Math.random()*e.length)}while(e.length>1&&t===this.state.lastQuestionIndex);this.state.lastQuestionIndex=t,this.state.currentQuestion=e[t]}this.ui.questionTopic.textContent=this.state.currentQuestion.topic,this.ui.questionLevel.textContent=`Nível ${this.state.currentQuestion.level}`,this.ui.questionText.textContent=this.state.currentQuestion.text,this.ui.userAnswer.value="",this.updateCounts(),this.showScreen("questionScreen")},async generateNewQuestion(){const{topics:e,subject:t,subjects:s,level:l}=this.state.currentFilters;let i=`Gere uma única questão discursiva inédita para o concurso de EPPGG de Sergipe, com complexidade de nível ${l||"avançado"}. A questão deve ser complexa, exigir raciocínio e ser estritamente aderente ao conteúdo do edital. `;e&&t?i+=`Foque no(s) tópico(s) "${e.join(", ")}" da matéria "${subjectDetailsDB[t].name}".`:s&&(i+=`A questão deve ser interdisciplinar, conectando as matérias: ${s.map(e=>subjectDetailsDB[e].name).join(", ")}.`);const o=`Você é um elaborador de questões de concurso. Sua tarefa é criar uma questão discursiva. Responda APENAS com o texto da questão, sem nenhum texto adicional. ${i}`;return await this.callGeminiAPI(o)},updateCounts(){const e=this.ui.userAnswer.value,t=e.trim()?e.split("\n").length:0;this.ui.charCount.textContent=`${e.length} caracteres`,this.ui.lineCount.textContent=`${t} linha${1!==t?"s":""}`},showScreen(e){["modeSelection","subjectSelection","topicSelection","interdisciplinarySelection","levelSelection","questionScreen","analysisScreen","loader","flashcardScreen"].forEach(t=>this.ui[t]?.classList.add("hidden")),this.ui[e]&&this.ui[e].classList.remove("hidden"),"analysisScreen"!==e&&"loader"!==e||(this.ui.loader.classList.remove("hidden"),this.ui.analysisResult.classList.add("hidden"),this.ui.analysisControls.classList.add("hidden"))},async submitAnswer(){const e=this.ui.userAnswer.value.trim();if(e.length<50){alert("Por favor, elabore um pouco mais sua resposta.");return}if(!localStorage.getItem("geminiApiKey")){alert("Por favor, insira sua chave da API do Gemini nas configurações para usar a análise."),this.toggleModal(!0);return}this.showScreen("analysisScreen");try{const t=`Você é um examinador experiente de concursos públicos para o cargo de Especialista em Políticas Públicas e Gestão Governamental. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
+            updateFocusedButtonState(){this.ui.generateFocusedQuestionBtn.disabled=this.ui.topicCheckboxes.querySelectorAll("input:checked").length<1},startInterdisciplinaryMode(){const e=Array.from(this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subjects:e,interdisciplinary:!0},this.loadQuestion()},updateInterdisciplinaryButtonState(){this.ui.generateInterdisciplinaryBtn.disabled=this.ui.interdisciplinaryCheckboxes.querySelectorAll("input:checked").length<2},
+            
+            getFilteredQuestions() {
+                const { level, subject, subjects, topics, interdisciplinary } = this.state.currentFilters;
+                let allQuestions = Object.values(subjectDetailsDB).flatMap(s => s.questions);
+
+                if (interdisciplinary) {
+                    return allQuestions.filter(q => 
+                        subjects && subjects.length > 1 && subjects.every(sub => q.subjects.includes(sub))
+                    );
+                }
+
+                return allQuestions.filter(q => {
+                    const levelMatch = !level || q.level === level;
+                    const subjectMatch = !subject || q.subjects.includes(subject);
+                    const topicMatch = !topics || !topics.length || topics.some(t => q.topic.includes(t));
+                    return levelMatch && subjectMatch && topicMatch && q.subjects.length <= 1;
+                });
+            },
+            
+            async loadQuestion() {
+                const displayQuestion = () => {
+                    if (!this.state.currentQuestion) return;
+                    this.ui.questionTopic.textContent = this.state.currentQuestion.topic;
+                    this.ui.questionLevel.textContent = `Nível ${this.state.currentQuestion.level}`;
+                    this.ui.questionText.textContent = this.state.currentQuestion.text;
+                    this.ui.userAnswer.value = "";
+                    this.updateCounts();
+                    this.showScreen('questionScreen');
+                };
+
+                let filteredQuestions = this.getFilteredQuestions();
+                
+                if (filteredQuestions.length > 0) {
+                    let newIndex;
+                    do {
+                        newIndex = Math.floor(Math.random() * filteredQuestions.length);
+                    } while (filteredQuestions.length > 1 && newIndex === this.state.lastQuestionIndex);
+                    this.state.lastQuestionIndex = newIndex;
+                    this.state.currentQuestion = filteredQuestions[newIndex];
+                    displayQuestion();
+                } else {
+                    this.showScreen("loader"); 
+                    try {
+                        const newQuestionText = await this.generateNewQuestion();
+                        this.state.currentQuestion = {
+                            level: this.state.currentFilters.level || 8,
+                            subjects: this.state.currentFilters.subjects || [this.state.currentSubject],
+                            topic: this.state.currentFilters.topics ? this.state.currentFilters.topics.join(' + ') : 'Geral (Interdisciplinar)',
+                            text: newQuestionText
+                        };
+                        displayQuestion();
+                    } catch (error) {
+                        console.error("Erro ao gerar questão:", error);
+                        alert(`Não foi possível gerar uma nova questão. Detalhes: ${error.message}`);
+                        this.goBack();
+                    }
+                }
+            },
+
+            async generateNewQuestion() {
+                const { topics, subject, subjects, level } = this.state.currentFilters;
+                let context = `Gere uma única questão discursiva inédita para o concurso de Auditor Fiscal da SEFAZ/SE, com complexidade de nível ${level || 'avançado'}. A questão deve ser complexa, exigir raciocínio e ser estritamente aderente ao conteúdo do edital. `;
+                if (topics && subject) {
+                    context += `Foque no(s) tópico(s) "${topics.join(', ')}" da matéria "${subjectDetailsDB[subject].name}".`;
+                } else if (subjects) {
+                    context += `A questão deve ser interdisciplinar, conectando as matérias: ${subjects.map(s => subjectDetailsDB[s].name).join(' e ')}.`;
+                }
+                const prompt = `Você é um elaborador de questões de concurso da banca Cebraspe. Sua tarefa é criar uma questão discursiva. Responda APENAS com o texto da questão, sem nenhum texto adicional. ${context}`;
+                return await this.callGeminiAPI(prompt);
+            },
+
+            updateCounts(){const e=this.ui.userAnswer.value,t=e.trim()?e.split("\n").length:0;this.ui.charCount.textContent=`${e.length} caracteres`,this.ui.lineCount.textContent=`${t} linha${1!==t?"s":""}`},showScreen(e){["modeSelection","subjectSelection","topicSelection","interdisciplinarySelection","levelSelection","questionScreen","analysisScreen","loader","flashcardScreen"].forEach(t=>this.ui[t]?.classList.add("hidden")),this.ui[e]&&this.ui[e].classList.remove("hidden"),"analysisScreen"!==e&&"loader"!==e||(this.ui.loader.classList.remove("hidden"),this.ui.analysisResult.classList.add("hidden"),this.ui.analysisControls.classList.add("hidden"))},
+            
+            async submitAnswer() {
+                const userAnswer = this.ui.userAnswer.value.trim();
+                if (userAnswer.length < 50) {
+                    alert("Por favor, elabore um pouco mais sua resposta.");
+                    return;
+                }
+                this.showScreen("analysisScreen");
+                try {
+                    const prompt = `Você é um examinador experiente da banca Cebraspe, corrigindo uma prova para o cargo de Auditor Fiscal de Tributos Estaduais da SEFAZ/SE. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
 ### Análise da Resposta
-Faça uma análise geral da resposta do candidato.
+Faça uma análise geral da resposta do candidato, abordando o conhecimento técnico demonstrado.
 ### Atribuição de Nota (Simulada)
-Apresente uma tabela em Markdown com a nota (máximo 40 pontos), dividida entre "Correção de Conteúdo" (20) e "Correção Formal" (20), com justificativas.
+Apresente uma tabela em Markdown com a nota (máximo 40 pontos), dividida entre "Domínio do Conteúdo" (30) e "Domínio da Modalidade Escrita" (10), com justificativas claras e objetivas, conforme o edital.
 | Critério | Pontuação Máxima | Nota Atribuída | Justificativa |
 | :--- | :--- | :--- | :--- |
-| **A. Correção de Conteúdo** | **20** | ... | ... |
-| **B. Correção Formal** | **20** | ... | ... |
+| **A. Domínio do Conteúdo** | **30** | ... | ... |
+| **B. Domínio da Modalidade Escrita** | **10** | ... | ... |
 | **NOTA FINAL** | **40** | **...** | |
 ### Ponderações e Pontos a Melhorar
-Crie duas listas: **Pontos Fortes** e **Pontos a Melhorar**, com sugestões práticas.
+Crie duas listas: **Pontos Fortes** e **Pontos a Melhorar**, com sugestões práticas e específicas para o concurso.
 ### Versão Aprimorada da Resposta
-Reescreva a resposta de forma ideal, como um gabarito nota máxima. Envolva o texto em um bloco de citação (blockquote).
+Reescreva a resposta de forma ideal, como um gabarito nota máxima, com linguagem técnica e precisa. Envolva o texto em um bloco de citação (blockquote).
 ---
 **Questão Proposta:** "${this.state.currentQuestion.text}"
-**Resposta do Candidato:** "${e}"`,s=await this.callGeminiAPI(t);this.displayAnalysis(s,e)}catch(t){console.error(t),this.displayAnalysis("# Erro na Análise\n\nOcorreu um problema ao contatar o examinador virtual. Verifique se sua chave da API do Gemini está correta nas configurações ou tente novamente.",e)}},async callGeminiAPI(e){const t=localStorage.getItem("geminiApiKey");if(!t)throw new Error("Chave da API não encontrada. Por favor, insira sua chave nas configurações.");const s=[{role:"user",parts:[{text:e}]}],i={contents:s},o=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${t}`,n=await fetch(o,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(i)});if(!n.ok){const e=await n.json();throw new Error(`Erro na API: ${e.error?.message||n.statusText}`)}const a=await n.json();if(a.candidates&&a.candidates[0].content&&a.candidates[0].content.parts[0])return a.candidates[0].content.parts[0].text;throw new Error("Resposta da API em formato inesperado.")},displayAnalysis(e,t){this.state.lastAnalysis={question:this.state.currentQuestion,userAnswer:t,analysisMarkdown:e};const s=new showdown.Converter({tables:!0,strikethrough:!0,literalMidWordUnderscores:!0});this.ui.analysisResult.innerHTML=s.makeHtml(e),this.ui.loader.classList.add("hidden"),this.ui.analysisResult.classList.remove("hidden"),this.ui.analysisControls.classList.remove("hidden")},async downloadReport(e){if(!this.state.lastAnalysis){alert("Nenhum relatório para baixar.");return}const t=e.textContent;e.textContent="Gerando...",e.disabled=!0;const{question:s,userAnswer:i,analysisMarkdown:o}=this.state.lastAnalysis,n=new showdown.Converter({tables:!0,strikethrough:!0}),a=n.makeHtml(o),l=document.getElementById("reportContainer");l.innerHTML=`
-                    <div class="header"><h1>Relatório de Desempenho</h1></div>
-                    <div class="card"><h2>Questão Proposta</h2><p><strong>Tópico:</strong> ${s.topic}</p><p>${s.text}</p></div>
-                    <div class="card"><h2>Sua Resposta</h2><pre>${i.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</pre></div>
-                    <div class="card"><h2>Análise do Examinador</h2>${a}</div>
-                `;try{const s=await html2canvas(l,{scale:2,useCORS:!0}),i=s.toDataURL("image/png"),o=new jsPDF({orientation:"portrait",unit:"px",format:[s.width,s.height]});o.addImage(i,"PNG",0,0,s.width,s.height),o.save(`relatorio_discursiva_${(new Date).toISOString().slice(0,10)}.pdf`)}catch(s){console.error("Erro ao gerar o PDF:",s),alert("Ocorreu um erro ao gerar o PDF. Tente novamente.")}finally{e.textContent=t,e.disabled=!1}},toggleModal(e){e?this.ui.settingsModal.classList.remove("hidden"):this.ui.settingsModal.classList.add("hidden")},saveApiKey(){const e=this.ui.apiKeyInput.value.trim();e?(localStorage.setItem("geminiApiKey",e),alert("Chave da API salva com sucesso!"),this.toggleModal(!1)):alert("Por favor, insira uma chave válida.")},loadApiKey(){const e=localStorage.getItem("geminiApiKey");e&&(this.ui.apiKeyInput.value=e)},clearApiKey(){localStorage.removeItem("geminiApiKey"),this.ui.apiKeyInput.value="",alert("Chave da API removida.")}};
+**Resposta do Candidato:** "${userAnswer}"`;
+                    const analysis = await this.callGeminiAPI(prompt);
+                    this.displayAnalysis(analysis, userAnswer);
+                } catch (error) {
+                    console.error(error);
+                    this.displayAnalysis(`# Erro na Análise\n\nOcorreu um problema ao contatar o examinador virtual. Detalhes: ${error.message}`, userAnswer);
+                }
+            },
+
+            async callGeminiAPI(prompt) {
+                // A chave da API é fornecida pelo ambiente de execução, não mais pelo usuário.
+                const apiKey = ""; 
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                const requestBody = {
+                    contents: [{
+                        parts: [{ text: prompt }]
+                    }]
+                };
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("Detalhes do erro da API:", errorData);
+                    throw new Error(`${errorData.error?.message || response.statusText}`);
+                }
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+                    return data.candidates[0].content.parts[0].text;
+                }
+                
+                if (data.candidates && data.candidates[0].finishReason && data.candidates[0].finishReason !== 'STOP') {
+                     throw new Error(`A geração de conteúdo foi interrompida por: ${data.candidates[0].finishReason}`);
+                }
+
+                throw new Error("Resposta da API em formato inesperado ou vazia.");
+            },
+            
+            displayAnalysis(markdown, userAnswer) {
+                this.state.lastAnalysis = {
+                    question: this.state.currentQuestion,
+                    userAnswer: userAnswer,
+                    analysisMarkdown: markdown
+                };
+                const converter = new showdown.Converter({ tables: true, strikethrough: true, literalMidWordUnderscores: true });
+                this.ui.analysisResult.innerHTML = converter.makeHtml(markdown);
+                this.ui.loader.classList.add('hidden');
+                this.ui.analysisResult.classList.remove('hidden');
+                this.ui.analysisControls.classList.remove('hidden');
+            },
+
+            async downloadReport(button) {
+                if (!this.state.lastAnalysis) {
+                    alert("Nenhum relatório para baixar.");
+                    return;
+                }
+                const originalText = button.textContent;
+                button.textContent = "Gerando...";
+                button.disabled = true;
+
+                const { question, userAnswer, analysisMarkdown } = this.state.lastAnalysis;
+                const converter = new showdown.Converter({ tables: true, strikethrough: true });
+                const analysisHtml = converter.makeHtml(analysisMarkdown);
+                const reportContainer = document.getElementById('reportContainer');
+                
+                reportContainer.innerHTML = `
+                    <div class="header"><h1>Relatório de Desempenho - SEFAZ/SE</h1></div>
+                    <div class="card"><h2>Questão Proposta</h2><p><strong>Tópico:</strong> ${question.topic}</p><p>${question.text}</p></div>
+                    <div class="card"><h2>Sua Resposta</h2><pre>${userAnswer.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre></div>
+                    <div class="card"><h2>Análise do Examinador</h2>${analysisHtml}</div>
+                `;
+
+                try {
+                    const canvas = await html2canvas(reportContainer, { scale: 2, useCORS: true });
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [canvas.width, canvas.height] });
+                    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+                    pdf.save(`relatorio_discursiva_sefaz-se_${new Date().toISOString().slice(0, 10)}.pdf`);
+                } catch (error) {
+                    console.error("Erro ao gerar o PDF:", error);
+                    alert("Ocorreu um erro ao gerar o PDF. Tente novamente.");
+                } finally {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }
+            }
+        };
 
         document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
