@@ -70,6 +70,7 @@
             background-color: #e0f2fe; color: #0c4a6e;
             transform: rotateY(180deg);
             border: 1px solid #bae6fd;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -81,6 +82,13 @@
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Treinador de Discursivas</h1>
             <p class="text-md text-gray-600 mt-2">Auditor Fiscal de Tributos Estaduais - SEFAZ/SE 2025</p>
         </header>
+
+        <!-- Settings Button -->
+        <div class="absolute top-0 right-0 p-4">
+            <button id="settingsButton" class="text-gray-500 hover:text-gray-800 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+        </div>
 
         <main id="app" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg min-h-[500px] flex flex-col">
 
@@ -133,20 +141,39 @@
             
             <!-- Tela de Flashcards -->
             <div id="flashcardScreen" class="hidden flex-grow flex flex-col">
-                <div class="mb-4 flex flex-col sm:flex-row gap-4 items-center">
-                    <label for="flashcardSubjectSelect" class="font-semibold text-gray-700">Matéria:</label>
-                    <select id="flashcardSubjectSelect" class="flex-grow p-2 border border-gray-300 rounded-lg"></select>
+                <h2 id="flashcardSubjectHeader" class="text-xl font-semibold mb-4 text-center"></h2>
+                
+                <!-- Controles de Modo de Estudo -->
+                <div class="mb-2 flex flex-col sm:flex-row gap-2 items-center justify-center">
+                    <fieldset class="flex flex-wrap gap-2">
+                        <legend class="sr-only">Modo de Estudo</legend>
+                        <div>
+                            <input type="radio" name="flashcardMode" value="aleatorio_sem_repeticao" id="mode_aleatorio_sem_repeticao" class="peer hidden" checked>
+                            <label for="mode_aleatorio_sem_repeticao" class="cursor-pointer rounded-lg border border-gray-300 px-3 py-2 text-sm peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700">Aleatório (sem repetição)</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="flashcardMode" value="aleatorio_com_repeticao" id="mode_aleatorio_com_repeticao" class="peer hidden">
+                            <label for="mode_aleatorio_com_repeticao" class="cursor-pointer rounded-lg border border-gray-300 px-3 py-2 text-sm peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700">Aleatório (com repetição)</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="flashcardMode" value="sequencial" id="mode_sequencial" class="peer hidden">
+                            <label for="mode_sequencial" class="cursor-pointer rounded-lg border border-gray-300 px-3 py-2 text-sm peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700">Sequencial</label>
+                        </div>
+                    </fieldset>
                 </div>
+                
+                <div id="flashcardCounter" class="text-center text-sm text-gray-500 mb-2"></div>
+
                 <div id="flashcardContainer" class="flashcard-container flex-grow flex items-center justify-center">
                     <div id="flashcard" class="flashcard">
-                        <div id="flashcardFront" class="flashcard-face flashcard-front text-2xl font-bold"></div>
-                        <div id="flashcardBack" class="flashcard-face flashcard-back text-lg"></div>
+                        <div id="flashcardFront" class="flashcard-face flashcard-front text-xl font-bold"></div>
+                        <div id="flashcardBack" class="flashcard-face flashcard-back text-sm text-left custom-scrollbar"></div>
                     </div>
                 </div>
                  <div class="mt-6 flex flex-col sm:flex-row gap-3">
                     <button id="flipCardButton" class="w-full sm:w-auto bg-gray-200 text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300 flex-grow">Virar Card</button>
                     <button id="nextCardButton" class="w-full sm:w-auto bg-green-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-700">Próximo Conceito</button>
-                    <button class="back-button w-full sm:w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar ao Menu</button>
+                    <button class="back-button w-full sm:w-auto bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300">Voltar</button>
                 </div>
             </div>
 
@@ -169,6 +196,15 @@
     <!-- Div para gerar PDF -->
     <div id="reportContainer" class="printable-report"></div>
 
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 md:p-8">
+            <div class="flex justify-between items-center mb-4"><h2 class="text-xl font-bold text-gray-800">Configurações</h2><button id="closeModalButton" class="text-gray-500 hover:text-gray-800">&times;</button></div>
+            <div class="space-y-4"><label for="apiKeyInput" class="block text-sm font-medium text-gray-700">Sua Chave da API do Gemini</label><input type="password" id="apiKeyInput" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Cole sua chave aqui"><p class="text-xs text-gray-500">Sua chave é salva apenas no seu navegador. <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline">Obtenha sua chave aqui.</a></p></div>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3"><button id="saveApiKeyButton" class="w-full bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700">Salvar Chave</button><button id="clearApiKeyButton" class="w-full sm:w-auto bg-red-100 text-red-700 font-semibold py-2 px-6 rounded-lg hover:bg-red-200">Limpar Chave</button></div>
+        </div>
+    </div>
+
     <script>
         const { jsPDF } = window.jspdf;
         // --- BANCO DE DADOS DE CONTEÚDO DO EDITAL - SEFAZ/SE 2025 ---
@@ -190,17 +226,16 @@
                     { level: 8, topic: 'Processo Administrativo Fiscal (Lei 7.651/13)', subjects: ['Legislação Tributária Estadual'], text: 'Analise as fases do Processo Administrativo Fiscal em Sergipe, desde a lavratura do auto de infração até a decisão final em segunda instância. Destaque os principais direitos e garantias do contribuinte nesse processo.' },
                 ],
                 flashcards: [
-                    { term: "Fato Gerador do ICMS", definition: "Regra geral, é a saída de mercadoria de estabelecimento de contribuinte. Outras hipóteses incluem fornecimento de alimentação, transporte, importação, etc. (Lei 3.796/96)" },
-                    { term: "Base de Cálculo do ICMS", definition: "Normalmente, é o valor da operação de que decorrer a saída da mercadoria. Inclui frete e outras despesas debitadas ao adquirente." },
-                    { term: "Contribuinte do ICMS", definition: "Qualquer pessoa, física ou jurídica, que realize, com habitualidade ou em volume que caracterize intuito comercial, operações de circulação de mercadoria ou prestações de serviços de transporte e comunicação." },
-                    { term: "Não Cumulatividade (ICMS)", definition: "Princípio que permite ao contribuinte abater do imposto devido em suas operações o montante cobrado nas operações anteriores (crédito do imposto)." },
-                    { term: "Substituição Tributária (ICMS)", definition: "Regime no qual a responsabilidade pelo recolhimento do imposto de operações futuras é atribuída a um contribuinte anterior na cadeia (ex: indústria recolhe pelo varejo)." },
-                    { term: "Contencioso Administrativo Fiscal", definition: "Órgão julgador de primeira instância no PAF de Sergipe, responsável por julgar as impugnações aos autos de infração. (Lei 7.651/2013)" },
-                    { term: "Conselho de Contribuintes", definition: "Órgão julgador de segunda e última instância administrativa no PAF de Sergipe, com composição paritária entre representantes do Fisco e dos contribuintes." },
-                    { term: "Fato Gerador do IPVA", definition: "A propriedade de veículo automotor. Ocorre no primeiro dia de janeiro de cada exercício. (Lei 7.655/2013)" },
-                    { term: "Fato Gerador do ITCMD", definition: "A transmissão 'causa mortis' (herança) ou por doação de quaisquer bens ou direitos. (Lei 7.724/2013)" },
-                    { term: "Fundo de Combate à Pobreza (FCP)", definition: "Financiado por um adicional na alíquota do ICMS sobre produtos e serviços considerados supérfluos, como bebidas alcoólicas, cigarros e cosméticos. (Lei 4.731/02)" },
-                    { term: "PSDI", definition: "Programa Sergipano de Desenvolvimento Industrial, que concede incentivos fiscais (crédito presumido de ICMS) para empresas que se instalem ou expandam suas atividades no estado. (Lei 3.140/1991)" }
+                    { term: "O que é o fato gerador do ICMS, segundo a legislação de Sergipe?", definition: "<b>Resposta:</b> O fato gerador do ICMS é o momento em que a obrigação de pagar o imposto nasce. A Lei 3.796/96 define vários momentos, sendo os principais: a saída de mercadoria do estabelecimento do contribuinte; o fornecimento de alimentação e bebidas; a prestação de serviços de transporte interestadual e intermunicipal; e a prestação de serviços de comunicação." },
+                    { term: "Quem é considerado contribuinte do ICMS em Sergipe?", definition: "<b>Resposta:</b> Contribuinte é qualquer pessoa, física ou jurídica, que realize, com habitualidade ou em volume que caracterize intuito comercial, operações de circulação de mercadoria ou prestações de serviços de transporte e de comunicação, ainda que as operações e as prestações se iniciem no exterior." },
+                    { term: "O que é a base de cálculo do ICMS na venda de uma mercadoria?", definition: "<b>Resposta:</b> A base de cálculo é o valor da operação. Isso inclui não apenas o valor da mercadoria, mas também todas as importâncias recebidas pelo vendedor, como frete (se cobrado pelo vendedor), juros, seguros e outras despesas acessórias." },
+                    { term: "Como funciona o princípio da não cumulatividade do ICMS?", definition: "<b>Resposta:</b> O princípio da não cumulatividade permite que o contribuinte abata, do imposto a pagar em suas operações de saída (vendas), o imposto que já foi pago nas operações de entrada (compras de insumos e mercadorias). Esse abatimento é feito através de um sistema de créditos e débitos.<br><br><b>Caso Prático:</b> Uma indústria compra R$ 10.000 em insumos com crédito de ICMS de R$ 1.200. Ela vende sua produção por R$ 30.000, gerando um débito de ICMS de R$ 5.400. Pela não cumulatividade, ela recolherá ao estado a diferença: R$ 5.400 (débito) - R$ 1.200 (crédito) = R$ 4.200." },
+                    { term: "Qual o objetivo da Lei nº 7.651/2013 (Processo Administrativo Fiscal)?", definition: "<b>Resposta:</b> O objetivo é regular o processo que julga as disputas entre o Fisco estadual e os contribuintes sobre a exigência de tributos e penalidades, garantindo ao contribuinte o direito à ampla defesa e ao contraditório." },
+                    { term: "Quais são as principais fases de um Processo Administrativo Fiscal (PAF)?", definition: "<b>Resposta:</b> As fases são: 1) Início (Auto de Infração); 2) Defesa (impugnação); 3) Julgamento em primeira instância; 4) Recurso para a segunda instância (Conselho de Contribuintes); 5) Decisão final.<br><br><b>Caso Prático:</b> Uma loja é autuada por não emitir notas. Ela apresenta sua defesa (impugnação). O processo é julgado em 1ª instância. Se a decisão for desfavorável, a loja pode recorrer ao Conselho de Contribuintes." },
+                    { term: "O que é o Programa Sergipano de Desenvolvimento Industrial (PSDI)?", definition: "<b>Resposta:</b> O PSDI é um programa de incentivos fiscais do Governo de Sergipe que visa atrair e manter indústrias no estado, buscando promover o desenvolvimento econômico e social.<br><br><b>Caso Prático:</b> Uma nova fábrica de calçados se instala no interior de Sergipe e, ao ser enquadrada no PSDI, recebe um crédito presumido de 90% sobre o saldo devedor de ICMS, pagando apenas 10% do imposto devido." },
+                    { term: "Qual a finalidade do Fundo Estadual de Equilíbrio Fiscal (FEEF)?", definition: "<b>Resposta:</b> O FEEF foi criado para fortalecer a arrecadação e manter o equilíbrio das finanças do estado, captando recursos de empresas que possuem incentivos fiscais.<br><br><b>Caso Prático:</b> A fábrica de calçados do exemplo anterior, que usufruiu de um incentivo de R$ 90.000, é obrigada a depositar 10% desse valor (R$ 9.000) no FEEF para manter seu benefício." },
+                    { term: "Qual é o fato gerador e a base de cálculo do IPVA em Sergipe?", definition: "<b>Resposta:</b> O fato gerador é a propriedade de veículo automotor no dia 1º de janeiro. A base de cálculo é o valor venal do veículo, geralmente definido pela tabela FIPE.<br><br><b>Caso Prático:</b> Ana possui um carro com valor de R$ 50.000 na tabela FIPE. Com uma alíquota de 2,5%, o IPVA devido será de R$ 1.250 (R$ 50.000 x 2,5%)." },
+                    { term: "O que tributa o ITCMD e como funcionam suas alíquotas em Sergipe?", definition: "<b>Resposta:</b> O ITCMD incide sobre a transmissão de quaisquer bens ou direitos por herança (causa mortis) ou por doação. As alíquotas são progressivas, de 3% a 8%, variando conforme o valor dos bens.<br><br><b>Caso Prático:</b> Carlos herda um imóvel de R$ 300.000. Para transferir o bem, ele precisa pagar o ITCMD. Aplicando a alíquota da faixa correspondente (ex: 3%), ele recolherá R$ 9.000 ao estado." }
                 ]
             },
             'Auditoria Fiscal': {
@@ -224,18 +259,22 @@
                     { level: 10, topic: 'Auditoria e Legislação', subjects: ['Auditoria Fiscal', 'Legislação Tributária Estadual'], text: 'Considerando as normas de auditoria fiscal (NBC TA) e a legislação do ICMS de Sergipe, descreva os procedimentos de auditoria que você aplicaria para identificar a falta de recolhimento do imposto decorrente de suprimentos de caixa não comprovados (passivo fictício) em uma empresa comercial. Relacione os achados da auditoria com as possíveis penalidades previstas na lei do Processo Administrativo Fiscal do estado.' }
                 ],
                 flashcards: [
-                    { term: "Risco de Auditoria", definition: "É o risco de o auditor expressar uma opinião de auditoria inadequada quando as demonstrações contábeis contiverem distorção relevante. Componentes: Risco Inerente, de Controle e de Detecção." },
-                    { term: "Evidência de Auditoria", definition: "Informações utilizadas pelo auditor para fundamentar suas conclusões. Deve ser apropriada (relevante e confiável) e suficiente (quantidade)." },
-                    { term: "Testes de Observância (ou de Controles)", definition: "Procedimentos de auditoria para testar a efetividade operacional dos controles internos na prevenção ou detecção e correção de distorções relevantes." },
-                    { term: "Testes Substantivos", definition: "Procedimentos de auditoria para detectar distorções relevantes no nível de afirmações. Incluem testes de detalhes (de saldos e transações) e procedimentos analíticos substantivos." },
-                    { term: "Amostragem em Auditoria (NBC TA 530)", definition: "Aplicação de procedimentos de auditoria em menos de 100% dos itens de uma população, de forma que todas as unidades de amostragem tenham a mesma chance de serem selecionadas." },
-                    { term: "Circularização (Confirmação Externa)", definition: "Procedimento de auditoria que consiste em obter evidência diretamente de terceiros, como confirmação de saldos de contas a receber com clientes ou saldos bancários com bancos." },
-                    { term: "Passivo Fictício", definition: "Registro de uma obrigação inexistente no passivo da empresa, geralmente com o objetivo de justificar uma entrada de recursos (suprimento de caixa) de origem ilícita ou não declarada." },
-                    { term: "Ativo Oculto", definition: "Bens ou direitos da empresa não registrados em sua contabilidade, frequentemente adquiridos com recursos de receitas não declaradas ('caixa dois')." },
-                    { term: "EFD ICMS/IPI", definition: "Escrituração Fiscal Digital. Arquivo digital que substitui os livros de registro de entradas, saídas, inventário e apuração do ICMS e IPI." },
-                    { term: "Cruzamento de Dados Fiscais", definition: "Técnica de auditoria que consiste em comparar informações de diferentes fontes (ex: EFD, NFe, ECF, Decred) para identificar inconsistências que apontem para sonegação fiscal." },
-                    { term: "Quebra de Sigilo Bancário (LC 105/2001)", definition: "A autoridade fiscal pode requisitar informações sobre movimentações financeiras de contribuintes diretamente às instituições financeiras, em caso de processo administrativo fiscal instaurado." },
-                    { term: "CIAP", definition: "Controle de Crédito de ICMS do Ativo Permanente. Documento fiscal para controlar o crédito de ICMS sobre a aquisição de bens destinados ao ativo imobilizado, que deve ser apropriado na razão de 1/48 por mês." }
+                    { term: "O que são as NBC TA e as NBC PA?", definition: "<b>Resposta:</b> As NBC TA (Normas Técnicas de Auditoria) estabelecem os requisitos e orientações para a execução do trabalho de auditoria. As NBC PA (Normas Profissionais de Auditoria) tratam das responsabilidades e qualificações do auditor.<br><br><b>Caso Prático:</b> Um auditor fiscal, ao planejar seu trabalho, segue a NBC TA 300, definindo a estratégia, avaliando riscos e determinando a natureza e extensão dos procedimentos de auditoria." },
+                    { term: "Para que serve a amostragem em auditoria (NBC TA 530)?", definition: "<b>Resposta:</b> Como é inviável verificar 100% das transações, o auditor seleciona uma amostra representativa para testar e obter evidência para concluir sobre toda a população.<br><br><b>Caso Prático:</b> Para verificar 5.000 notas de pagamento, um auditor usa amostragem estatística para analisar 200. Se não encontrar problemas significativos, pode concluir que o total das 5.000 está correto." },
+                    { term: "O que são testes de observância (ou de controles)?", definition: "<b>Resposta:</b> São procedimentos para verificar se os controles internos definidos pela empresa estão sendo efetivamente cumpridos. O auditor foca no processo, não no valor final.<br><br><b>Caso Prático:</b> A política da empresa exige aprovação de um gerente para compras acima de R$ 10.000. O auditor seleciona 30 compras e verifica se todas têm a assinatura do gerente, testando se a regra foi seguida." },
+                    { term: "O que são testes substantivos?", definition: "<b>Resposta:</b> São procedimentos para obter evidência direta sobre a exatidão dos valores registrados. O objetivo é detectar distorções materiais (erros ou fraudes) nos saldos e transações.<br><br><b>Caso Prático:</b> O auditor pega uma compra de R$ 50.000, confirma o valor com o fornecedor (circularização), verifica a entrada no estoque e o pagamento. Ele está validando a veracidade da transação." },
+                    { term: "O que indica um saldo credor na conta Caixa?", definition: "<b>Resposta:</b> Um saldo credor (negativo) na conta Caixa é uma impossibilidade contábil e um forte indício de omissão de receitas (Caixa 2). Significa que saídas de dinheiro foram registradas sem a correspondente entrada declarada.<br><br><b>Caso Prático:</b> O caixa de uma loja termina o dia com -R$ 1.500 após um pagamento. Isso sugere que pelo menos R$ 1.500 em vendas sem nota fiscal entraram para cobrir o pagamento." },
+                    { term: "Como a auditoria identifica aquisições não contabilizadas?", definition: "<b>Resposta:</b> Através do cruzamento de informações: comparando estoque físico com o contábil, analisando NFs de compra emitidas contra o CNPJ (que o Fisco possui) e verificando se foram escrituradas.<br><br><b>Caso Prático:</b> Um auditor encontra 50 TVs no estoque, mas os registros mostram a compra de apenas 30. Isso indica que 20 TVs foram adquiridas 'por fora', provavelmente com dinheiro de Caixa 2." },
+                    { term: "O que é um passivo fictício?", definition: "<b>Resposta:</b> É o registro de uma dívida inexistente para simular uma despesa e justificar a sonegação de receitas. O dinheiro que 'pagaria' a dívida falsa vem de vendas não declaradas.<br><br><b>Caso Prático:</b> Uma empresa registra uma dívida de R$ 200.000 com um fornecedor 'Fantasma Ltda.'. O fiscal não encontra o contrato nem o CNPJ do fornecedor, concluindo que o passivo foi criado para ocultar R$ 200.000 de receita." },
+                    { term: "Quais os 3 tipos de procedimentos de auditoria?", definition: "<b>Resposta:</b> 1) Avaliação de Riscos: Entender a entidade e seus controles para identificar riscos. 2) Testes de Controle: Avaliar a eficácia dos controles internos. 3) Procedimentos Substantivos: Detectar distorções relevantes nos valores.<br><br><b>Caso Prático:</b> Um auditor avalia o risco de fretes superfaturados, testa o controle (aprovação do gerente) e realiza um procedimento substantivo (confirma valores com a transportadora)." },
+                    { term: "O que é a recomposição do fluxo de caixa?", definition: "<b>Resposta:</b> É uma técnica usada pelo Fisco para determinar a receita omitida. Compara-se o total de saídas de caixa com as entradas comprovadas. Se as saídas forem maiores, a diferença é considerada receita sonegada.<br><br><b>Caso Prático:</b> Uma empresa teve saídas de R$ 350.000, mas declarou apenas R$ 200.000 de entradas. O Fisco presume que a diferença de R$ 150.000 é receita de vendas 'por fora' e autua a empresa." },
+                    { term: "O que é baixa fictícia de títulos não recebidos?", definition: "<b>Resposta:</b> É registrar uma conta a receber como 'Perda', quando na verdade o cliente pagou 'por fora'. O objetivo é que o dinheiro entre no caixa sem ser tributado como receita.<br><br><b>Caso Prático:</b> A empresa 'Alfa' dá baixa de R$ 20.000 como prejuízo. O auditor, ao contatar o cliente, descobre que ele pagou a dívida em dinheiro, com recibo. A fraude é descoberta e a receita omitida é tributada." },
+                    { term: "Qual o objetivo de cotejar recebíveis com receitas?", definition: "<b>Resposta:</b> Garantir que toda venda a prazo registrada na DRE gerou um correspondente direito de recebimento no Balanço Patrimonial. Inconsistências podem indicar receitas fictícias.<br><br><b>Caso Prático:</b> Uma empresa registra R$ 5 milhões em vendas, mas o 'Contas a Receber' só aumenta R$ 1 milhão. A investigação pode revelar que a empresa emitiu notas frias para atingir metas." },
+                    { term: "Qual o desafio na auditoria de ativos intangíveis?", definition: "<b>Resposta:</b> A subjetividade na avaliação do valor e da vida útil do ativo (ex: marca, software), abrindo margem para superavaliação e amortização indevida para reduzir lucros.<br><br><b>Caso Prático:</b> Uma empresa avalia um software de R$ 100 mil por R$ 1 milhão, gerando uma despesa de amortização muito maior. O fiscal pode contestar a avaliação e glosar o excesso de despesa." },
+                    { term: "O que é passivo oculto (omissão de passivo)?", definition: "<b>Resposta:</b> É a prática de não registrar uma dívida real para apresentar uma situação financeira melhor do que a real, seja para enganar investidores ou obter empréstimos.<br><br><b>Caso Prático:</b> Para obter um empréstimo, uma empresa não registra uma dívida de R$ 500.000 com um fornecedor. O fiscal descobre a omissão ao cruzar as notas fiscais de entrada emitidas contra o CNPJ da empresa." },
+                    { term: "Qual a implicação fiscal de um aumento de capital sem comprovação?", definition: "<b>Resposta:</b> Se o sócio não comprova a origem dos recursos para aumentar o capital da empresa, o Fisco pode presumir que o valor é, na verdade, receita da própria empresa que foi omitida, e então tributá-la.<br><br><b>Caso Prático:</b> Um sócio integraliza R$ 200.000 em dinheiro, mas sua declaração de IR é incompatível com tal valor. A fiscalização conclui que são vendas da empresa sem nota fiscal e autua a pessoa jurídica." },
+                    { term: "O que é o CIAP e como é auditado na EFD?", definition: "<b>Resposta:</b> O CIAP (Controle de Crédito de ICMS do Ativo Permanente) controla o crédito de ICMS na aquisição de ativo imobilizado, apropriado em 48 parcelas. Na EFD, o fiscal verifica se o crédito mensal está correto (1/48), se o bem dá direito a crédito e se há estorno na venda antecipada." },
+                    { term: "O que é o Bloco K da EFD e qual sua importância?", definition: "<b>Resposta:</b> É o Livro de Controle da Produção e do Estoque digital. Ele detalha o processo produtivo e é uma ferramenta poderosa para a fiscalização cruzar a quantidade de insumos comprados com a de produtos vendidos, identificando produção e venda não declaradas.<br><br><b>Caso Prático:</b> Uma fábrica comprou insumos para 1 milhão de garrafas, mas declarou a produção de apenas 800 mil. O fiscal pode autuar pela omissão de receita das 200 mil unidades restantes." }
                 ]
             }
         };
@@ -269,8 +308,15 @@
                 subjectFilterForLevel: document.getElementById('subjectFilterForLevel'),
                 subjectFilterSelect: document.getElementById('subjectFilterSelect'),
                 generateLevelQuestionBtn: document.getElementById('generateLevelQuestion'),
+                settingsButton: document.getElementById('settingsButton'),
+                settingsModal: document.getElementById('settingsModal'),
+                closeModalButton: document.getElementById('closeModalButton'),
+                apiKeyInput: document.getElementById('apiKeyInput'),
+                saveApiKeyButton: document.getElementById('saveApiKeyButton'),
+                clearApiKeyButton: document.getElementById('clearApiKeyButton'),
                 // Flashcard UI
-                flashcardSubjectSelect: document.getElementById('flashcardSubjectSelect'),
+                flashcardSubjectHeader: document.getElementById('flashcardSubjectHeader'),
+                flashcardCounter: document.getElementById('flashcardCounter'),
                 flashcard: document.getElementById('flashcard'),
                 flashcardFront: document.getElementById('flashcardFront'),
                 flashcardBack: document.getElementById('flashcardBack'),
@@ -287,6 +333,7 @@
             init() {
                 this.setupEventListeners();
                 this.renderSelections();
+                this.loadApiKey();
                 this.showScreen('modeSelection');
             },
             
@@ -312,8 +359,21 @@
                 document.getElementById('downloadReport').addEventListener('click', (e) => this.downloadReport(e.target));
                 this.ui.userAnswer.addEventListener('input', () => this.updateCounts());
                 
+                // Settings Listeners
+                this.ui.settingsButton.addEventListener('click', () => this.toggleModal(true));
+                this.ui.closeModalButton.addEventListener('click', () => this.toggleModal(false));
+                this.ui.settingsModal.addEventListener('click', (e) => { if (e.target === this.ui.settingsModal) this.toggleModal(false); });
+                this.ui.saveApiKeyButton.addEventListener('click', () => this.saveApiKey());
+                this.ui.clearApiKeyButton.addEventListener('click', () => this.clearApiKey());
+
                 // Flashcard Listeners
-                this.ui.flashcardSubjectSelect.addEventListener('change', (e) => this.loadFlashcardDeck(e.target.value));
+                document.querySelectorAll('input[name="flashcardMode"]').forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        if (this.state.currentSubject) {
+                            this.loadFlashcardDeck(this.state.currentSubject);
+                        }
+                    });
+                });
                 this.ui.flipCardButton.addEventListener('click', () => this.flipCard());
                 this.ui.nextCardButton.addEventListener('click', () => this.nextCard());
 
@@ -323,7 +383,6 @@
                 const subjectKeys = Object.keys(subjectDetailsDB);
                 this.ui.subjectGrid.innerHTML = subjectKeys.map(key => `<button data-subject="${key}" class="w-full text-md font-semibold p-4 border rounded-lg transition hover:bg-blue-500 hover:text-white hover:border-blue-500">${subjectDetailsDB[key].name}</button>`).join('');
                 this.ui.interdisciplinaryCheckboxes.innerHTML = subjectKeys.map(key => `<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"><input type="checkbox" name="subject" value="${key}" class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"><span class="ml-3 text-gray-700">${subjectDetailsDB[key].name}</span></label>`).join('');
-                this.ui.flashcardSubjectSelect.innerHTML = subjectKeys.map(key => `<option value="${key}">${subjectDetailsDB[key].name}</option>`).join('');
                 
                 let subjectOptions = `<option value="all">Todas as Matérias</option>`;
                 subjectOptions += subjectKeys.map(key => `<option value="${key}">${subjectDetailsDB[key].name}</option>`).join('');
@@ -337,28 +396,67 @@
                 const button = e.target.closest('button');
                 if (!button || !button.dataset.mode) return;
                 this.state.currentMode = button.dataset.mode;
-                if (this.state.currentMode === 'focado') this.showScreen('subjectSelection');
-                else if (this.state.currentMode === 'interdisciplinar') this.showScreen('interdisciplinarySelection');
-                else if (this.state.currentMode === 'classico') this.showScreen('levelSelection');
-                else if (this.state.currentMode === 'flashcards') this.startFlashcardMode();
+                if (this.state.currentMode === 'focado' || this.state.currentMode === 'flashcards') {
+                    this.showScreen('subjectSelection');
+                } else if (this.state.currentMode === 'interdisciplinar') {
+                    this.showScreen('interdisciplinarySelection');
+                } else if (this.state.currentMode === 'classico') {
+                    this.showScreen('levelSelection');
+                }
             },
 
-            startFlashcardMode() {
+            handleSubjectSelection(e) {
+                const button = e.target.closest("button");
+                if (button && button.dataset.subject) {
+                    this.state.currentSubject = button.dataset.subject;
+                    if (this.state.currentMode === 'focado') {
+                        this.renderTopics(this.state.currentSubject);
+                        this.showScreen("topicSelection");
+                    } else if (this.state.currentMode === 'flashcards') {
+                        this.startFlashcardMode(this.state.currentSubject);
+                    }
+                }
+            },
+
+            startFlashcardMode(subjectKey) {
+                this.ui.flashcardSubjectHeader.textContent = `Flashcards de ${subjectDetailsDB[subjectKey].name}`;
                 this.showScreen('flashcardScreen');
-                this.loadFlashcardDeck(this.ui.flashcardSubjectSelect.value);
+                this.loadFlashcardDeck(subjectKey);
             },
 
             loadFlashcardDeck(subjectKey) {
-                const deck = subjectDetailsDB[subjectKey]?.flashcards || [];
-                this.state.flashcardDeck = deck
-                    .map(value => ({ value, sort: Math.random() }))
-                    .sort((a, b) => a.sort - b.sort)
-                    .map(({ value }) => value);
+                const studyMode = document.querySelector('input[name="flashcardMode"]:checked').value;
+                const originalDeck = subjectDetailsDB[subjectKey]?.flashcards || [];
+
+                if (studyMode === 'aleatorio_sem_repeticao') {
+                    this.state.flashcardDeck = originalDeck
+                        .map(value => ({ value, sort: Math.random() }))
+                        .sort((a, b) => a.sort - b.sort)
+                        .map(({ value }) => value);
+                } else if (studyMode === 'sequencial') {
+                    this.state.flashcardDeck = [...originalDeck]; 
+                } else { // aleatorio_com_repeticao
+                    this.state.flashcardDeck = [...originalDeck];
+                }
+
                 this.state.currentFlashcardIndex = 0;
                 this.displayCurrentCard();
             },
 
             displayCurrentCard() {
+                const studyMode = document.querySelector('input[name="flashcardMode"]:checked').value;
+
+                if (studyMode === 'aleatorio_com_repeticao') {
+                    this.ui.flashcardCounter.classList.add('hidden');
+                } else {
+                    this.ui.flashcardCounter.classList.remove('hidden');
+                    if (this.state.flashcardDeck.length > 0) {
+                        this.ui.flashcardCounter.textContent = `Card ${this.state.currentFlashcardIndex + 1} de ${this.state.flashcardDeck.length}`;
+                    } else {
+                        this.ui.flashcardCounter.textContent = '';
+                    }
+                }
+
                 if(this.ui.flashcard.classList.contains('is-flipped')) {
                     this.ui.flashcard.classList.remove('is-flipped');
                 }
@@ -366,10 +464,10 @@
                     const card = this.state.flashcardDeck[this.state.currentFlashcardIndex];
                     if (card) {
                         this.ui.flashcardFront.textContent = card.term;
-                        this.ui.flashcardBack.textContent = card.definition;
+                        this.ui.flashcardBack.innerHTML = card.definition;
                     } else {
                         this.ui.flashcardFront.textContent = 'Sem cards!';
-                        this.ui.flashcardBack.textContent = 'Não há conceitos para esta matéria no momento.';
+                        this.ui.flashcardBack.innerHTML = 'Não há conceitos para esta matéria no momento.';
                     }
                 }, 300); 
             },
@@ -377,6 +475,17 @@
             flipCard() { this.ui.flashcard.classList.toggle('is-flipped'); },
 
             nextCard() {
+                const studyMode = document.querySelector('input[name="flashcardMode"]:checked').value;
+
+                if (studyMode === 'aleatorio_com_repeticao') {
+                    if (this.state.flashcardDeck.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * this.state.flashcardDeck.length);
+                        this.state.currentFlashcardIndex = randomIndex;
+                        this.displayCurrentCard();
+                    }
+                    return;
+                }
+
                 this.state.currentFlashcardIndex++;
                 if (this.state.currentFlashcardIndex >= this.state.flashcardDeck.length) {
                     if (this.ui.flashcard.classList.contains('is-flipped')) {
@@ -384,15 +493,23 @@
                     }
                      setTimeout(() => {
                         this.ui.flashcardFront.textContent = 'Fim do Ciclo!';
-                        this.ui.flashcardBack.textContent = 'Embaralhando o baralho novamente...';
-                        setTimeout(() => this.loadFlashcardDeck(this.ui.flashcardSubjectSelect.value), 1500);
+                        this.ui.flashcardBack.textContent = 'Reiniciando o baralho...';
+                        setTimeout(() => this.loadFlashcardDeck(this.state.currentSubject), 1500);
                     }, 300);
                 } else {
                     this.displayCurrentCard();
                 }
             },
             
-            handleSubjectSelection(e){const t=e.target.closest("button");t&&t.dataset.subject&&(this.state.currentSubject=t.dataset.subject,this.renderTopics(this.state.currentSubject),this.showScreen("topicSelection"))},
+            goBack() {
+                if ((this.state.currentMode === 'focado' || this.state.currentMode === 'flashcards') && this.state.currentSubject) {
+                    this.state.currentSubject = null;
+                    this.showScreen("subjectSelection");
+                } else {
+                    this.state.currentMode = null;
+                    this.showScreen("modeSelection");
+                }
+            },
             
             handleLevelSelection(e) {
                 const button = e.target.closest('button');
@@ -410,7 +527,7 @@
                  this.state.currentFilters = {};
             },
 
-            renderTopics(e){const t=subjectDetailsDB[e];this.ui.topicSelectionHeader.textContent=`Tópicos de ${t.name}`,this.ui.topicCheckboxes.innerHTML=t.topics.map(e=>`<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">\n                         <input type="checkbox" name="topic" value="${e}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">\n                         <span class="ml-3 text-gray-700">${e}</span>\n                     </label>`).join(""),this.updateFocusedButtonState()},goBack(){"focado"===this.state.currentMode&&this.state.currentSubject?(this.state.currentSubject=null,this.showScreen("subjectSelection")):(this.state.currentMode=null,this.showScreen("modeSelection"))},startFocusedMode(){const e=Array.from(this.ui.topicCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subject:this.state.currentSubject,topics:e},this.loadQuestion()},
+            renderTopics(e){const t=subjectDetailsDB[e];this.ui.topicSelectionHeader.textContent=`Tópicos de ${t.name}`,this.ui.topicCheckboxes.innerHTML=t.topics.map(e=>`<label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">\n                         <input type="checkbox" name="topic" value="${e}" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">\n                         <span class="ml-3 text-gray-700">${e}</span>\n                     </label>`).join(""),this.updateFocusedButtonState()},startFocusedMode(){const e=Array.from(this.ui.topicCheckboxes.querySelectorAll("input:checked")).map(e=>e.value);this.state.currentFilters={subject:this.state.currentSubject,topics:e},this.loadQuestion()},
             
             startClassicMode() {
                 const subject = this.ui.subjectFilterSelect.value;
@@ -464,6 +581,11 @@
                     this.state.currentQuestion = filteredQuestions[newIndex];
                     displayQuestion();
                 } else {
+                    if (!localStorage.getItem("geminiApiKey")) {
+                        alert("Para gerar questões inéditas, é necessário inserir sua chave da API do Gemini nas configurações.");
+                        this.toggleModal(true);
+                        return;
+                    }
                     this.showScreen("loader"); 
                     try {
                         const newQuestionText = await this.generateNewQuestion();
@@ -502,6 +624,11 @@
                     alert("Por favor, elabore um pouco mais sua resposta.");
                     return;
                 }
+                 if (!localStorage.getItem("geminiApiKey")) {
+                    alert("Por favor, insira sua chave da API do Gemini nas configurações para usar a análise.");
+                    this.toggleModal(true);
+                    return;
+                }
                 this.showScreen("analysisScreen");
                 try {
                     const prompt = `Você é um examinador experiente da banca Cebraspe, corrigindo uma prova para o cargo de Auditor Fiscal de Tributos Estaduais da SEFAZ/SE. Sua tarefa é analisar uma resposta discursiva de um candidato de forma crítica e construtiva. A sua resposta DEVE ser em Markdown e seguir ESTRITAMENTE a estrutura abaixo:
@@ -530,8 +657,10 @@ Reescreva a resposta de forma ideal, como um gabarito nota máxima, com linguage
             },
 
             async callGeminiAPI(prompt) {
-                // A chave da API é fornecida pelo ambiente de execução, não mais pelo usuário.
-                const apiKey = ""; 
+                const apiKey = localStorage.getItem("geminiApiKey");
+                if (!apiKey) {
+                    throw new Error("Chave da API não encontrada. Por favor, insira sua chave nas configurações.");
+                }
                 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
                 
                 const requestBody = {
@@ -611,6 +740,38 @@ Reescreva a resposta de forma ideal, como um gabarito nota máxima, com linguage
                     button.textContent = originalText;
                     button.disabled = false;
                 }
+            },
+
+            toggleModal(show) {
+                if (show) {
+                    this.ui.settingsModal.classList.remove('hidden');
+                } else {
+                    this.ui.settingsModal.classList.add('hidden');
+                }
+            },
+
+            saveApiKey() {
+                const apiKey = this.ui.apiKeyInput.value.trim();
+                if (apiKey) {
+                    localStorage.setItem("geminiApiKey", apiKey);
+                    alert("Chave da API salva com sucesso!");
+                    this.toggleModal(false);
+                } else {
+                    alert("Por favor, insira uma chave válida.");
+                }
+            },
+
+            loadApiKey() {
+                const apiKey = localStorage.getItem("geminiApiKey");
+                if (apiKey) {
+                    this.ui.apiKeyInput.value = apiKey;
+                }
+            },
+
+            clearApiKey() {
+                localStorage.removeItem("geminiApiKey");
+                this.ui.apiKeyInput.value = "";
+                alert("Chave da API removida.");
             }
         };
 
